@@ -1,0 +1,140 @@
+.tooltip {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
+  font-family: "Prompt" !important;
+  line-height: normal;
+  padding: 15px;
+  width: 250px;
+  position: absolute;
+  border-radius: 5px;
+  display: none;
+}
+
+.tooltip__container {
+  display: flex;
+  background: #ffffff;
+}
+
+/* .tooltip::before {
+  content: "";
+  position: absolute;
+  left: -9px;
+  top: 50px;
+  transition: all 0.5s ease;
+  border: 8px solid #fff;
+  box-shadow: -5px opx -5px 5px rgba(0, 0, 0, 0.1);
+  transform: rotate(45deg);
+} */
+
+.blocktext {
+  margin-top: 11px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.img-ps {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.close {
+  margin-left: 197px;
+  margin-top: -30px;
+}
+
+button {
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.minimap-icon {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+a.btn {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: initial;
+}
+
+.label {
+  font-family: "Prompt" !important;
+  text-align: left;
+  font-weight: bold;
+  background-color: blue;
+  visibility: hidden;
+  text-anchor: middle;
+  fill: black;
+  font-family: "Arial";
+  font-size: 12px;
+}
+
+/* input[type="checkbox"] {
+  display: none;
+} */
+
+.wrap-collabsible {
+  margin: 1.2rem 0;
+}
+.lbl-toggle {
+  display: block;
+  font-weight: bold;
+  font-family: "Prompt";
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  text-align: center;
+  height: 45px;
+  padding: 0.7rem;
+  color: rgb(10, 10, 10);
+  background: #ffa600e8;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.25s ease-out;
+}
+.lbl-toggle:hover {
+  color: rgb(255, 255, 255);
+}
+.lbl-toggle::before {
+  content: " ";
+  display: inline-block;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid currentColor;
+  vertical-align: middle;
+  margin-right: 0.7rem;
+  transform: translateY(-2px);
+  transition: transform 0.2s ease-out;
+}
+.toggle:checked + .lbl-toggle::before {
+  transform: rotate(90deg) translateX(-3px);
+}
+.collapsible-content {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.25s ease-in-out;
+}
+.toggle:checked + .lbl-toggle + .collapsible-content {
+  max-height: 350px;
+}
+.toggle:checked + .lbl-toggle {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.collapsible-content .content-inner {
+  background: rgba(255, 255, 255, 0.603);
+  border-bottom: 1px solid rgba(0, 105, 255, 0.45);
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  padding: 0.5rem 1rem;
+}
+.collapsible-content p {
+  margin-bottom: 0;
+}

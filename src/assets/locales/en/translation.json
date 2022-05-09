@@ -1,0 +1,163 @@
+{
+  "title": "Knowledge & Innovation Management System",
+
+  "lang_en": "EN",
+  "lang_th": "TH",
+
+  "search": "Search",
+
+  "searchbar": {
+    "menu1": "Name",
+    "menu2": "Sirname",
+    "menu3": "Please fill in the Name",
+    "menu4": "Please fill in the Sirname"
+  },
+
+  "countuser": "Number of visitor: {{count}} view",
+
+  "notfound": "not data available.",
+
+  "menu1": "Home",
+  "menu2": "Research",
+  "menu3": "Academic Service",
+  "menu4": "Researcher",
+  "menu5": "Agency",
+  "menu6": "Innovation/Product",
+  "menu7": "Intellectual Property",
+
+  "community": {
+    "menu1": "Community",
+    "menu2": "Business Agency",
+    "menu3": "Government Agency",
+    "menu4": "Philosopher",
+    "menu5": "International Agency",
+    "menu6": "Please fill in the name of Agency",
+    "menu7": "Agency"
+  },
+
+  "research": {
+    "menu0": "Research",
+    "menu1": "Academic Service",
+    "menu2": "Academic Service (U2T)",
+    "menu3": "Please fill in the name of Academic Service.",
+    "menu4": "Academic Service.",
+    "menu5": "Please fill in the name of Research.",
+    "menu6": "Research."
+  },
+
+  "concept_proposal_page": {
+    "menu1": "Researcher Name",
+    "menu2": "Budget",
+    "menu3": "Source of Funds",
+    "menu4": "Year of Receipt",
+    "tabmenu": {
+      "menu1": "Research Network",
+      "menu2": "Research Detail",
+      "menu3": "Knowledge",
+      "menu4": "New Knowledge",
+      "menu5": "Impact"
+    },
+    "network": {
+      "header": "Research Networks Map",
+      "table": {
+        "menu1": "No.",
+        "menu2": "Research",
+        "menu3": "Year",
+        "menu4": "Budget"
+      }
+    },
+    "project_detail": {
+      "header": "Researh Detail",
+      "table": {
+        "menu1": "Type",
+        "menu2": "Research",
+        "menu3": "Location",
+        "menu4": "Source of Funds",
+        "menu5": "Year",
+        "menu6": "Budget"
+      }
+    },
+    "knowledge": {
+      "header": "Knowledge",
+      "detail": {
+        "menu1": "Knowledge",
+        "menu2": "Output",
+        "menu3": "Outcome"
+      }
+    },
+    "new_knowledge": {
+      "header": "New Knowledge",
+      "detail": {
+        "menu1": "Image",
+        "menu2": "Video"
+      }
+    },
+    "impact": {
+      "header": "Impact Detail",
+      "search": {
+        "menu1": "Impact Type",
+        "menu2": "Please Select."
+      },
+      "table": {
+        "menu1": "Impact",
+        "menu2": "Factor",
+        "menu3": "Issue",
+        "menu4": "Issue Detail"
+      },
+      "graph": {
+        "header": "Impact Detail Graph"
+      },
+      "goal": {
+        "header": "Development Goal"
+      }
+    }
+  },
+
+  "agency": {
+    "tabmenu": {
+      "menu1": "Expertise",
+      "menu2": "Knowledge",
+      "menu3": "Product",
+      "menu4": "Innovation",
+      "menu5": "Creative Work",
+      "menu6": "Implementation Project",
+      "menu7": "Intellectual Property",
+      "menu8": "Contact"
+    }
+  },
+
+  "researcher": {
+    "carddetail": {
+      "text1": "Academic",
+      "text2": "University",
+      "text3": "Major",
+      "text4": "Organization"
+    },
+    "tabmenu": {
+      "menu1": "Research/Study Area",
+      "menu2": "Expertise",
+      "menu3": "Intellectual Property",
+      "menu4": "Publication",
+      "menu5": "Innovation/Product/Creative",
+      "menu6": "Research Group",
+      "menu7": "Researcher Information",
+      "menu8": "Course"
+    },
+
+    "areapage": {
+      "carddetail": {
+        "header": "Research Map and Study Area"
+      },
+      "table": {
+        "header1": "View",
+        "header2": "Project Name",
+        "header3": "Year",
+        "header4": "Research Name",
+        "header5": "Research",
+        "header6": "Academic Service",
+        "header7": "Academic Service (U2T)",
+        "header8": "Sum"
+      }
+    }
+  }
+}
