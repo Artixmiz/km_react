@@ -55,6 +55,7 @@ function App(props) {
     console.log(res);
   };
 
+  
   useEffect(() => {
     getData();
     // const params = new URLSearchParams(document.location.search);
