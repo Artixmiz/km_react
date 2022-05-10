@@ -55,6 +55,16 @@ import { useTranslation } from "react-i18next";
 // import D3Layer from "./D3Layer";
 
 function SearchPageProject(props) {
+  const windowUrl = window.location.search;
+
+  console.log(windowUrl);
+  const parameter = new URLSearchParams(windowUrl);
+  const checkproject = parameter.get("checkproject");
+  const checkservice = parameter.get("checkservice");
+  const checku2t = parameter.get("checku2t");
+
+  const checkyear = parameter.get("year");
+
   const { locationSearch } = props;
 
   const { t } = useTranslation();
@@ -62,7 +72,7 @@ function SearchPageProject(props) {
   const [projects, setProjects] = React.useState([]);
   const [searchTitle, setSearchTitle] = React.useState("");
 
-  const [year, setYear] = React.useState("");
+  const [year, setYear] = React.useState(checkyear);
 
   const [message, setMessage] = React.useState("");
   const [selected1, setSelected1] = React.useState(1);
@@ -86,14 +96,21 @@ function SearchPageProject(props) {
   const localUrl = "http://localhost:4000";
 
   const mapData = async () => {
-    const response = await axios.get(`${apiUrl}/api/get/map`);
+    const response = await axios.get(
+      `${localUrl}/api/get/visualize/map?academic=1&academic_service=2&academic_service_u2t=5&year=2565`
+    );
     console.log(response.data);
     return response.data;
   };
 
-  const mapDataCondition = async (type_project, type_service, type_u2t) => {
+  const mapDataCondition = async (
+    type_project,
+    type_service,
+    type_u2t,
+    year
+  ) => {
     const response = await axios.get(
-      `${apiUrl}/api/get/map/con?type_project=${type_project}&type_service=${type_service}&type_u2t=${type_u2t}`
+      `${localUrl}/api/get/visualize/map?academic=${type_project}&academic_service=${type_service}&academic_service_u2t=${type_u2t}&year=${year}`
     );
     console.log(response.data);
     return response.data;
@@ -102,19 +119,11 @@ function SearchPageProject(props) {
   const onSubmit = (event) => {
     event.preventDefault();
     console.log(check1, check2, check5);
-    window.location.href = `/monitoring?checkproject=${check1}&checkservice=${check2}&checku2t=${check5}`;
+    window.location.href = `/monitoring?checkproject=${check1}&checkservice=${check2}&checku2t=${check5}&year=${year}`;
   };
 
   const retrieveProjects = () => {
     setLoading(true);
-
-    const windowUrl = window.location.search;
-
-    console.log(windowUrl);
-    const parameter = new URLSearchParams(windowUrl);
-    const checkproject = parameter.get("checkproject");
-    const checkservice = parameter.get("checkservice");
-    const checku2t = parameter.get("checku2t");
 
     console.log(checkproject);
     console.log(checkservice);
@@ -126,23 +135,24 @@ function SearchPageProject(props) {
     setcheck2(conboolean(checkservice));
     setcheck5(conboolean(checku2t));
 
-    if (
-      conboolean(checkproject) == true &&
-      conboolean(checkservice) == true &&
-      conboolean(checku2t) == true
-    ) {
-      let mapdata = mapData();
-      setmap1(mapdata);
-      setLoading(false);
-    } else {
+    // if (
+    //   conboolean(checkproject) == true &&
+    //   conboolean(checkservice) == true &&
+    //   conboolean(checku2t) == true
+    // ) {
+    //   let mapdata = mapData();
+    //   setmap1(mapdata);
+    //   setLoading(false);
+    // } else {
       const mapdataCon = mapDataCondition(
         conboolean(checkproject) == true ? 1 : "",
         conboolean(checkservice) == true ? 2 : "",
-        conboolean(checku2t) == true ? 5 : ""
+        conboolean(checku2t) == true ? 5 : "",
+        checkyear
       );
       setmap1(mapdataCon);
       setLoading(false);
-    }
+    // }
 
     // if (check1 == true) {
     //   setmap1({ nodes: [], links: [] });
@@ -168,7 +178,7 @@ function SearchPageProject(props) {
 
   function D3Layer() {
     const map = useMap();
-    let radius = 15;
+    let radius = 13;
 
     React.useEffect(async () => {
       const svgLayer = L.svg({ clickable: true });
@@ -1017,7 +1027,7 @@ function SearchPageProject(props) {
                   </CardTitle>
                 </CardBody> */}
               <>
-                <div className="" style={{ padding:6  }}>
+                <div className="" style={{ padding: 6 }}>
                   <Box
                     component="form"
                     sx={{
@@ -1160,11 +1170,17 @@ function SearchPageProject(props) {
                               color: "white",
                               border: "0px solid black",
                             }}
+                            onChange={handleChange}
+                            value={year}
                           >
-                            <option selected>ปี 2565</option>
-                            {/* <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option> */}
+                            <option value="2565">ปี 2565</option>
+                            <option value="2564">ปี 2564</option>
+                            <option value="2563">ปี 2563</option>
+                            <option value="2562">ปี 2562</option>
+                            <option value="2561">ปี 2561</option>
+                            <option value="2560">ปี 2560</option>
+                            <option value="2559">ปี 2559</option>
+                            <option value="2558">ปี 2558</option>
                           </select>
                         </Col>
 

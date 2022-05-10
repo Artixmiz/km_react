@@ -5,7 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Researcher from "./Researcher";
 import CoResearcher from "./Components/CoResearcher";
 import Leftbar from "./Components/Leftbar";
-import Testbar from "./Components/Testbar";
+// import Testbar from "./Components/Testbar";
 import Footer from "./Components/Footer";
 import { Col } from "reactstrap";
 import ProjectDetail from "./ProjcetDetail";

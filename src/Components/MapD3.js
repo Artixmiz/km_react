@@ -28,7 +28,7 @@ export default function MiniDrawer() {
 
   const mapData = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/get/map`);
+      const response = await axios.get(`${localUrl}/api/get/visualize/map`);
       return response.data;
     } catch (e) {
       console.log(e);
