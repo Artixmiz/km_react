@@ -110,7 +110,7 @@ function SearchPageProject(props) {
     year
   ) => {
     const response = await axios.get(
-      `${localUrl}/api/get/visualize/map?academic=${type_project}&academic_service=${type_service}&academic_service_u2t=${type_u2t}&year=${year}`
+      `${apiUrl}/api/get/visualize/map?academic=${type_project}&academic_service=${type_service}&academic_service_u2t=${type_u2t}&year=${year}`
     );
     console.log(response.data);
     return response.data;
