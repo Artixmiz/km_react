@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Researcher from "./Researcher";
 import CoResearcher from "./Components/CoResearcher";
 import Leftbar from "./Components/Leftbar";
+import Testbar from "./Components/Testbar";
 import Footer from "./Components/Footer";
 import { Col } from "reactstrap";
 import ProjectDetail from "./ProjcetDetail";
@@ -25,6 +26,8 @@ import Research from "./Components/PatentPage/Research";
 import CoRe from "./Components/PatentPage/CoRe";
 import Chumchon from "./Components/PatentPage/Chumchon";
 import i18n from "./i18n";
+
+// import Testbar from "./Components/Testbar";
 
 import token from "./config/token.json";
 import knowledgePage from "./Components/ConceptPage/Knowledge";
@@ -55,7 +58,6 @@ function App(props) {
     console.log(res);
   };
 
-  
   useEffect(() => {
     getData();
     // const params = new URLSearchParams(document.location.search);
@@ -81,177 +83,83 @@ function App(props) {
   }, []);
 
   return (
-    <div className="">
+    <div>
+      <Leftbar />
+      {/* <Testbar /> */}
       <Switch>
         <Route exact path="/">
-          <Col xs="auto">
-              <Leftbar />
-          </Col>
-          <Col xs="0">
-            <SearchMap />
-            {/* <Footer /> */}
-          </Col>
+          <SearchMap />
         </Route>
 
         <Route path="/Researcher">
           <Researcher />
-          <Footer />
         </Route>
 
-        {/* <Route path="/ProjectDetailConcep/knowledege">
+        <Route path="/ProjectDetailConcep/knowledege">
           <knowledgePage />
-        </Route> */}
+        </Route>
 
         <Route path="/CoResearcher">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <CoResearcher />
-            <Footer />
-          </Col>
+          <CoResearcher />
         </Route>
 
         <Route path="/ProjectDetailConcep">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <ProjcetDetailConcept />
-            <Footer />
-          </Col>
+          <ProjcetDetailConcept />
         </Route>
 
         <Route path="/ProjectDetail">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <ProjectDetail />
-            <Footer />
-          </Col>
+          <ProjectDetail />
         </Route>
 
         <Route path="/SearchProject">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <SearchPageProject locationSearch={locationSearch} />
-            <Footer />
-          </Col>
+          <SearchPageProject locationSearch={locationSearch} />
         </Route>
 
         <Route path="/SearchProjectService">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <SearchPageProjectSevice />
-            <Footer />
-          </Col>
+          <SearchPageProjectSevice />
         </Route>
 
         <Route path="/SearchResearcher">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <SearchPageResearch locationSearch={locationSearch} />
-            <Footer />
-          </Col>
+          <SearchPageResearch locationSearch={locationSearch} />
         </Route>
 
         <Route path="/SearchPageCo">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <SearchPageCoRe locationCo={locationCo} />
-            <Footer />
-          </Col>
+          <SearchPageCoRe locationCo={locationCo} />
         </Route>
 
         <Route path="/Innovation">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <Innovation />
-            <Footer />
-          </Col>
+          <Innovation />
         </Route>
 
         <Route path="/Innovat">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <Innovat />
-            <Footer />
-          </Col>
+          <Innovat />
         </Route>
 
         <Route path="/Product">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <Product />
-            <Footer />
-          </Col>
+          <Product />
         </Route>
 
         <Route path="/Creative">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <Creative />
-            <Footer />
-          </Col>
+          <Creative />
         </Route>
 
         <Route path="/Patent">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <Patent />
-            <Footer />
-          </Col>
+          <Patent />
         </Route>
 
         <Route path="/Research">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <Research />
-            <Footer />
-          </Col>
+          <Research />
         </Route>
 
         <Route path="/CoRe">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <CoRe />
-            <Footer />
-          </Col>
+          <CoRe />
         </Route>
 
         <Route path="/Chumchon">
-          <Col xs="auto">
-            <Leftbar />
-          </Col>
-          <Col xs="0">
-            <Chumchon />
-            <Footer />
-          </Col>
+          <Chumchon />
         </Route>
       </Switch>
+      <Footer />
     </div>
   );
 }

@@ -1,20 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable eqeqeq */
-/* eslint-disable no-unused-vars */
-import {
-  Box,
-  TextField,
-  Button,
-  Select,
-  MenuItem,
-  FormControl,
-  Container,
-  CircularProgress,
-  IconButton,
-  InputLabel,
-  FormHelperText,
-  ListItem,
-} from "@material-ui/core";
 import {
   Card,
   CardBody,
@@ -29,86 +12,26 @@ import {
 } from "reactstrap";
 import React, { useEffect, useState } from "react";
 
-import { AiOutlineAudit } from "react-icons/ai";
+import OwlCarousel from 'react-owl-carousel2';
+// import 'react-owl-carousel2/style.css';
 
-import Leftbar from "./Leftbar";
 import "./Css/Search.scss";
 import "../index.css";
-import {
-  MapContainer,
-  TileLayer,
-  ZoomControl,
-  Marker,
-  CircleMarker,
-  Tooltip,
-  Popup,
-} from "react-leaflet";
-import markerIconPng from "../images/icon.png";
-import { Icon, popup } from "leaflet";
+
 import { withRouter } from "react-router";
-import { FaSearch } from "react-icons/fa";
 import axios from "axios";
-import Pagination from "@material-ui/lab/Pagination";
-import { BiInfoCircle } from "react-icons/bi";
-import noImg from "../images/no-image.png";
-import Tab from "@material-ui/core/Tab";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import { HiOutlineLightBulb, HiOutlineAcademicCap } from "react-icons/hi";
+import { makeStyles } from "@material-ui/core/styles";
 
-import AwesomeSlider from "react-awesome-slider";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import {
-  makeStyles,
-  createTheme,
-  ThemeProvider,
-} from "@material-ui/core/styles";
-import PropTypes from "prop-types";
+import background_innovation from "../images/bg_innovation.png";
 
-import { AiOutlineShopping, AiOutlineFormatPainter } from "react-icons/ai";
-import { BsGearFill } from "react-icons/bs";
-import { Route, BrowserRouter, Switch, Link } from "react-router-dom";
-// import Product from "./InnovationPage/Product";
-// import Innovat from "./InnovationPage/Innovat";
-// import Createive from "./InnovationPage/creative";
-
-import Artboard1 from "../images/Artboard1.png";
-import innoimg from "../images/inno.jpg";
-import pdimg from "../images/product.jpg";
-import ctimg from "../images/creative.jpg";
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
+import "./Css/innovation.scss";
+import $ from "jquery";
 
 function a11yProps(index) {
   return {
     id: `scrollable-force-tab-${index}`,
     "aria-controls": `scrollable-force-tabpanel-${index}`,
   };
-}
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-force-tabpanel-${index}`}
-      aria-labelledby={`scrollable-force-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -192,6 +115,40 @@ const useStyles = makeStyles((theme) => ({
       "linear-gradient(90deg,rgba(240, 99, 0, 1) 0%,rgba(255, 115, 0, 1) 38%,rgba(254, 148, 0, 1) 100%)",
   },
 }));
+$(document).ready(function () {
+  var zindex = 10;
+
+  $("div.card").click(function (e) {
+    e.preventDefault();
+
+    var isShowing = false;
+
+    if ($(this).hasClass("show")) {
+      isShowing = true;
+    }
+
+    if ($("div.cards").hasClass("showing")) {
+      // a card is already in view
+      $("div.card.show").removeClass("show");
+
+      if (isShowing) {
+        // this card was showing - reset the grid
+        $("div.cards").removeClass("showing");
+      } else {
+        // this card isn't showing - get in with it
+        $(this).css({ zIndex: zindex }).addClass("show");
+      }
+
+      zindex++;
+    } else {
+      // no cards in view
+      $("div.cards").addClass("showing");
+      $(this).css({ zIndex: zindex }).addClass("show");
+
+      zindex++;
+    }
+  });
+});
 
 function SearchPageCoRe(props) {
   // const { locationCo } = props;
@@ -418,489 +375,485 @@ function SearchPageCoRe(props) {
   //   retrieveCoResearchers();
   // }, [page]);
 
+  const options = {
+    items: 4,
+    nav: true,
+    rewind: true,
+    autoplay: true,
+    margin:10
+  };
+
   return (
-    <body className="img-bg">
-      <div className="body-detail ">
-        {/* <Box style={{ margin: "-20px 0px 20px 200px" }}>
-          <text
-            style={{
-              fontFamily: "Prompt",
-              fontSize: 50,
-              fontWeight: "bold",
-              color: "#FF9F45",
-            }}
-          >
-            Knowledge & Innovation Management System
-          </text>
-        </Box> */}
-        <div style={{ padding: "15px", margin: "0px 20px 0px 20px" }}>
-          <Row>
-            <Col md={4}>
-              <Card
-                className="card-border card1"
-                onClick={() => {
-                  props.history.push({
-                    pathname: "/Innovat",
-                  });
-                }}
-              >
-                <div>
-                  <img
+    // <body className="img-bg">
+    <div className="body-detail" style={{ background: "#6cb5df85" }}>
+      <div style={{ padding: "15px", margin: "0px 20px 0px 20px" }}>
+        <Row>
+          <Col md={12}>
+            <div
+              style={{
+                backgroundImage: `url(${background_innovation})`,
+                backgroundSize: "cover",
+                borderRadius: "20px",
+                padding: "0.5rem 0.5rem 0.5rem 2rem",
+                boxShadow: "2px 4px 8px 4px #e56f2d78",
+              }}
+            >
+              <div className="cards">
+                <Row style={{ width: "100%" }}>
+                  <Col sm={4} md={4} lg={3}>
+                    <div className="title-center">
+                      <div className="bg-title">
+                        <Row>
+                          <Col md={12}>
+                            <h1
+                              className="hit-the-floor"
+                              style={{ color: "white", fontFamily: "Prompt" }}
+                            >
+                              นวัตกรรม
+                            </h1>
+                          </Col>
+                          <Col md={12}>
+                            <h1
+                              className="hit-the-floor"
+                              style={{ color: "white", fontFamily: "Prompt" }}
+                            >
+                              Innovation
+                            </h1>
+                          </Col>
+                        </Row>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col sm={4} md={4} lg={3}>
+                    <div className="card">
+                      <div className="card__image-holder">
+                        <img
+                          className="card__image img-innovation"
+                          src="https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/3681375bba7c8bd147fe76688f753ac1.png"
+                          alt="wave"
+                        />
+                      </div>
+                      <div className="card-title">
+                        <a href="#" className="toggle-info btn">
+                          <span className="left" />
+                          <span className="right" />
+                        </a>
+                        <h2 style={{ paddingTop: "0.5rem" }}>
+                          STGuide
+                          <small>ราคา:120,000 บาท</small>
+                        </h2>
+                      </div>
+                      <div className="card-flap flap1">
+                        <div className="card-description">
+                          <p>เลขที่สิทธิบัตร :</p>
+                          <p>จำนวนการผลิต : 10 ชิ้น</p>
+                          <p>ผู้ประสานงาน : จงกล จันทร์เรือง</p>
+                          <p>โทรศัพท์ : 0839650226</p>
+                          <p>
+                            Facebook : https://www.facebook.com/jongkol.janruang
+                          </p>
+                          <p>Line : jjsci</p>
+                          <p>Email : jj@sci.rmuti.ac.th</p>
+                        </div>
+                        <div className="card-flap flap2">
+                          <div className="card-actions">
+                            <a href="#" className="btn">
+                              Read more
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col sm={4} md={4} lg={3}>
+                    <div className="card">
+                      <div className="card__image-holder">
+                        <img
+                          className="card__image img-innovation"
+                          src="https://source.unsplash.com/300x225/?beach"
+                          alt="beach"
+                        />
+                      </div>
+                      <div className="card-title">
+                        <a href="#" className="toggle-info btn">
+                          <span className="left" />
+                          <span className="right" />
+                        </a>
+                        <h2>
+                          Card title
+                          <small>Image from unsplash.com</small>
+                        </h2>
+                      </div>
+                      <div className="card-flap flap1">
+                        <div className="card-description">
+                          This grid is an attempt to make something nice that
+                          works on touch devices. Ignoring hover states when
+                          they're not available etc.
+                        </div>
+                        <div className="card-flap flap2">
+                          <div className="card-actions">
+                            <a href="#" className="btn">
+                              Read more
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col sm={4} md={4} lg={3}>
+                    <div className="card">
+                      <div className="card__image-holder ">
+                        <img
+                          className="card__image img-innovation"
+                          src="https://source.unsplash.com/300x225/?mountain"
+                          alt="mountain"
+                        />
+                      </div>
+                      <div className="card-title">
+                        <a href="#" className="toggle-info btn">
+                          <span className="left" />
+                          <span className="right" />
+                        </a>
+                        <h2>
+                          Card title
+                          <small>Image from unsplash.com</small>
+                        </h2>
+                      </div>
+                      <div className="card-flap flap1">
+                        <div className="card-description">
+                          This grid is an attempt to make something nice that
+                          works on touch devices. Ignoring hover states when
+                          they're not available etc.
+                        </div>
+                        <div className="card-flap flap2">
+                          <div className="card-actions">
+                            <a href="#" className="btn">
+                              Read more
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+
+                  <OwlCarousel className="owl-theme" options={options}>
+                    <div className="card">
+                      <div className="card__image-holder">
+                        <img
+                          className="card__image img-innovation"
+                          src="https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/3681375bba7c8bd147fe76688f753ac1.png"
+                          alt="wave"
+                        />
+                      </div>
+                      <div className="card-title">
+                        <a href="#" className="toggle-info btn">
+                          <span className="left" />
+                          <span className="right" />
+                        </a>
+                        <h2 style={{ paddingTop: "0.5rem" }}>
+                          STGuide
+                          <small>ราคา:120,000 บาท</small>
+                        </h2>
+                      </div>
+                      <div className="card-flap flap1">
+                        <div className="card-description">
+                          <p>เลขที่สิทธิบัตร :</p>
+                          <p>จำนวนการผลิต : 10 ชิ้น</p>
+                          <p>ผู้ประสานงาน : จงกล จันทร์เรือง</p>
+                          <p>โทรศัพท์ : 0839650226</p>
+                          <p>
+                            Facebook : https://www.facebook.com/jongkol.janruang
+                          </p>
+                          <p>Line : jjsci</p>
+                          <p>Email : jj@sci.rmuti.ac.th</p>
+                        </div>
+                        <div className="card-flap flap2">
+                          <div className="card-actions">
+                            <a href="#" className="btn">
+                              Read more
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card">
+                      <div className="card__image-holder">
+                        <img
+                          className="card__image img-innovation"
+                          src="https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/3681375bba7c8bd147fe76688f753ac1.png"
+                          alt="wave"
+                        />
+                      </div>
+                      <div className="card-title">
+                        <a href="#" className="toggle-info btn">
+                          <span className="left" />
+                          <span className="right" />
+                        </a>
+                        <h2 style={{ paddingTop: "0.5rem" }}>
+                          STGuide
+                          <small>ราคา:120,000 บาท</small>
+                        </h2>
+                      </div>
+                      <div className="card-flap flap1">
+                        <div className="card-description">
+                          <p>เลขที่สิทธิบัตร :</p>
+                          <p>จำนวนการผลิต : 10 ชิ้น</p>
+                          <p>ผู้ประสานงาน : จงกล จันทร์เรือง</p>
+                          <p>โทรศัพท์ : 0839650226</p>
+                          <p>
+                            Facebook : https://www.facebook.com/jongkol.janruang
+                          </p>
+                          <p>Line : jjsci</p>
+                          <p>Email : jj@sci.rmuti.ac.th</p>
+                        </div>
+                        <div className="card-flap flap2">
+                          <div className="card-actions">
+                            <a href="#" className="btn">
+                              Read more
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card">
+                      <div className="card__image-holder">
+                        <img
+                          className="card__image img-innovation"
+                          src="https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/3681375bba7c8bd147fe76688f753ac1.png"
+                          alt="wave"
+                        />
+                      </div>
+                      <div className="card-title">
+                        <a href="#" className="toggle-info btn">
+                          <span className="left" />
+                          <span className="right" />
+                        </a>
+                        <h2 style={{ paddingTop: "0.5rem" }}>
+                          STGuide
+                          <small>ราคา:120,000 บาท</small>
+                        </h2>
+                      </div>
+                      <div className="card-flap flap1">
+                        <div className="card-description">
+                          <p>เลขที่สิทธิบัตร :</p>
+                          <p>จำนวนการผลิต : 10 ชิ้น</p>
+                          <p>ผู้ประสานงาน : จงกล จันทร์เรือง</p>
+                          <p>โทรศัพท์ : 0839650226</p>
+                          <p>
+                            Facebook : https://www.facebook.com/jongkol.janruang
+                          </p>
+                          <p>Line : jjsci</p>
+                          <p>Email : jj@sci.rmuti.ac.th</p>
+                        </div>
+                        <div className="card-flap flap2">
+                          <div className="card-actions">
+                            <a href="#" className="btn">
+                              Read more
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card">
+                      <div className="card__image-holder">
+                        <img
+                          className="card__image img-innovation"
+                          src="https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/3681375bba7c8bd147fe76688f753ac1.png"
+                          alt="wave"
+                        />
+                      </div>
+                      <div className="card-title">
+                        <a href="#" className="toggle-info btn">
+                          <span className="left" />
+                          <span className="right" />
+                        </a>
+                        <h2 style={{ paddingTop: "0.5rem" }}>
+                          STGuide
+                          <small>ราคา:120,000 บาท</small>
+                        </h2>
+                      </div>
+                      <div className="card-flap flap1">
+                        <div className="card-description">
+                          <p>เลขที่สิทธิบัตร :</p>
+                          <p>จำนวนการผลิต : 10 ชิ้น</p>
+                          <p>ผู้ประสานงาน : จงกล จันทร์เรือง</p>
+                          <p>โทรศัพท์ : 0839650226</p>
+                          <p>
+                            Facebook : https://www.facebook.com/jongkol.janruang
+                          </p>
+                          <p>Line : jjsci</p>
+                          <p>Email : jj@sci.rmuti.ac.th</p>
+                        </div>
+                        <div className="card-flap flap2">
+                          <div className="card-actions">
+                            <a href="#" className="btn">
+                              Read more
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card">
+                      <div className="card__image-holder">
+                        <img
+                          className="card__image img-innovation"
+                          src="https://source.unsplash.com/300x225/?beach"
+                          alt="beach"
+                        />
+                      </div>
+                      <div className="card-title">
+                        <a href="#" className="toggle-info btn">
+                          <span className="left" />
+                          <span className="right" />
+                        </a>
+                        <h2>
+                          Card title
+                          <small>Image from unsplash.com</small>
+                        </h2>
+                      </div>
+                      <div className="card-flap flap1">
+                        <div className="card-description">
+                          This grid is an attempt to make something nice that
+                          works on touch devices. Ignoring hover states when
+                          they're not available etc.
+                        </div>
+                        <div className="card-flap flap2">
+                          <div className="card-actions">
+                            <a href="#" className="btn">
+                              Read more
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card">
+                      <div className="card__image-holder">
+                        <img
+                          className="card__image img-innovation"
+                          src="https://source.unsplash.com/300x225/?beach"
+                          alt="beach"
+                        />
+                      </div>
+                      <div className="card-title">
+                        <a href="#" className="toggle-info btn">
+                          <span className="left" />
+                          <span className="right" />
+                        </a>
+                        <h2>
+                          Card title
+                          <small>Image from unsplash.com</small>
+                        </h2>
+                      </div>
+                      <div className="card-flap flap1">
+                        <div className="card-description">
+                          This grid is an attempt to make something nice that
+                          works on touch devices. Ignoring hover states when
+                          they're not available etc.
+                        </div>
+                        <div className="card-flap flap2">
+                          <div className="card-actions">
+                            <a href="#" className="btn">
+                              Read more
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </OwlCarousel>
+                </Row>
+              </div>
+            </div>
+          </Col>
+          <Col md={12} style={{ marginTop: "5vh" }}>
+            <div
+              style={{
+                backgroundImage: `url(${background_innovation})`,
+                height: "55vh",
+                backgroundSize: "cover",
+                borderRadius: "20px",
+              }}
+            >
+              Hello World
+            </div>
+          </Col>
+          <Col md={12} style={{ marginTop: "1rem" }}>
+            <div
+              style={{
+                backgroundImage: `url(${background_innovation})`,
+                height: "55vh",
+                backgroundSize: "cover",
+                borderRadius: "20px",
+              }}
+            >
+              Hello World
+            </div>
+          </Col>
+          <Col md={3}>
+            <Card
+              className="card-border card1"
+              onClick={() => {
+                props.history.push({
+                  pathname: "/Innovat",
+                });
+              }}
+            >
+              <div>
+                {/* <img
                     position="relative"
                     align="right"
                     width="520px"
                     height="800px"
-                    src={innoimg}
-                  />
-                </div>
-                {/* <CardBody>
-                    {productinnovation.map((listValue) => {
-                      return (
-                        <div>
-                          <div>
-                            <AwesomeSlider bullets={false}>
-                              {listValue.images.map((listitem, index) => {
-                                return (
-                                  <Col md="2">
-                                    <img
-                                      className="card-border"
-                                      style={{
-                                        objectPosition: "center center",
-                                        padding: 1,
-                                        color: "black",
-                                        fontFamily: "Prompt",
-                                      }}
-                                      width="100%"
-                                      height="auto"
-                                      src={
-                                        listitem.co_innovation_image
-                                          ? `https://researcher.kims-rmuti.com/file-upload/co_innovationproduct_upload/${listitem.co_innovation_image}`
-                                          : `https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/${listitem.innovation_image_name}`
-                                      }
-                                    />
-                                  </Col>
-                                );
-                              })}
-                            </AwesomeSlider>
+                    // src={innoimg}
+                  /> */}
+              </div>
+            </Card>
+          </Col>
 
-                            <br />
-                            <Typography
-                              style={{
-                                textAlign: "left",
-                                fontFamily: "Prompt",
-                              }}
-                            >
-                              <p>
-                                ชื่อนวัตกรรม :&nbsp;
-                                {listValue.co_researcher_pi_name
-                                  ? listValue.co_researcher_pi_name
-                                  : listValue.innovation_name}
-                              </p>
-                              <p>
-                                <h>จำนวนการผลิต : </h>
-                                {listValue.co_researcher_pi_amount
-                                  ? listValue.co_researcher_pi_amount
-                                  : listValue.innovation_amount}{" "}
-                                ชิ้น
-                              </p>
-                              <p>
-                                <h>ราคา : </h>
-                                {listValue.co_researcher_pi_price
-                                  ? listValue.co_researcher_pi_price
-                                  : listValue.innovation_price}{" "}
-                                บาท
-                              </p>
-                              <p>
-                                <h>ผู้ประสานงาน : </h>
-                                {listValue.co_researcher_pi_coordinator
-                                  ? listValue.co_researcher_pi_coordinator
-                                  : "-"}
-                              </p>
-                              <p>
-                                <h>โทรศัพท์ : </h>
-                                {listValue.co_researcher_pi_phone
-                                  ? listValue.co_researcher_pi_phone
-                                  : "-"}
-                              </p>
-                              <p>
-                                <h>Facebook : </h>
-                                <Button
-                                  a
-                                  href={
-                                    listValue.co_researcher_pi_facebook
-                                      ? listValue.co_researcher_pi_facebook
-                                      : ""
-                                  }
-                                  style={{ fontSize: "smaller" }}
-                                >
-                                  {listValue.co_researcher_pi_facebook
-                                    ? listValue.co_researcher_pi_facebook.slice(
-                                        8,
-                                        35
-                                      )
-                                    : "-"}
-                                </Button>
-                              </p>
-
-                              <p>
-                                <h>Line : </h>
-                                {listValue.co_researcher_pi_line
-                                  ? listValue.co_researcher_pi_line
-                                  : "-"}
-                              </p>
-                              <p>
-                                <h>Email : </h>
-                                {listValue.co_researcher_pi_mail
-                                  ? listValue.co_researcher_pi_mail
-                                  : "-"}
-                              </p>
-
-                              <p></p>
-                            </Typography>
-                          </div>
-                        </div>
-                      );
-                    })}
-
-                    <Button
-                      align="center"
-                      color="primary"
-                      style={{ fontFamily: "Prompt", fontSize: 20 }}
-                      aria-label="view info project"
-                      component="a"
-                      href="/monitoring/Innovat"
-                      // className={(classes.link)}
-                      // selected={true}
-                      className={classes.link}
-                      // classes={{ selected: classes.active }}
-                    >
-                      นวัตกรรมอื่นๆ
-                    </Button>
-                  </CardBody> */}
-              </Card>
-            </Col>
-
-            <Col md={4}>
-              <Card
-                className="card-border card1"
-                onClick={() => {
-                  props.history.push({
-                    pathname: "/Product",
-                  });
-                }}
-              >
-                <div>
-                  <img
+          <Col md={3}>
+            <Card
+              className="card-border card1"
+              onClick={() => {
+                props.history.push({
+                  pathname: "/Product",
+                });
+              }}
+            >
+              <div>
+                {/* <img
                     position="relative"
                     align="right"
                     width="520px"
                     height="800px"
                     src={pdimg}
-                  />
-                </div>
-                {/* <CardBody>
-                    {productlist.map((listValue) => {
-                      return (
-                        <div>
-                          <div>
-                            <AwesomeSlider bullets={false}>
-                              {listValue.images.map((listitem, index) => {
-                                return (
-                                  <Col md="2">
-                                    <img
-                                      className="card-border"
-                                      style={{
-                                        objectPosition: "center center",
-                                        padding: 1,
-                                        color: "black",
-                                        fontFamily: "Prompt",
-                                      }}
-                                      width="100%"
-                                      height="auto"
-                                      src={
-                                        listitem.co_innovation_image
-                                          ? `https://researcher.kims-rmuti.com/file-upload/co_innovationproduct_upload/${listitem.co_innovation_image}`
-                                          : `https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/${listitem.innovation_image_name}`
-                                      }
-                                    />
-                                  </Col>
-                                );
-                              })}
-                            </AwesomeSlider>
-                            <br />
-                            <Typography
-                              style={{
-                                textAlign: "left",
-                                fontFamily: "Prompt",
-                                fontSize: "22",
-                              }}
-                            >
-                              <p>
-                                ชื่อผลิตภัณฑ์ :&nbsp;
-                                {listValue.co_researcher_pi_name
-                                  ? listValue.co_researcher_pi_name
-                                  : listValue.innovation_name}
-                              </p>
+                  /> */}
+              </div>
+            </Card>
+          </Col>
 
-                              <p>
-                                <h>จำนวนการผลิต : </h>
-                                {listValue.co_researcher_pi_amount
-                                  ? listValue.co_researcher_pi_amount
-                                  : listValue.innovation_amount}{" "}
-                                ชิ้น
-                              </p>
-                              <p>
-                                <h>ราคา : </h>
-                                {listValue.co_researcher_pi_price
-                                  ? listValue.co_researcher_pi_price
-                                  : listValue.innovation_price}{" "}
-                                บาท
-                              </p>
-                              <p>
-                                <h>ผู้ประสานงาน : </h>
-                                {listValue.co_researcher_pi_coordinator
-                                  ? listValue.co_researcher_pi_coordinator
-                                  : "-"}
-                              </p>
-                              <p>
-                                <h>โทรศัพท์ : </h>
-                                {listValue.co_researcher_pi_phone
-                                  ? listValue.co_researcher_pi_phone
-                                  : "-"}
-                              </p>
-                              <p>
-                                <h>Facebook : </h>
-                                <Button
-                                  a
-                                  href={
-                                    listValue.co_researcher_pi_facebook
-                                      ? listValue.co_researcher_pi_facebook
-                                      : ""
-                                  }
-                                  style={{ fontSize: "smaller" }}
-                                >
-                                  {listValue.co_researcher_pi_facebook
-                                    ? listValue.co_researcher_pi_facebook.slice(
-                                        8,
-                                        35
-                                      )
-                                    : "-"}
-                                </Button>
-                              </p>
-
-                              <p>
-                                <h>Line : </h>
-                                {listValue.co_researcher_pi_line
-                                  ? listValue.co_researcher_pi_line
-                                  : "-"}
-                              </p>
-                              <p>
-                                <h>Email : </h>
-                                {listValue.co_researcher_pi_mail
-                                  ? listValue.co_researcher_pi_mail
-                                  : "-"}
-                              </p>
-
-                              <p></p>
-                            </Typography>
-                          </div>
-                        </div>
-                      );
-                    })}
-
-                    <Button
-                      align="center"
-                      color="primary"
-                      style={{ fontFamily: "Prompt", fontSize: 20 }}
-                      aria-label="view info project"
-                      component="a"
-                      href="/monitoring/Product"
-                      // className={(classes.link)}
-                      // selected={true}
-                      className={classes.link}
-                      // classes={{ selected: classes.active }}
-                    >
-                      ผลิตภัณฑ์อื่นๆ
-                    </Button>
-                  </CardBody> */}
-              </Card>
-            </Col>
-
-            <Col md={4}>
-              <Card
-                className="card-border card1"
-                onClick={() => {
-                  props.history.push({
-                    pathname: "/Creative",
-                  });
-                }}
-              >
-                <div>
-                  <img
+          <Col md={3}>
+            <Card
+              className="card-border card1"
+              onClick={() => {
+                props.history.push({
+                  pathname: "/Creative",
+                });
+              }}
+            >
+              <div>
+                {/* <img
                     position="relative"
                     align="right"
                     width="520px"
                     height="800px"
                     src={ctimg}
-                  />
-                </div>
-
-                {/* <CardBody>
-                    {message ? (
-                      <p className="p-4" style={{ fontFamily: "Prompt" }}>
-                        ไม่พบข้อมูล
-                      </p>
-                    ) : (
-                      <div>
-                        {productinnovation.co_researcher_pi_type_id >= 12 ? (
-                          <Row>
-                            {productinnovation.map((listValue) => (
-                              <Col md="2">
-                                <Card
-                                  style={{
-                                    marginTop: "20px",
-                                    width: "40",
-                                    fontFamily: "Prompt",
-                                    height: 660,
-                                  }}
-                                >
-                                  <CardBody className="card-header-border">
-                                    <AwesomeSlider bullets={false}>
-                                      {listValue.images.map(
-                                        (listitem, index) => {
-                                          return (
-                                            <Col md="5">
-                                              <img
-                                                className="card-border"
-                                                style={{
-                                                  objectPosition:
-                                                    "center center",
-                                                  padding: 1,
-                                                  color: "black",
-                                                  fontFamily: "Prompt",
-                                                }}
-                                                width="100%"
-                                                height="auto"
-                                                src={
-                                                  listitem.co_innovation_image
-                                                    ? `https://researcher.kims-rmuti.com/file-upload/co_innovationproduct_upload/${listitem.co_innovation_image}`
-                                                    : `https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/${listitem.innovation_image_name}`
-                                                }
-                                              />
-                                            </Col>
-                                          );
-                                        }
-                                      )}
-                                    </AwesomeSlider>
-                                    <br />
-                                    <Typography
-                                      style={{
-                                        textAlign: "left",
-                                        fontFamily: "Prompt",
-                                        fontSize: "18",
-                                      }}
-                                    >
-                                      <p>
-                                        ชื่องานสร้างสรรค์ :&nbsp;
-                                        {listValue.co_researcher_pi_name
-                                          ? listValue.co_researcher_pi_name
-                                          : listValue.innovation_name}
-                                      </p>
-                                      <p>
-                                        <h>จำนวนการผลิต : </h>
-                                        {listValue.co_researcher_pi_amount
-                                          ? listValue.co_researcher_pi_amount
-                                          : listValue.innovation_amount}{" "}
-                                        ชิ้น
-                                      </p>
-                                      <p>
-                                        <h>ราคา : </h>
-                                        {listValue.co_researcher_pi_price
-                                          ? listValue.co_researcher_pi_price
-                                          : listValue.innovation_price}{" "}
-                                        บาท
-                                      </p>
-                                      <p>
-                                        <h>ผู้ประสานงาน : </h>
-                                        {listValue.co_researcher_pi_coordinator
-                                          ? listValue.co_researcher_pi_coordinator
-                                          : "-"}
-                                      </p>
-                                      <p>
-                                        <h>โทรศัพท์ : </h>
-                                        {listValue.co_researcher_pi_phone
-                                          ? listValue.co_researcher_pi_phone
-                                          : "-"}
-                                      </p>
-                                      <p>
-                                        <h>Facebook : </h>
-                                        <Button
-                                          a
-                                          href={
-                                            listValue.co_researcher_pi_facebook
-                                              ? listValue.co_researcher_pi_facebook
-                                              : ""
-                                          }
-                                          style={{ fontSize: "smaller" }}
-                                        >
-                                          {listValue.co_researcher_pi_facebook
-                                            ? listValue.co_researcher_pi_facebook.slice(
-                                                8,
-                                                35
-                                              )
-                                            : "-"}
-                                        </Button>
-                                      </p>
-
-                                      <p>
-                                        <h>Line : </h>
-                                        {listValue.co_researcher_pi_line
-                                          ? listValue.co_researcher_pi_line
-                                          : "-"}
-                                      </p>
-                                      <p>
-                                        <h>Email : </h>
-                                        {listValue.co_researcher_pi_mail
-                                          ? listValue.co_researcher_pi_mail
-                                          : "-"}
-                                      </p>
-
-                                      <p></p>
-                                    </Typography>
-                                  </CardBody>
-                                </Card>
-                              </Col>
-                            ))}
-                          </Row>
-                        ) : (
-                          <p className="p-4" style={{ fontFamily: "Prompt" }}>
-                            ไม่พบข้อมูล
-                          </p>
-                        )}
-                      </div>
-                    )}
-                  </CardBody>
-
-                  <Button
-                    align="center"
-                    color="primary"
-                    style={{ fontFamily: "Prompt", fontSize: 20 }}
-                    aria-label="view info project"
-                    component="a"
-                    href="/monitoring/Creative"
-                     className={(classes.link)}
-                     selected={true}
-                    className={classes.link}
-                     classes={{ selected: classes.active }}
-                  >
-                    งานสร้างสรรค์อื่นๆ
-                  </Button> */}
-              </Card>
-            </Col>
-          </Row>
-        </div>
+                  /> */}
+              </div>
+            </Card>
+          </Col>
+        </Row>
       </div>
-    </body>
+    </div>
+    // </body>
   );
 }
 

@@ -2,36 +2,27 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import PropTypes from "prop-types";
-import AppBar from "@material-ui/core/AppBar";
-import Grid from "@material-ui/core/Grid";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import MenuIcon from "@material-ui/icons/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-import { BiNetworkChart, BiShoppingBag, BiCopyright } from "react-icons/bi";
+import { BiNetworkChart, BiShoppingBag } from "react-icons/bi";
 import {
   AiOutlineProject,
   AiFillHome,
   AiOutlineFundProjectionScreen,
 } from "react-icons/ai";
 import { FaUserTie } from "react-icons/fa";
-import { RiCommunityFill } from "react-icons/ri";
 import rmuti from "../images/rmuti.png";
 
 import rmutilogo from "../images/rmutilogo.png";
-import rmutiAppbar from "../images/rmuti-black.png";
 import kminn from "../images/kminn.png";
-import rmuti2 from "../images/rmuti2.png";
 import "../index.css";
 import axios from "axios";
 import useGaTracker from "../useGaTracker";
@@ -44,8 +35,8 @@ import { useTranslation } from "react-i18next";
 
 import token from "../config/token.json";
 
-var counterContainer = document.querySelector(".website-counter");
-var resetButton = document.querySelector("#reset");
+import "./Css/menubar.scss"
+
 var visitCount = localStorage.getItem("page_view");
 
 // Check if page_view entry is present
@@ -62,18 +53,15 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-   
   },
 
   shadowMenu: {
     boxShadow: "10px 0 20px -5px rgba(115,115,115,0.75)",
   },
   drawer: {
-
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
       flexShrink: 0,
-
     },
   },
   icon: {
@@ -144,7 +132,8 @@ const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    boxShadow: "rgba(0, 0, 0, 0.5) 0px 14px 28px, rgba(0, 0, 0, 0.4) 0px 10px 10px",
+    boxShadow:
+      "rgba(0, 0, 0, 0.5) 0px 14px 28px, rgba(0, 0, 0, 0.4) 0px 10px 10px",
     width: drawerWidth,
     background:
       "linear-gradient(180deg, #f9bc00 0%, #d26625 45%, rgba(244,90,2,1) 90%)",
@@ -216,15 +205,17 @@ function ResponsiveDrawer({ window }) {
   }, []);
 
   const drawer = (
-    <div >
+    <div>
       {/* <div className={classes.toolbar} /> */}
 
       <List>
         <ListItem>
           <img
             src={rmutilogo}
-            width={90}
-            // margin={"30px 10px 10px 10px"}
+            width={60}
+            style={{
+              marginLeft: "1rem",
+            }}
           />
           <img
             src={sidelogo}
@@ -233,9 +224,10 @@ function ResponsiveDrawer({ window }) {
               marginTop: 10,
               objectFit: "cover",
               objectPosition: "center center",
+              maxWidth: "50%",
+              height: "auto",
+              marginLeft: "1rem",
             }}
-            width={115}
-            height={150}
             // margin={"30px 10px 10px 10px"}
           />
         </ListItem>
@@ -264,7 +256,7 @@ function ResponsiveDrawer({ window }) {
           <ListItemText>
             <text
               className={classes.textUnderline}
-              style={{ fontFamily: "Prompt", fontSize: 15 }}
+              style={{ fontFamily: "Prompt", fontSize: 14 }}
             >
               {t("menu1")}
               {/* หน้าแรก */}
@@ -284,7 +276,7 @@ function ResponsiveDrawer({ window }) {
           <ListItemText>
             <text
               className={classes.textUnderline}
-              style={{ fontFamily: "Prompt", fontSize: 15 }}
+              style={{ fontFamily: "Prompt", fontSize: 14 }}
             >
               หน้าแรก
             </text>
@@ -305,7 +297,7 @@ function ResponsiveDrawer({ window }) {
           <ListItemText>
             <text
               className={classes.textUnderline}
-              style={{ fontFamily: "Prompt", fontSize: 15 }}
+              style={{ fontFamily: "Prompt", fontSize: 14 }}
             >
               {t("menu2")}
             </text>
@@ -326,7 +318,7 @@ function ResponsiveDrawer({ window }) {
           <ListItemText>
             <text
               className={classes.textUnderline}
-              style={{ fontFamily: "Prompt", fontSize: 15 }}
+              style={{ fontFamily: "Prompt", fontSize: 14 }}
             >
               {t("menu3")}
             </text>
@@ -348,7 +340,7 @@ function ResponsiveDrawer({ window }) {
           <ListItemText>
             <text
               className={classes.textUnderline}
-              style={{ fontFamily: "Prompt", fontSize: 15 }}
+              style={{ fontFamily: "Prompt", fontSize: 14 }}
             >
               {t("menu4")}
             </text>
@@ -367,7 +359,7 @@ function ResponsiveDrawer({ window }) {
           <ListItemText>
             <text
               className={classes.textUnderline}
-              style={{ fontFamily: "Prompt", fontSize: 15 }}
+              style={{ fontFamily: "Prompt", fontSize: 14 }}
             >
               {t("menu5")}
             </text>
@@ -386,7 +378,7 @@ function ResponsiveDrawer({ window }) {
           <ListItemText>
             <text
               className={classes.textUnderline}
-              style={{ fontFamily: "Prompt", fontSize: 15 }}
+              style={{ fontFamily: "Prompt", fontSize: 14 }}
             >
               {t("menu6")}
             </text>
@@ -409,7 +401,7 @@ function ResponsiveDrawer({ window }) {
           <ListItemText>
             <text
               className={classes.textUnderline}
-              style={{ fontFamily: "Prompt", fontSize: 15 }}
+              style={{ fontFamily: "Prompt", fontSize: 14 }}
             >
               {t("menu7")}
             </text>
@@ -417,7 +409,7 @@ function ResponsiveDrawer({ window }) {
         </ListItem>
       </List>
       <Divider className={classes.dividerColor} />
-      <div style={{ position: "absolute", bottom: 0, marginBottom: 10 }}>
+      <div style={{ bottom: 0, marginBottom: 10 , marginTop:"1rem" }}>
         <button
           // className="button"
           onClick={() => {
@@ -454,7 +446,7 @@ function ResponsiveDrawer({ window }) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <div >
+    <div>
       <div className={classes.root}>
         <CssBaseline />
         {/* <div className="app-bar">
@@ -505,7 +497,7 @@ function ResponsiveDrawer({ window }) {
       </div> */}
         <nav className={classes.drawer}>
           {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-          <Hidden smUp implementation="css" >
+          <Hidden smUp implementation="css">
             <Drawer
               container={container}
               variant="temporary"
