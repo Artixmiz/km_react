@@ -1,7 +1,7 @@
 import "leaflet/dist/leaflet.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Researcher from "./Researcher";
 import CoResearcher from "./Components/CoResearcher";
 import Leftbar from "./Components/Leftbar";
@@ -16,7 +16,7 @@ import SearchPageCoRe from "./Components/SearchPageCoRe";
 import SearchPageResearch from "./Components/SearchPageResearch";
 import SearchPageProjectSevice from "./Components/SearchPageProjectSevice";
 import SearchMap from "./Components/SearchMap";
-import Innovation from "./Components/Innovation.js";
+// import Innovation from "./Components/Innovation.js";
 import { ListView } from "./Components";
 import Patent from "./Components/Patent.js";
 import Innovat from "./Components/InnovationPage/Innovat";
@@ -87,7 +87,23 @@ function App(props) {
       <Leftbar />
       {/* <Testbar /> */}
       <Switch>
-        <Route exact path="/">
+        <Route
+          exact
+          path="/"
+          render={() => {
+            return (
+              <Redirect
+                to={{
+                  pathname: "/map",
+                  search:
+                    "?checkproject=true&checkservice=true&checku2t=true&year=2564",
+                }}
+              ></Redirect>
+            );
+          }}
+        ></Route>
+
+        <Route path={"/map"}>
           <SearchMap />
         </Route>
 
@@ -128,7 +144,7 @@ function App(props) {
         </Route>
 
         <Route path="/Innovation">
-          <Innovation />
+          {/* <Innovation /> */}
         </Route>
 
         <Route path="/Innovat">

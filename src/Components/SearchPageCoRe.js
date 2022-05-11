@@ -428,7 +428,7 @@ function SearchPageCoRe(props) {
   return (
     <body className="bg">
       <div className="body-detail ">
-        <Box>
+        {/* <Box>
           <text
             style={{
               fontFamily: "Prompt",
@@ -440,7 +440,7 @@ function SearchPageCoRe(props) {
           >
             {t("title")}
           </text>
-        </Box>
+        </Box> */}
 
         <div className="">
           <div style={{ padding: "0px 10px 0px 10px" }}>
