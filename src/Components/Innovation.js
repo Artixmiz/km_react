@@ -1,31 +1,23 @@
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-  Form,
-  FormGroup,
-  Input,
-  CardText,
-} from "reactstrap";
-import React, { useEffect, useState } from "react";
+import { Row, Col } from "reactstrap";
+import React, { useState } from "react";
 
-import OwlCarousel from 'react-owl-carousel2';
-// import 'react-owl-carousel2/style.css';
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/react-splide/dist/css/splide.min.css";
 
-import "./Css/Search.scss";
-import "../index.css";
+// import "./Css/Search.scss";
+// import "../index.css";
 
 import { withRouter } from "react-router";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
 
 import background_innovation from "../images/bg_innovation.png";
 
+import no_img_innovation from "../images/no_img_innovation.png";
+import no_img_product from "../images/no_img_product.png";
+import no_img_creative from "../images/no_img_creative.png";
+
 import "./Css/innovation.scss";
-import $ from "jquery";
+// import $ from "jquery";
 
 function a11yProps(index) {
   return {
@@ -34,357 +26,367 @@ function a11yProps(index) {
   };
 }
 
-const useStyles = makeStyles((theme) => ({
-  abRoot: {
-    backgroundColor: "bule",
-  },
-  abStatic: {
-    border: "solid blue 2px",
-  },
-  appbar: {
-    alignItems: "center",
-    backgroundColor: "rgba(219, 219, 219, 0.459)",
-  },
-
-  root: {
-    flexGrow: 1,
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-  },
-
-  customLabel: {
-    fontFamily: "Prompt",
-    fontWeight: "bold",
-    color: "black",
-  },
-
-  round: {
-    borderRadius: "50%",
-    border: "4px solid rgb(223, 223, 223)",
-    width: "100%",
-    boxShadow:
-      "rgba(0, 0, 0, 0.293) 0px 19px 38px, rgba(0, 0, 0, 0.129) 0px 15px 12px",
-    [theme.breakpoints.up("sm")]: {
-      width: "65%",
-    },
-  },
-
-  underlineCol: {
-    borderBottom: "2px solid rgb(211, 211, 211)",
-    paddingTop: 12,
-  },
-
-  tabpanel: {
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-
-  headerLabel: {
-    position: "relative",
-    fontFamily: "Prompt",
-    fontWeight: "bold",
-    color: "black",
-    zIndex: 1,
-
-    textAlign: "center",
-
-    "&::after": {
-      position: "absolute",
-      content: '""',
-      top: 10,
-      borderBottom: "3px solid black",
-      width: 120,
-      left: "50%",
-      marginTop: 10,
-      marginLeft: "-60px",
-      bottom: 0,
-    },
-  },
-
-  cardlayout: {
-    marginTop: 20,
-    boxShadow:
-      "rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px",
-    [theme.breakpoints.up("sm")]: {
-      marginTop: 0,
-    },
-  },
-
-  tabsBg: {
-    background:
-      "linear-gradient(90deg,rgba(240, 99, 0, 1) 0%,rgba(255, 115, 0, 1) 38%,rgba(254, 148, 0, 1) 100%)",
-  },
-}));
-$(document).ready(function () {
-  var zindex = 10;
-
-  $("div.card").click(function (e) {
-    e.preventDefault();
-
-    var isShowing = false;
-
-    if ($(this).hasClass("show")) {
-      isShowing = true;
-    }
-
-    if ($("div.cards").hasClass("showing")) {
-      // a card is already in view
-      $("div.card.show").removeClass("show");
-
-      if (isShowing) {
-        // this card was showing - reset the grid
-        $("div.cards").removeClass("showing");
-      } else {
-        // this card isn't showing - get in with it
-        $(this).css({ zIndex: zindex }).addClass("show");
-      }
-
-      zindex++;
-    } else {
-      // no cards in view
-      $("div.cards").addClass("showing");
-      $(this).css({ zIndex: zindex }).addClass("show");
-
-      zindex++;
-    }
-  });
-});
-
 function SearchPageCoRe(props) {
   // const { locationCo } = props;
-  const [productinnovation, setproductinnovation] = useState([]);
+  const [creativelist, setcreativelist] = useState([]);
   const [productlist, setproductlist] = useState([]);
-  const [innovationgroup1, setinnovationgroup1] = useState([]);
-  const [innovationgroup2, setinnovationgroup2] = useState([]);
-  const [productgroup, setproductgroup] = useState([]);
-  const [searchTitle, setSearchTitle] = useState("");
-  const [searchTitle1, setSearchTitle1] = useState("");
-
-  // const [page, setPage] = useState(1);
-  // const [count, setCount] = useState(0);
-  const [message, setMessage] = useState("");
-
-  const [loading, setLoading] = useState(false);
-
-  const [previousValue] = useState([]);
-  // const classes = useStyles();
-
-  const [innovation, setinnovation] = useState("");
-  const [product, setproduct] = useState("");
-
-  const classes = useStyles();
-
-  const handleChangeInnovation = (event) => {
-    setinnovation(event.target.value);
-  };
-
-  const handleChangeProduct = (event) => {
-    setproduct(event.target.value);
-  };
-
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const [valuePage1, setValuePage1] = useState(0);
-
-  const handleChangePage1 = (event, newValue) => {
-    setValuePage1(newValue);
-  };
+  const [innovationlist, setinnovationlist] = useState([]);
 
   const apiUrl = "https://kmapi.kims-rmuti.com";
-  const localUrl = "http://localhost:4000";
 
-  const getRequestParams = (title, innovation_group) => {
-    let params = {};
-
-    // if (page) {
-    //   params["page"] = page - 1;
-    // }
-
-    if (innovation_group) {
-      params["innovation_group_id"] = innovation_group;
-    }
-
-    // if (product_group) {
-    //   params["product_group_id"] = product_group;
-    // }
-
-    if (title != undefined) {
-      params["title"] = title;
-    }
-
-    return params;
-  };
-
-  const getRequestParams1 = (title, product_group) => {
-    let params = {};
-
-    // if (page) {
-    //   params["page"] = page - 1;
-    // }
-
-    // if (innovation_group) {
-    //   params["innovation_group_id"] = innovation_group;
-    // }
-
-    if (product_group) {
-      params["product_group_id"] = product_group;
-    }
-
-    if (title != undefined) {
-      params["title"] = title;
-    }
-
-    return params;
-  };
-
-  const getinnovationGroup1 = () => {
-    axios
-      .get(`${apiUrl}/api/get/co_researcher_product_group/findinnovationgroup1`)
-      .then((res) => {
-        setinnovationgroup1(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const getinnovationGroup2 = () => {
-    axios
-      .get(`${apiUrl}/api/get/co_researcher_product_group/findinnovationgroup2`)
-      .then((res) => {
-        setinnovationgroup2(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const getproductGroup = () => {
-    axios
-      .get(`${apiUrl}/api/get/co_researcher_product_group`)
-      .then((res) => {
-        setproductgroup(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const retrieveinnovation = () => {
-    setLoading(true);
-    // previousValue.push(selected);
-
-    // if (previousValue.length > 2) {
-    //   previousValue.shift();
-    // }
-    // console.log(previousValue);
-
-    const params = getRequestParams(searchTitle, innovation);
-    console.log(params);
+  const getinnovationlist = () => {
     axios
       .get(
-        `${apiUrl}/api/get/co_researcher_productionnovation/innovation/list`,
-        { params }
+        `${apiUrl}/api/get/co_researcher_productionnovation/innovation/list?innovation_group_id=&title=`
       )
       .then((res) => {
-        console.log(res.data);
-
-        // console.log(users);
-        setproductinnovation([res.data[0]]);
-        // setCount(totalPages);
+        setinnovationlist(res.data);
       })
-      .finally(() => {
-        setMessage("");
-        setLoading(false);
-        // if (previousValue[0] != previousValue[1]) {
-        //   setPage(1);
-        // }
-      })
-      .catch((e) => {
-        console.log(e);
-        // setPage(1);
-        // setCount(0);
-        // setTimeout(() => {
-        //   setMessage(e.response.data.message);
-        // }, 500);
-        setMessage(e.response.data.message);
+      .catch((err) => {
+        console.log(err);
       });
   };
 
-  const retrieveProduct = () => {
-    setLoading(true);
-    // previousValue.push(selected);
-
-    // if (previousValue.length > 2) {
-    //   previousValue.shift();
-    // }
-    // console.log(previousValue);
-
-    const params = getRequestParams1(searchTitle, product);
-    console.log(params);
+  const getproductlist = () => {
     axios
-      .get(`${apiUrl}/api/get/co_researcher_productionnovation/product/list`, {
-        params,
-      })
+      .get(
+        `${apiUrl}/api/get/co_researcher_productionnovation/product/list?title=`
+      )
       .then((res) => {
-        console.log(res.data);
+        setproductlist(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-        // console.log(users);
-        setproductlist([res.data[0]]);
-        // setCount(totalPages);
+  const getcreativelist = () => {
+    axios
+      .get(
+        `${apiUrl}/api/get/co_researcher_productionnovation/cretive/list?title=`
+      )
+      .then((res) => {
+        setcreativelist(res.data);
       })
-      .finally(() => {
-        setMessage("");
-        setLoading(false);
-        // if (previousValue[0] != previousValue[1]) {
-        //   setPage(1);
-        // }
-      })
-      .catch((e) => {
-        console.log(e);
-        // setPage(1);
-        // setCount(0);
-        // setTimeout(() => {
-        //   setMessage(e.response.data.message);
-        // }, 500);
-        setMessage(e.response.data.message);
+      .catch((err) => {
+        console.log(err);
       });
   };
 
   React.useEffect(() => {
-    retrieveProduct();
-    retrieveinnovation();
-    getinnovationGroup1();
-    getinnovationGroup2();
-    getproductGroup();
+    getinnovationlist();
+    getproductlist();
+    getcreativelist();
   }, []);
 
-  const onChangeTitle = (e) => {
-    setSearchTitle(e.target.value);
+  function getMultipleRandom(arr, num) {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+
+    return shuffled.slice(0, num);
+  }
+
+  console.log("innovationlist:", innovationlist);
+  console.log("productlist:", productlist);
+  console.log("creativelist:", creativelist);
+
+  const imageExists = async (url, callback) => {
+    var img = new Image();
+    img.onload = function () {
+      callback(true);
+    };
+    img.onerror = function () {
+      callback(false);
+    };
+    img.src = url;
   };
 
-  const onChangeTitle1 = (e) => {
-    setSearchTitle1(e.target.value);
-  };
+  let innovationdata = getMultipleRandom(innovationlist, 15).map(function (
+    listValue,
+    i
+  ) {
+    var url_image = "";
+    if (listValue.innovation_image) {
+      url_image = listValue.innovation_image;
+    } else {
+      url_image = no_img_innovation;
+    }
 
-  // React.useEffect(() => {
-  //   retrieveCoResearchers();
-  // }, [page]);
+    // console.log(url_image);
+    return (
+      <SplideSlide key={i}>
+        <div className="card card-bg-innovation card-innovation">
+          <div className="card__image-holder">
+            <img
+              className="card__image img-innovation"
+              src={url_image}
+              onError={(e) => (
+                (e.target.onerror = null), (e.target.src = no_img_innovation)
+              )}
+              alt="co_innovation_image"
+            />
+          </div>
+          <div className="card-innovation-title">
+            <h2 className="innovation-title" style={{ paddingTop: "0.5rem" }}>
+              {listValue.co_researcher_pi_name
+                ? listValue.co_researcher_pi_name
+                : listValue.innovation_name}
+            </h2>
+            <small className="innovation">
+              ราคา:{" "}
+              {listValue.co_researcher_pi_price
+                ? listValue.co_researcher_pi_price
+                : listValue.innovation_price}{" "}
+              บาท
+            </small>
+          </div>
+          <div className="descriptions">
+            <h5>
+              {listValue.co_researcher_pi_name
+                ? listValue.co_researcher_pi_name
+                : listValue.innovation_name}
+            </h5>
+            <p>
+              รายละเอียด :{" "}
+              {listValue.innovation_detail
+                ? listValue.innovation_detail.replace(/<[^>]+>|&nbsp;/g, "")
+                : "-"}
+            </p>
+            <p>
+              จำนวนการผลิต :
+              {listValue.co_researcher_pi_amount
+                ? listValue.co_researcher_pi_amount
+                : listValue.innovation_amount}{" "}
+              ชิ้น
+            </p>
+            <p>
+              ผู้ประสานงาน :{" "}
+              {listValue.co_researcher_pi_coordinator
+                ? listValue.co_researcher_pi_coordinator
+                : "-"}
+            </p>
+            <p>
+              โทรศัพท์ :{" "}
+              {listValue.co_researcher_pi_phone
+                ? listValue.co_researcher_pi_phone
+                : "-"}
+            </p>
+            <a href="#" className="btn-innovation">
+              ดูเพิ่มเติม
+            </a>
+          </div>
+        </div>
+      </SplideSlide>
+    );
+  });
+
+  let productdata = getMultipleRandom(productlist, 15).map(function (
+    listValue,
+    i
+  ) {
+    return (
+      <SplideSlide key={i}>
+        <div className="card card-bg-innovation card-innovation">
+          <div className="card__image-holder">
+            <img
+              className="card__image img-innovation"
+              src={
+                listValue.co_researcher_pi_image
+                  ? `https://researcher.kims-rmuti.com/file-upload/co_innovationproduct_upload/${listValue.co_researcher_pi_image}`
+                  : `https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/${listValue.co_researcher_pi_image}`
+              }
+              alt="co_researcher_pi_image"
+            />
+          </div>
+          <div className="card-innovation-title">
+            <h2 className="innovation-title" style={{ paddingTop: "0.5rem" }}>
+              {listValue.co_researcher_pi_name
+                ? listValue.co_researcher_pi_name
+                : listValue.innovation_name}
+            </h2>
+            <small className="innovation">
+              ราคา:{" "}
+              {listValue.co_researcher_pi_price
+                ? listValue.co_researcher_pi_price
+                : listValue.innovation_price}{" "}
+              บาท
+            </small>
+          </div>
+          <div className="descriptions">
+            <h5>
+              {" "}
+              {listValue.co_researcher_pi_name
+                ? listValue.co_researcher_pi_name
+                : listValue.innovation_name}
+            </h5>
+            <p>
+              รายละเอียด :{" "}
+              {listValue.co_researcher_pi_details
+                ? listValue.co_researcher_pi_details
+                : listValue.co_researcher_pi_details}{" "}
+            </p>
+            <p>
+              จำนวนการผลิต :
+              {listValue.co_researcher_pi_amount
+                ? listValue.co_researcher_pi_amount
+                : listValue.innovation_amount}{" "}
+              ชิ้น
+            </p>
+            <p>
+              ผู้ประสานงาน :{" "}
+              {listValue.co_researcher_pi_coordinator
+                ? listValue.co_researcher_pi_coordinator
+                : "-"}
+            </p>
+            <p>
+              โทรศัพท์ :{" "}
+              {listValue.co_researcher_pi_phone
+                ? listValue.co_researcher_pi_phone
+                : "-"}
+            </p>
+            <a href="#" className="btn-innovation">
+              ดูเพิ่มเติม
+            </a>
+          </div>
+        </div>
+      </SplideSlide>
+    );
+  });
+
+  let creativedata = getMultipleRandom(creativelist, 15).map(function (
+    listValue,
+    i
+  ) {
+    return (
+      <SplideSlide key={i}>
+        <div className="card card-bg-innovation card-innovation">
+          <div className="card__image-holder">
+            <img
+              className="card__image img-innovation"
+              src={
+                listValue.co_researcher_pi_image
+                  ? `https://researcher.kims-rmuti.com/file-upload/co_innovationproduct_upload/${listValue.co_researcher_pi_image}`
+                  : `https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/${listValue.co_researcher_pi_image}`
+              }
+              alt="co_researcher_pi_image"
+            />
+          </div>
+          <div className="card-innovation-title">
+            <h2 className="innovation-title" style={{ paddingTop: "0.5rem" }}>
+              {listValue.co_researcher_pi_name
+                ? listValue.co_researcher_pi_name
+                : listValue.innovation_name}
+            </h2>
+            <small className="innovation">
+              ราคา:{" "}
+              {listValue.co_researcher_pi_price
+                ? listValue.co_researcher_pi_price
+                : listValue.innovation_price}{" "}
+              บาท
+            </small>
+          </div>
+          <div className="descriptions">
+            <h5>
+              {" "}
+              {listValue.co_researcher_pi_name
+                ? listValue.co_researcher_pi_name
+                : listValue.innovation_name}
+            </h5>
+            <p>
+              รายละเอียด :{" "}
+              {listValue.co_researcher_pi_details
+                ? listValue.co_researcher_pi_details
+                : listValue.co_researcher_pi_details}{" "}
+            </p>
+            <p>
+              จำนวนการผลิต :
+              {listValue.co_researcher_pi_amount
+                ? listValue.co_researcher_pi_amount
+                : listValue.innovation_amount}{" "}
+              ชิ้น
+            </p>
+            <p>
+              ผู้ประสานงาน :{" "}
+              {listValue.co_researcher_pi_coordinator
+                ? listValue.co_researcher_pi_coordinator
+                : "-"}
+            </p>
+            <p>
+              โทรศัพท์ :{" "}
+              {listValue.co_researcher_pi_phone
+                ? listValue.co_researcher_pi_phone
+                : "-"}
+            </p>
+            <a href="#" className="btn-innovation">
+              ดูเพิ่มเติม
+            </a>
+          </div>
+        </div>
+      </SplideSlide>
+    );
+  });
+
+  const options_top = {
+    type: "loop",
+    gap: "1rem",
+    perPage: 4,
+    perMove: 1,
+    interval: 3000,
+    pagination: false,
+    speed: 2000,
+    start: 10,
+    breakpoints: {
+      2560: {
+        perPage: 4,
+      },
+      1440: {
+        perPage: 3,
+      },
+      1024: {
+        perPage: 3,
+      },
+      768: {
+        perPage: 2,
+      },
+      640: {
+        perPage: 1,
+      },
+    },
+    autoplay: true,
+    pauseOnHover: true,
+    resetProgress: false,
+  };
 
   const options = {
-    items: 4,
-    nav: true,
-    rewind: true,
+    type: "loop",
+    gap: "1rem",
+    perPage: 5,
+    perMove: 1,
+    interval: 2500,
+    pagination: false,
+    speed: 2000,
+    breakpoints: {
+      2560: {
+        perPage: 5,
+      },
+      1440: {
+        perPage: 4,
+      },
+      1024: {
+        perPage: 4,
+      },
+      768: {
+        perPage: 3,
+      },
+      640: {
+        perPage: 2,
+      },
+    },
     autoplay: true,
-    margin:10
+    pauseOnHover: true,
+    resetProgress: false,
   };
 
   return (
-    // <body className="img-bg">
     <div className="body-detail" style={{ background: "#6cb5df85" }}>
       <div style={{ padding: "15px", margin: "0px 20px 0px 20px" }}>
         <Row>
@@ -424,436 +426,153 @@ function SearchPageCoRe(props) {
                       </div>
                     </div>
                   </Col>
-                  <Col sm={4} md={4} lg={3}>
-                    <div className="card">
-                      <div className="card__image-holder">
-                        <img
-                          className="card__image img-innovation"
-                          src="https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/3681375bba7c8bd147fe76688f753ac1.png"
-                          alt="wave"
-                        />
-                      </div>
-                      <div className="card-title">
-                        <a href="#" className="toggle-info btn">
-                          <span className="left" />
-                          <span className="right" />
-                        </a>
-                        <h2 style={{ paddingTop: "0.5rem" }}>
-                          STGuide
-                          <small>ราคา:120,000 บาท</small>
-                        </h2>
-                      </div>
-                      <div className="card-flap flap1">
-                        <div className="card-description">
-                          <p>เลขที่สิทธิบัตร :</p>
-                          <p>จำนวนการผลิต : 10 ชิ้น</p>
-                          <p>ผู้ประสานงาน : จงกล จันทร์เรือง</p>
-                          <p>โทรศัพท์ : 0839650226</p>
-                          <p>
-                            Facebook : https://www.facebook.com/jongkol.janruang
-                          </p>
-                          <p>Line : jjsci</p>
-                          <p>Email : jj@sci.rmuti.ac.th</p>
-                        </div>
-                        <div className="card-flap flap2">
-                          <div className="card-actions">
-                            <a href="#" className="btn">
-                              Read more
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  <Col sm={8} md={8} lg={9}>
+                    {innovationlist.length > 0 ? (
+                      <Splide
+                        options={options_top}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {innovationdata}
+                      </Splide>
+                    ) : null}
                   </Col>
-                  <Col sm={4} md={4} lg={3}>
-                    <div className="card">
-                      <div className="card__image-holder">
-                        <img
-                          className="card__image img-innovation"
-                          src="https://source.unsplash.com/300x225/?beach"
-                          alt="beach"
-                        />
-                      </div>
-                      <div className="card-title">
-                        <a href="#" className="toggle-info btn">
-                          <span className="left" />
-                          <span className="right" />
-                        </a>
-                        <h2>
-                          Card title
-                          <small>Image from unsplash.com</small>
-                        </h2>
-                      </div>
-                      <div className="card-flap flap1">
-                        <div className="card-description">
-                          This grid is an attempt to make something nice that
-                          works on touch devices. Ignoring hover states when
-                          they're not available etc.
-                        </div>
-                        <div className="card-flap flap2">
-                          <div className="card-actions">
-                            <a href="#" className="btn">
-                              Read more
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  <Col md={12}>
+                    {innovationlist.length > 0 ? (
+                      <Splide
+                        options={options}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {innovationdata}
+                      </Splide>
+                    ) : null}
                   </Col>
-                  <Col sm={4} md={4} lg={3}>
-                    <div className="card">
-                      <div className="card__image-holder ">
-                        <img
-                          className="card__image img-innovation"
-                          src="https://source.unsplash.com/300x225/?mountain"
-                          alt="mountain"
-                        />
-                      </div>
-                      <div className="card-title">
-                        <a href="#" className="toggle-info btn">
-                          <span className="left" />
-                          <span className="right" />
-                        </a>
-                        <h2>
-                          Card title
-                          <small>Image from unsplash.com</small>
-                        </h2>
-                      </div>
-                      <div className="card-flap flap1">
-                        <div className="card-description">
-                          This grid is an attempt to make something nice that
-                          works on touch devices. Ignoring hover states when
-                          they're not available etc.
-                        </div>
-                        <div className="card-flap flap2">
-                          <div className="card-actions">
-                            <a href="#" className="btn">
-                              Read more
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-
-                  <OwlCarousel className="owl-theme" options={options}>
-                    <div className="card">
-                      <div className="card__image-holder">
-                        <img
-                          className="card__image img-innovation"
-                          src="https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/3681375bba7c8bd147fe76688f753ac1.png"
-                          alt="wave"
-                        />
-                      </div>
-                      <div className="card-title">
-                        <a href="#" className="toggle-info btn">
-                          <span className="left" />
-                          <span className="right" />
-                        </a>
-                        <h2 style={{ paddingTop: "0.5rem" }}>
-                          STGuide
-                          <small>ราคา:120,000 บาท</small>
-                        </h2>
-                      </div>
-                      <div className="card-flap flap1">
-                        <div className="card-description">
-                          <p>เลขที่สิทธิบัตร :</p>
-                          <p>จำนวนการผลิต : 10 ชิ้น</p>
-                          <p>ผู้ประสานงาน : จงกล จันทร์เรือง</p>
-                          <p>โทรศัพท์ : 0839650226</p>
-                          <p>
-                            Facebook : https://www.facebook.com/jongkol.janruang
-                          </p>
-                          <p>Line : jjsci</p>
-                          <p>Email : jj@sci.rmuti.ac.th</p>
-                        </div>
-                        <div className="card-flap flap2">
-                          <div className="card-actions">
-                            <a href="#" className="btn">
-                              Read more
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div className="card__image-holder">
-                        <img
-                          className="card__image img-innovation"
-                          src="https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/3681375bba7c8bd147fe76688f753ac1.png"
-                          alt="wave"
-                        />
-                      </div>
-                      <div className="card-title">
-                        <a href="#" className="toggle-info btn">
-                          <span className="left" />
-                          <span className="right" />
-                        </a>
-                        <h2 style={{ paddingTop: "0.5rem" }}>
-                          STGuide
-                          <small>ราคา:120,000 บาท</small>
-                        </h2>
-                      </div>
-                      <div className="card-flap flap1">
-                        <div className="card-description">
-                          <p>เลขที่สิทธิบัตร :</p>
-                          <p>จำนวนการผลิต : 10 ชิ้น</p>
-                          <p>ผู้ประสานงาน : จงกล จันทร์เรือง</p>
-                          <p>โทรศัพท์ : 0839650226</p>
-                          <p>
-                            Facebook : https://www.facebook.com/jongkol.janruang
-                          </p>
-                          <p>Line : jjsci</p>
-                          <p>Email : jj@sci.rmuti.ac.th</p>
-                        </div>
-                        <div className="card-flap flap2">
-                          <div className="card-actions">
-                            <a href="#" className="btn">
-                              Read more
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div className="card__image-holder">
-                        <img
-                          className="card__image img-innovation"
-                          src="https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/3681375bba7c8bd147fe76688f753ac1.png"
-                          alt="wave"
-                        />
-                      </div>
-                      <div className="card-title">
-                        <a href="#" className="toggle-info btn">
-                          <span className="left" />
-                          <span className="right" />
-                        </a>
-                        <h2 style={{ paddingTop: "0.5rem" }}>
-                          STGuide
-                          <small>ราคา:120,000 บาท</small>
-                        </h2>
-                      </div>
-                      <div className="card-flap flap1">
-                        <div className="card-description">
-                          <p>เลขที่สิทธิบัตร :</p>
-                          <p>จำนวนการผลิต : 10 ชิ้น</p>
-                          <p>ผู้ประสานงาน : จงกล จันทร์เรือง</p>
-                          <p>โทรศัพท์ : 0839650226</p>
-                          <p>
-                            Facebook : https://www.facebook.com/jongkol.janruang
-                          </p>
-                          <p>Line : jjsci</p>
-                          <p>Email : jj@sci.rmuti.ac.th</p>
-                        </div>
-                        <div className="card-flap flap2">
-                          <div className="card-actions">
-                            <a href="#" className="btn">
-                              Read more
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div className="card__image-holder">
-                        <img
-                          className="card__image img-innovation"
-                          src="https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/3681375bba7c8bd147fe76688f753ac1.png"
-                          alt="wave"
-                        />
-                      </div>
-                      <div className="card-title">
-                        <a href="#" className="toggle-info btn">
-                          <span className="left" />
-                          <span className="right" />
-                        </a>
-                        <h2 style={{ paddingTop: "0.5rem" }}>
-                          STGuide
-                          <small>ราคา:120,000 บาท</small>
-                        </h2>
-                      </div>
-                      <div className="card-flap flap1">
-                        <div className="card-description">
-                          <p>เลขที่สิทธิบัตร :</p>
-                          <p>จำนวนการผลิต : 10 ชิ้น</p>
-                          <p>ผู้ประสานงาน : จงกล จันทร์เรือง</p>
-                          <p>โทรศัพท์ : 0839650226</p>
-                          <p>
-                            Facebook : https://www.facebook.com/jongkol.janruang
-                          </p>
-                          <p>Line : jjsci</p>
-                          <p>Email : jj@sci.rmuti.ac.th</p>
-                        </div>
-                        <div className="card-flap flap2">
-                          <div className="card-actions">
-                            <a href="#" className="btn">
-                              Read more
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div className="card__image-holder">
-                        <img
-                          className="card__image img-innovation"
-                          src="https://source.unsplash.com/300x225/?beach"
-                          alt="beach"
-                        />
-                      </div>
-                      <div className="card-title">
-                        <a href="#" className="toggle-info btn">
-                          <span className="left" />
-                          <span className="right" />
-                        </a>
-                        <h2>
-                          Card title
-                          <small>Image from unsplash.com</small>
-                        </h2>
-                      </div>
-                      <div className="card-flap flap1">
-                        <div className="card-description">
-                          This grid is an attempt to make something nice that
-                          works on touch devices. Ignoring hover states when
-                          they're not available etc.
-                        </div>
-                        <div className="card-flap flap2">
-                          <div className="card-actions">
-                            <a href="#" className="btn">
-                              Read more
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="card">
-                      <div className="card__image-holder">
-                        <img
-                          className="card__image img-innovation"
-                          src="https://source.unsplash.com/300x225/?beach"
-                          alt="beach"
-                        />
-                      </div>
-                      <div className="card-title">
-                        <a href="#" className="toggle-info btn">
-                          <span className="left" />
-                          <span className="right" />
-                        </a>
-                        <h2>
-                          Card title
-                          <small>Image from unsplash.com</small>
-                        </h2>
-                      </div>
-                      <div className="card-flap flap1">
-                        <div className="card-description">
-                          This grid is an attempt to make something nice that
-                          works on touch devices. Ignoring hover states when
-                          they're not available etc.
-                        </div>
-                        <div className="card-flap flap2">
-                          <div className="card-actions">
-                            <a href="#" className="btn">
-                              Read more
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </OwlCarousel>
                 </Row>
               </div>
             </div>
           </Col>
-          <Col md={12} style={{ marginTop: "5vh" }}>
+          <Col md={12} style={{ marginTop: "2rem" }}>
             <div
               style={{
                 backgroundImage: `url(${background_innovation})`,
-                height: "55vh",
                 backgroundSize: "cover",
                 borderRadius: "20px",
+                padding: "0.5rem 0.5rem 0.5rem 2rem",
+                boxShadow: "2px 4px 8px 4px #e56f2d78",
               }}
             >
-              Hello World
+              <div className="cards">
+                <Row style={{ width: "100%" }}>
+                  <Col sm={4} md={4} lg={3}>
+                    <div className="title-center">
+                      <div className="bg-title">
+                        <Row>
+                          <Col md={12}>
+                            <h1
+                              className="hit-the-floor"
+                              style={{ color: "white", fontFamily: "Prompt" }}
+                            >
+                              ผลิตภัณฑ์
+                            </h1>
+                          </Col>
+                          <Col md={12}>
+                            <h1
+                              className="hit-the-floor"
+                              style={{ color: "white", fontFamily: "Prompt" }}
+                            >
+                              Product
+                            </h1>
+                          </Col>
+                        </Row>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col sm={8} md={8} lg={9}>
+                    {productlist.length > 0 ? (
+                      <Splide
+                        options={options_top}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {productdata}
+                      </Splide>
+                    ) : null}
+                  </Col>
+                  <Col md={12}>
+                    {productlist.length > 0 ? (
+                      <Splide
+                        options={options}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {productdata}
+                      </Splide>
+                    ) : null}
+                  </Col>
+                </Row>
+              </div>
             </div>
           </Col>
-          <Col md={12} style={{ marginTop: "1rem" }}>
+          <Col md={12} style={{ marginTop: "2rem" }}>
             <div
               style={{
                 backgroundImage: `url(${background_innovation})`,
-                height: "55vh",
                 backgroundSize: "cover",
                 borderRadius: "20px",
+                padding: "0.5rem 0.5rem 0.5rem 2rem",
+                boxShadow: "2px 4px 8px 4px #e56f2d78",
               }}
             >
-              Hello World
+              <div className="cards">
+                <Row style={{ width: "100%" }}>
+                  <Col sm={4} md={4} lg={3}>
+                    <div className="title-center">
+                      <div className="bg-title">
+                        <Row>
+                          <Col md={12}>
+                            <h1
+                              className="hit-the-floor"
+                              style={{ color: "white", fontFamily: "Prompt" }}
+                            >
+                              สือสร้างสรรค์
+                            </h1>
+                          </Col>
+                          <Col md={12}>
+                            <h1
+                              className="hit-the-floor"
+                              style={{ color: "white", fontFamily: "Prompt" }}
+                            >
+                              Digital media
+                            </h1>
+                          </Col>
+                        </Row>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col sm={8} md={8} lg={9}>
+                    {creativelist.length > 0 ? (
+                      <Splide
+                        options={options_top}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {creativedata}
+                      </Splide>
+                    ) : null}
+                  </Col>
+                  <Col md={12}>
+                    {creativelist.length > 0 ? (
+                      <Splide
+                        options={options}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {creativedata}
+                      </Splide>
+                    ) : null}
+                  </Col>
+                </Row>
+              </div>
             </div>
-          </Col>
-          <Col md={3}>
-            <Card
-              className="card-border card1"
-              onClick={() => {
-                props.history.push({
-                  pathname: "/Innovat",
-                });
-              }}
-            >
-              <div>
-                {/* <img
-                    position="relative"
-                    align="right"
-                    width="520px"
-                    height="800px"
-                    // src={innoimg}
-                  /> */}
-              </div>
-            </Card>
-          </Col>
-
-          <Col md={3}>
-            <Card
-              className="card-border card1"
-              onClick={() => {
-                props.history.push({
-                  pathname: "/Product",
-                });
-              }}
-            >
-              <div>
-                {/* <img
-                    position="relative"
-                    align="right"
-                    width="520px"
-                    height="800px"
-                    src={pdimg}
-                  /> */}
-              </div>
-            </Card>
-          </Col>
-
-          <Col md={3}>
-            <Card
-              className="card-border card1"
-              onClick={() => {
-                props.history.push({
-                  pathname: "/Creative",
-                });
-              }}
-            >
-              <div>
-                {/* <img
-                    position="relative"
-                    align="right"
-                    width="520px"
-                    height="800px"
-                    src={ctimg}
-                  /> */}
-              </div>
-            </Card>
           </Col>
         </Row>
       </div>
     </div>
-    // </body>
   );
 }
 

@@ -7,7 +7,6 @@ import CoResearcher from "./Components/CoResearcher";
 import Leftbar from "./Components/Leftbar";
 // import Testbar from "./Components/Testbar";
 import Footer from "./Components/Footer";
-import { Col } from "reactstrap";
 import ProjectDetail from "./ProjcetDetail";
 import MapD3 from "./Components/MapD3";
 import ProjcetDetailConcept from "./ProjcetDetailConcept";
@@ -26,6 +25,8 @@ import Research from "./Components/PatentPage/Research";
 import CoRe from "./Components/PatentPage/CoRe";
 import Chumchon from "./Components/PatentPage/Chumchon";
 import i18n from "./i18n";
+
+
 
 // import Testbar from "./Components/Testbar";
 

@@ -993,14 +993,14 @@ function RCbutton(props) {
             <Container className="pt-4  bg" maxWidth={false}>
               {user.map((listValue, index) => {
                 return (
-                  <Card style={{backgroundColor: "#fbaa35"}}>
+                  <Card style={{ backgroundColor: "#fbaa35" }}>
                     <Row
                       className="align-items-center justify-content-md-center p-4"
                       style={{
                         fontFamily: "Prompt",
                       }}
                     >
-                      <Col xs="12" md="3" style={{height:"100%"}}>
+                      <Col xs="12" md="3" style={{ height: "100%" }}>
                         {listValue.user_image_user ? (
                           <CardImg
                             style={{
@@ -1008,7 +1008,6 @@ function RCbutton(props) {
                               objectPosition: "center center",
                               borderRadius: 4,
                               // width: "300px"
-
                             }}
                             src={`https://researcher.kims-rmuti.com/file-upload/images-profile-upload/${listValue.user_image_user}`}
                             // width={350}
@@ -1026,25 +1025,29 @@ function RCbutton(props) {
                         )}
                       </Col>
 
-                      <Col xs="12" md="9" style={{height:"100%"}}>
-                        <Card style={{ marginTop: 5 , color:"#156c68" }} className="img-shadow">
-                        
+                      <Col xs="12" md="9" style={{ height: "100%" }}>
+                        <Card
+                          style={{ marginTop: 5, color: "#156c68" }}
+                          className="img-shadow"
+                        >
                           <CardBody>
-                            <CardText style={{ textAlign: "left", color:"#156c68" }}>
+                            <CardText
+                              style={{ textAlign: "left", color: "#156c68" }}
+                            >
                               <h4>
                                 <strong>
-                                {" "}
-                                {listValue.active_first_name_th == 1
-                                  ? listValue.prefix_id
-                                    ? prefix[listValue.prefix_id]
-                                    : ""
-                                  : " "}{" "}
-                                {listValue.active_first_name_th == 1
-                                  ? [listValue.user_first_name_th] +
-                                    " " +
-                                    [listValue.user_last_name_th]
-                                  : " "}{" "}
-                                  </strong>
+                                  {" "}
+                                  {listValue.active_first_name_th == 1
+                                    ? listValue.prefix_id
+                                      ? prefix[listValue.prefix_id]
+                                      : ""
+                                    : " "}{" "}
+                                  {listValue.active_first_name_th == 1
+                                    ? [listValue.user_first_name_th] +
+                                      " " +
+                                      [listValue.user_last_name_th]
+                                    : " "}{" "}
+                                </strong>
                               </h4>
                               <p>
                                 {t("researcher.carddetail.text1")}:{" "}
@@ -1165,118 +1168,117 @@ function RCbutton(props) {
                       >
                         {t("researcher.areapage.carddetail.header")}
                       </CardTitle>
-                    
 
-                    <MapContainer
-                      // className="minimap2"
-                      style={{ width: "100%", height: "50vh" }}
-                      center={[15, 103]}
-                      zoom={5}
-                      scrollWheelZoom={true}
-                      zoomControl={false}
-                    >
-                      <TileLayer
-                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                      />
-                      <ZoomControl position="topright" />
+                      <MapContainer
+                        // className="minimap2"
+                        style={{ width: "100%", height: "50vh" }}
+                        center={[15, 103]}
+                        zoom={5}
+                        scrollWheelZoom={true}
+                        zoomControl={false}
+                      >
+                        <TileLayer
+                          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <ZoomControl position="topright" />
 
-                      {/* <D3Layer data={locationRe}/>
+                        {/* <D3Layer data={locationRe}/>
                     {markermap} */}
-                      {/* <Map location={dataM} /> */}
-                      {map.map((p, index) => {
-                        return (
-                          <CircleMarker
-                            key={index}
-                            center={[
-                              p.project_latitude ? p.project_latitude : 0,
-                              p.project_longitude ? p.project_longitude : 0,
-                            ]}
-                            // radius={10}
-                            opacity={0}
-                          >
-                            <Marker
-                              position={[
+                        {/* <Map location={dataM} /> */}
+                        {map.map((p, index) => {
+                          return (
+                            <CircleMarker
+                              key={index}
+                              center={[
                                 p.project_latitude ? p.project_latitude : 0,
                                 p.project_longitude ? p.project_longitude : 0,
                               ]}
-                              icon={
-                                new Icon({
-                                  iconUrl:
-                                    p.project_type_id == 1
-                                      ? "https://researcher.kims-rmuti.com/icon/วิจัย.png"
-                                      : p.project_type_id == 2
-                                      ? "https://researcher.kims-rmuti.com/icon/บริการ.png"
-                                      : p.project_type_id == 5
-                                      ? "https://researcher.kims-rmuti.com/icon/u2t.jpg"
-                                      : "https://cdn1.iconfinder.com/data/icons/social-media-set/24/Reverbnation-128.png",
-                                  iconSize: [40, 41],
-                                  // iconAnchor: [19, 0],
-                                  className: "image-icon",
-                                })
-                              }
+                              // radius={10}
+                              opacity={0}
                             >
-                              <Popup>
-                                <CardTitle class="  ">
-                                  <text
-                                    style={{
-                                      marginTop: "10px",
-                                      fontFamily: "Prompt",
-                                      fontSize: "20px",
-                                    }}
-                                  >
-                                    {p.project_type}
-                                  </text>
-                                  <hr />
+                              <Marker
+                                position={[
+                                  p.project_latitude ? p.project_latitude : 0,
+                                  p.project_longitude ? p.project_longitude : 0,
+                                ]}
+                                icon={
+                                  new Icon({
+                                    iconUrl:
+                                      p.project_type_id == 1
+                                        ? "https://researcher.kims-rmuti.com/icon/วิจัย.png"
+                                        : p.project_type_id == 2
+                                        ? "https://researcher.kims-rmuti.com/icon/บริการ.png"
+                                        : p.project_type_id == 5
+                                        ? "https://researcher.kims-rmuti.com/icon/u2t.jpg"
+                                        : "https://cdn1.iconfinder.com/data/icons/social-media-set/24/Reverbnation-128.png",
+                                    iconSize: [40, 41],
+                                    // iconAnchor: [19, 0],
+                                    className: "image-icon",
+                                  })
+                                }
+                              >
+                                <Popup>
+                                  <CardTitle class="  ">
+                                    <text
+                                      style={{
+                                        marginTop: "10px",
+                                        fontFamily: "Prompt",
+                                        fontSize: "20px",
+                                      }}
+                                    >
+                                      {p.project_type}
+                                    </text>
+                                    <hr />
 
-                                  <text
-                                    style={{
-                                      marginTop: "10px",
-                                      fontFamily: "Prompt",
-                                      fontSize: "15px",
-                                    }}
-                                  >
-                                    {p.project_name_th}
-                                  </text>
-                                  <hr />
+                                    <text
+                                      style={{
+                                        marginTop: "10px",
+                                        fontFamily: "Prompt",
+                                        fontSize: "15px",
+                                      }}
+                                    >
+                                      {p.project_name_th}
+                                    </text>
+                                    <hr />
 
-                                  <IconButton
-                                    color="primary"
-                                    aria-label="view info co"
-                                    onClick={() => {
-                                      console.log(p.concept_id);
-                                      p.project_id
-                                        ? props.history.push({
-                                            pathname:
-                                              "/ProjectDetail/ProjectNetwork",
-                                            search: `?project_id=${btoa(
-                                              p.project_id
-                                            )}`,
-                                          })
-                                        : props.history.push({
-                                            pathname:
-                                              "/ProjectDetailConcep/ProjectNetwork",
-                                            search: `?concep_id=${btoa(
-                                              p.concept_id
-                                            )}`,
-                                          });
-                                    }}
-                                    style={{
-                                      marginTop: "10px",
-                                      fontFamily: "Prompt",
-                                      fontSize: "15px",
-                                    }}
-                                  >
-                                    รายละเอียดเพิ่มเติม{" "}
-                                    <BiInfoCircle size={18} />
-                                  </IconButton>
-                                </CardTitle>
-                              </Popup>
-                            </Marker>
-                          </CircleMarker>
-                        );
-                      })}
-                    </MapContainer>
+                                    <IconButton
+                                      color="primary"
+                                      aria-label="view info co"
+                                      onClick={() => {
+                                        console.log(p.concept_id);
+                                        p.project_id
+                                          ? props.history.push({
+                                              pathname:
+                                                "/ProjectDetail/ProjectNetwork",
+                                              search: `?project_id=${btoa(
+                                                p.project_id
+                                              )}`,
+                                            })
+                                          : props.history.push({
+                                              pathname:
+                                                "/ProjectDetailConcep/ProjectNetwork",
+                                              search: `?concep_id=${btoa(
+                                                p.concept_id
+                                              )}`,
+                                            });
+                                      }}
+                                      style={{
+                                        marginTop: "10px",
+                                        fontFamily: "Prompt",
+                                        fontSize: "15px",
+                                      }}
+                                    >
+                                      รายละเอียดเพิ่มเติม{" "}
+                                      <BiInfoCircle size={18} />
+                                    </IconButton>
+                                  </CardTitle>
+                                </Popup>
+                              </Marker>
+                            </CircleMarker>
+                          );
+                        })}
+                      </MapContainer>
                     </CardBody>
                   </Card>
                   <br />
