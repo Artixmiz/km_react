@@ -338,7 +338,7 @@ const SearchPageResearch = (props) => {
   return (
     <body className="bg">
       <div className="body-detail">
-        <Box>
+        {/* <Box>
           <text
             style={{
               fontFamily: "Prompt",
@@ -347,10 +347,10 @@ const SearchPageResearch = (props) => {
               color: "#FF9F45",
             }}
           >
-            {t('title')}
+            {t("title")}
           </text>
-        </Box>
-        <div style={{ padding: "0px 10px 0px 10px" }}>
+        </Box> */}
+        <Container maxWidth={false}>
           <Card className="card-border">
             {/* <CardBody className="card-header-border ">
               <CardTitle
@@ -574,7 +574,7 @@ const SearchPageResearch = (props) => {
               </Col>
             </Row>
           </Card>
-        </div>
+        </Container>
       </div>
     </body>
   );

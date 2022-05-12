@@ -372,7 +372,8 @@ function SearchPageProject(props) {
         </Box> */}
 
         <div className="">
-          <div style={{ padding: "0px 10px 0px 10px" }}>
+          <div >
+          <Container maxWidth={false}>
             <Card className="card-border">
               {/* <CardBody className="card-header-border">
                 <CardTitle
@@ -681,6 +682,7 @@ function SearchPageProject(props) {
                 </Col>
               </Row>
             </Card>
+            </Container>
 
             {/* <Card
               style={{ marginTop: "15px", fontFamily: "Prompt" }}

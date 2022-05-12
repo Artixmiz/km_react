@@ -15,7 +15,7 @@ import SearchPageCoRe from "./Components/SearchPageCoRe";
 import SearchPageResearch from "./Components/SearchPageResearch";
 import SearchPageProjectSevice from "./Components/SearchPageProjectSevice";
 import SearchMap from "./Components/SearchMap";
-// import Innovation from "./Components/Innovation.js";
+import Innovation from "./Components/Innovation.js";
 import { ListView } from "./Components";
 import Patent from "./Components/Patent.js";
 import Innovat from "./Components/InnovationPage/Innovat";
@@ -145,7 +145,7 @@ function App(props) {
         </Route>
 
         <Route path="/Innovation">
-          {/* <Innovation /> */}
+          <Innovation />
         </Route>
 
         <Route path="/Innovat">
