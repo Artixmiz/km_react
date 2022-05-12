@@ -250,11 +250,11 @@ function SearchPageProject(props) {
                   new Icon({
                     iconUrl:
                       p.project_type_id == 1
-                        ? "https://researcher.kims-rmuti.com/icon/วิจัย.png"
+                        ? "https://researcher.kims-rmuti.com/icon/R.jpg"
                         : p.project_type_id == 2
-                        ? "https://researcher.kims-rmuti.com/icon/บริการ.png"
+                        ? "https://researcher.kims-rmuti.com/icon/AS.jpg"
                         : p.project_type_id == 5
-                        ? "https://researcher.kims-rmuti.com/icon/u2t.jpg"
+                        ? "https://researcher.kims-rmuti.com/icon/U2T.jpg"
                         : "https://cdn1.iconfinder.com/data/icons/social-media-set/24/Reverbnation-128.png",
                     iconSize: [10, 11],
                     // iconAnchor: [19, 0],
@@ -294,7 +294,7 @@ function SearchPageProject(props) {
   return (
     <body className="bg">
       <div className="body-detail ">
-        <Box>
+        {/* <Box>
           <text
             style={{
               fontFamily: "Prompt",
@@ -305,7 +305,7 @@ function SearchPageProject(props) {
           >
             {t("title")}
           </text>
-        </Box>
+        </Box> */}
         <div>
           <div style={{ padding: "0px 10px 0px 10px" }}>
             <Card className="card-border">
@@ -384,7 +384,7 @@ function SearchPageProject(props) {
                                   height="45"
                                   aria-label="Placeholder: Image"
                                   preserveAspectRatio="xMidYMid slice"
-                                  src={`https://researcher.kims-rmuti.com/icon/บริการ.png`}
+                                  src={`https://researcher.kims-rmuti.com/icon/AS.jpg`}
                                   style={{ padding: "11px" }}
                                 />
                                 <Input
@@ -416,7 +416,7 @@ function SearchPageProject(props) {
                                   height="45"
                                   aria-label="Placeholder: Image"
                                   preserveAspectRatio="xMidYMid slice"
-                                  src={`https://researcher.kims-rmuti.com/icon/u2t.jpg`}
+                                  src={`https://researcher.kims-rmuti.com/icon/U2T.jpg`}
                                   style={{ padding: "11px" }}
                                 />
                                 {t("research.menu2")}
@@ -504,11 +504,11 @@ function SearchPageProject(props) {
                                   new Icon({
                                     iconUrl:
                                       p.project_type_id == 1
-                                        ? "https://researcher.kims-rmuti.com/icon/วิจัย.png"
+                                        ? "https://researcher.kims-rmuti.com/icon/R.jpg"
                                         : p.project_type_id == 2
-                                        ? "https://researcher.kims-rmuti.com/icon/บริการ.png"
+                                        ? "https://researcher.kims-rmuti.com/icon/AS.jpg"
                                         : p.project_type_id == 5
-                                        ? "https://researcher.kims-rmuti.com/icon/u2t.jpg"
+                                        ? "https://researcher.kims-rmuti.com/icon/U2T.jpg"
                                         : "https://cdn1.iconfinder.com/data/icons/social-media-set/24/Reverbnation-128.png",
                                     iconSize: [26, 26],
                                     // iconAnchor: [19, 0],
@@ -641,13 +641,13 @@ function SearchPageProject(props) {
                                               height={40}
                                               src={
                                                 listdata.project_type_id == 1
-                                                  ? `https://researcher.kims-rmuti.com/icon/วิจัย.png`
+                                                  ? `https://researcher.kims-rmuti.com/icon/R.jpg`
                                                   : listdata.project_type_id ==
                                                     2
-                                                  ? `https://researcher.kims-rmuti.com/icon/บริการ.png`
+                                                  ? `https://researcher.kims-rmuti.com/icon/AS.jpg`
                                                   : listdata.project_type_id ==
                                                     5
-                                                  ? `https://researcher.kims-rmuti.com/icon/u2t.jpg`
+                                                  ? `https://researcher.kims-rmuti.com/icon/U2T.jpg`
                                                   : noImg
                                               }
                                             />

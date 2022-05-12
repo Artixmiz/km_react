@@ -119,7 +119,7 @@ function SearchPageProject(props) {
   const onSubmit = (event) => {
     event.preventDefault();
     console.log(check1, check2, check5);
-    window.location.href = `/monitoring?checkproject=${check1}&checkservice=${check2}&checku2t=${check5}&year=${year}`;
+    window.location.href = `/monitoring/map?checkproject=${check1}&checkservice=${check2}&checku2t=${check5}&year=${year}`;
   };
 
   const retrieveProjects = () => {
@@ -144,14 +144,14 @@ function SearchPageProject(props) {
     //   setmap1(mapdata);
     //   setLoading(false);
     // } else {
-      const mapdataCon = mapDataCondition(
-        conboolean(checkproject) == true ? 1 : "",
-        conboolean(checkservice) == true ? 2 : "",
-        conboolean(checku2t) == true ? 5 : "",
-        checkyear
-      );
-      setmap1(mapdataCon);
-      setLoading(false);
+    const mapdataCon = mapDataCondition(
+      conboolean(checkproject) == true ? 1 : "",
+      conboolean(checkservice) == true ? 2 : "",
+      conboolean(checku2t) == true ? 5 : "",
+      checkyear
+    );
+    setmap1(mapdataCon);
+    setLoading(false);
     // }
 
     // if (check1 == true) {
@@ -414,7 +414,8 @@ function SearchPageProject(props) {
         .attr("class", "toggle ")
         .attr("type", "checkbox")
         .style("pointer-events", "auto")
-        .style("display", "none");
+        .style("display", "none")
+        .property("checked", true);
 
       box
         .append("label")
@@ -1086,9 +1087,10 @@ function SearchPageProject(props) {
                                 <img
                                   width="45"
                                   height="45"
+                                  className="rounded-circle"
                                   aria-label="Placeholder: Image"
                                   preserveAspectRatio="xMidYMid slice"
-                                  src={`https://researcher.kims-rmuti.com/icon/วิจัย.png`}
+                                  src={`https://researcher.kims-rmuti.com/icon/R.jpg`}
                                   style={{ padding: "11px" }}
                                 />
                                 <Input
@@ -1113,9 +1115,10 @@ function SearchPageProject(props) {
                                 <img
                                   width="45"
                                   height="45"
+                                  className="rounded-circle"
                                   aria-label="Placeholder: Image"
                                   preserveAspectRatio="xMidYMid slice"
-                                  src={`https://researcher.kims-rmuti.com/icon/บริการ.png`}
+                                  src={`https://researcher.kims-rmuti.com/icon/AS.jpg`}
                                   style={{ padding: "11px" }}
                                 />
                                 <Input
@@ -1152,7 +1155,7 @@ function SearchPageProject(props) {
                                   className="rounded-circle"
                                   aria-label="Placeholder: Image"
                                   preserveAspectRatio="xMidYMid slice"
-                                  src={`https://researcher.kims-rmuti.com/icon/u2t.jpg`}
+                                  src={`https://researcher.kims-rmuti.com/icon/U2T.jpg`}
                                   style={{ padding: "11px" }}
                                 />
                                 {t("research.menu2")}
@@ -1212,7 +1215,7 @@ function SearchPageProject(props) {
             </Card>
 
             <Card
-              className="card-border"
+              className="map-border-frontpage"
               style={{ marginTop: "15px", fontFamily: "Prompt" }}
             >
               {/* <CardBody className="card-header-border">

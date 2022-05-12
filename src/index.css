@@ -211,7 +211,7 @@ div.co-reseacher-group {
   height: 26px !important;
   width: 26px !important;
   border-radius: 50%;
-  border: solid 1px;
+  border: solid 0px;
   border-color: orange;
   /* margin-bottom: 20px; */
 }
@@ -231,7 +231,7 @@ div.co-reseacher-group {
   padding-bottom: 10px;
   position: relative;
   display: block;
-  background: #005f61;
+  background: rgba(108, 181, 223, 0.52);
   /* url("./images/bg-img.jpg"); */
   background-position: bottom;
   background-repeat: no-repeat;
@@ -322,9 +322,15 @@ div.co-reseacher-group {
 
 
 .card-border {
-  /* border: 1px solid rgb(255, 153, 0) !important; */
+  /* border: 2px solid #f6a834 !important; */
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
+
+.map-border-frontpage {
+  border: 2px solid #f6a834 !important;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
 
 .card-border2 {
   /* border: 1px solid rgb(255, 153, 0) !important; */
