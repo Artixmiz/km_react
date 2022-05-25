@@ -918,23 +918,24 @@ function RCbutton(props) {
 
   return (
     <div className="body-detail" style={{ padding: "2rem" }}>
-      <div
-        style={{
-          backgroundColor: "#fff",
-          width: "100%",
-          marginTop: "7rem",
-          borderRadius: "15px 15px 0 0",
-        }}
-      >
-        <Row>
-          <Col sm={4} style={{ textAlign: "right" }}>
-            <img
-              className="profile-image"
-              src="https://researcher.kims-rmuti.com/file-upload/images-profile-upload/a58c03e74fa3338d073aa07fa8aa92d1.jpg"
-            />
-          </Col>
-          {user.map((listValue) => {
-            return (
+      {user.map((listValue) => {
+        return (
+          <div
+            style={{
+              backgroundColor: "#fff",
+              width: "100%",
+              marginTop: "7rem",
+              borderRadius: "15px 15px 0 0",
+            }}
+          >
+            <Row>
+              <Col sm={4} style={{ textAlign: "right" }}>
+                <img
+                  className="profile-image"
+                  src={`https://researcher.kims-rmuti.com/file-upload/images-profile-upload/${listValue.user_image_user}`}
+                />
+              </Col>
+
               <Col sm={8}>
                 <section className="profile-info" style={{ marginTop: "20px" }}>
                   <h4>
@@ -1015,90 +1016,91 @@ function RCbutton(props) {
                   )}
                 </section>
               </Col>
-            );
-          })}
-          <Col sm={12}>
-            <div className="line-bottom" style={{ margin: "1rem 3rem" }} />
-          </Col>
-        </Row>
-        <Row style={{ width: "100%" }}>
-          <Col sm={12}>
-            <section className="statistics">
-              <AppBar
-                position="center"
-                color="default"
-                className={classes.appbar}
-              >
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  indicatorColor="secondary"
-                  textColor="secondary"
-                  variant="scrollable"
-                  scrollButtons="on"
-                  TabIndicatorProps={{
-                    style: { background: "rgb(252, 113, 0)" },
-                  }}
-                  aria-label="scrollable tabs menu"
-                >
-                  <Tab
-                    label={t("researcher.tabmenu.menu1")}
-                    className={classes.customLabel}
-                    icon={<BiMapPin size={25} />}
-                    {...a11yProps(0)}
-                  />
 
-                  <Tab
-                    label={t("researcher.tabmenu.menu2")}
-                    className={classes.customLabel}
-                    icon={<BiMedal size={25} />}
-                    {...a11yProps(1)}
-                  />
-                  <Tab
-                    label={t("researcher.tabmenu.menu3")}
-                    className={classes.customLabel}
-                    icon={<BiCertification size={25} />}
-                    {...a11yProps(2)}
-                  />
+              <Col sm={12}>
+                <div className="line-bottom" style={{ margin: "1rem 3rem" }} />
+              </Col>
+            </Row>
+            <Row style={{ width: "100%" }}>
+              <Col sm={12}>
+                <section className="statistics">
+                  <AppBar
+                    position="center"
+                    color="default"
+                    className={classes.appbar}
+                  >
+                    <Tabs
+                      value={value}
+                      onChange={handleChange}
+                      indicatorColor="secondary"
+                      textColor="secondary"
+                      variant="scrollable"
+                      scrollButtons="on"
+                      TabIndicatorProps={{
+                        style: { background: "rgb(252, 113, 0)" },
+                      }}
+                      aria-label="scrollable tabs menu"
+                    >
+                      <Tab
+                        label={t("researcher.tabmenu.menu1")}
+                        className={classes.customLabel}
+                        icon={<BiMapPin size={25} />}
+                        {...a11yProps(0)}
+                      />
 
-                  <Tab
-                    label={t("researcher.tabmenu.menu4")}
-                    className={classes.customLabel}
-                    icon={<BiNews size={25} />}
-                    {...a11yProps(3)}
-                  />
-                  <Tab
-                    label={t("researcher.tabmenu.menu5")}
-                    className={classes.customLabel}
-                    icon={<HiOutlineLightBulb size={25} />}
-                    {...a11yProps(4)}
-                  />
-                  <Tab
-                    label={t("researcher.tabmenu.menu6")}
-                    className={classes.customLabel}
-                    icon={<BiGroup size={25} />}
-                    {...a11yProps(5)}
-                  />
-                  <Tab
-                    label={t("researcher.tabmenu.menu7")}
-                    className={classes.customLabel}
-                    icon={<FaRegIdCard size={25} />}
-                    {...a11yProps(6)}
-                  />
-                  {user && user.length > 0 && user[0].group_id === 1 && (
-                    <Tab
-                      label={t("researcher.tabmenu.menu8")}
-                      className={classes.customLabel}
-                      icon={<HiOutlineAcademicCap size={25} />}
-                      {...a11yProps(7)}
-                    />
-                  )}
-                </Tabs>
-              </AppBar>
-            </section>
-          </Col>
-        </Row>
-      </div>
+                      <Tab
+                        label={t("researcher.tabmenu.menu2")}
+                        className={classes.customLabel}
+                        icon={<BiMedal size={25} />}
+                        {...a11yProps(1)}
+                      />
+                      <Tab
+                        label={t("researcher.tabmenu.menu3")}
+                        className={classes.customLabel}
+                        icon={<BiCertification size={25} />}
+                        {...a11yProps(2)}
+                      />
+
+                      <Tab
+                        label={t("researcher.tabmenu.menu4")}
+                        className={classes.customLabel}
+                        icon={<BiNews size={25} />}
+                        {...a11yProps(3)}
+                      />
+                      <Tab
+                        label={t("researcher.tabmenu.menu5")}
+                        className={classes.customLabel}
+                        icon={<HiOutlineLightBulb size={25} />}
+                        {...a11yProps(4)}
+                      />
+                      <Tab
+                        label={t("researcher.tabmenu.menu6")}
+                        className={classes.customLabel}
+                        icon={<BiGroup size={25} />}
+                        {...a11yProps(5)}
+                      />
+                      <Tab
+                        label={t("researcher.tabmenu.menu7")}
+                        className={classes.customLabel}
+                        icon={<FaRegIdCard size={25} />}
+                        {...a11yProps(6)}
+                      />
+                      {user && user.length > 0 && user[0].group_id === 1 && (
+                        <Tab
+                          label={t("researcher.tabmenu.menu8")}
+                          className={classes.customLabel}
+                          icon={<HiOutlineAcademicCap size={25} />}
+                          {...a11yProps(7)}
+                        />
+                      )}
+                    </Tabs>
+                  </AppBar>
+                </section>
+              </Col>
+            </Row>
+          </div>
+        );
+      })}
       <div
         style={{
           backgroundColor: "rgb(246, 168, 52)",

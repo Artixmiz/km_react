@@ -8,14 +8,15 @@ import translationTH from "./assets/locales/th/translation.json";
 
 // the translations
 const resources = {
-  en: {
-    translation: translationEN,
-  },
   th: {
     translation: translationTH,
   },
+  en: {
+    translation: translationEN,
+  },
 };
 
+i18n.defaultLocale = 'th';
 i18n
   .use(Backend)
   .use(LanguageDetector)
