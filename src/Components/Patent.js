@@ -1,557 +1,545 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable eqeqeq */
-/* eslint-disable no-unused-vars */
-import { Box, Button } from "@material-ui/core";
-import { Card, CardBody, CardTitle, Row, Col } from "reactstrap";
-import React, { useEffect, useState } from "react";
-import "./Css/Search.scss";
-import "../index.css";
+import { Row, Col } from "reactstrap";
+import React, { useState } from "react";
+import { FcManager } from "react-icons/fc";
+
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/react-splide/dist/css/splide.min.css";
+
+// import "./Css/Search.scss";
+// import "../index.css";
+
 import { withRouter } from "react-router";
 import axios from "axios";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
-import Artboard1 from "../images/Artboard1.png";
-import research from "../images/research.jpg";
-import core from "../images/core.jpg";
-import chumchon from "../images/chumchon.jpg";
 
-// import Product from "./InnovationPage/Product";
-// import Innovat from "./InnovationPage/Innovat";
-// import Createive from "./InnovationPage/creative";
+import background_product from "../images/bg_product.png";
 
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
+import no_img_research from "../images/no_img_research.png";
+import no_img_product from "../images/no_img_product.png";
+import no_img_creative from "../images/no_img_creative.png";
 
-function a11yProps(index) {
-  return {
-    id: `scrollable-force-tab-${index}`,
-    "aria-controls": `scrollable-force-tabpanel-${index}`,
+import { useTranslation } from "react-i18next";
+
+import "./Css/innovation.scss";
+// import $ from "jquery";
+
+function Patent(props) {
+  // const { locationCo } = props;
+
+  const [researcher, setresearcher] = useState([]);
+  const [community, setcommunity] = useState([]);
+  const [co_operation, setco_operation] = useState([]);
+  const { t } = useTranslation();
+
+  const apiUrl = "https://kmapi.kims-rmuti.com";
+
+  const getresearcher = () => {
+    axios
+      .get(`${apiUrl}/api/get/patent?title=`)
+      .then((res) => {
+        setresearcher(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-}
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const getcommunity = () => {
+    axios
+      .get(`${apiUrl}api/get/co-researcher/commupatent/list?title=`)
+      .then((res) => {
+        setcommunity(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getco_operation = () => {
+    axios
+      .get(`${apiUrl}/api/get/co-researcher/cooppatent/list?title=`)
+      .then((res) => {
+        setco_operation(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  React.useEffect(() => {
+    getresearcher();
+    getcommunity();
+    getco_operation();
+  }, []);
+
+  function getMultipleRandom(arr, num) {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+
+    return shuffled.slice(0, num);
+  }
+
+  console.log("researcher:", researcher);
+  console.log("community:", community);
+  console.log("co_operation:", co_operation);
+
+  // const imageExists = async (url, callback) => {
+  //   var img = new Image();
+  //   img.onload = function () {
+  //     callback(true);
+  //   };
+  //   img.onerror = function () {
+  //     callback(false);
+  //   };
+  //   img.src = url;
+  // };
+
+  let innovationdata = getMultipleRandom(researcher, 15).map(function (
+    listValue,
+    i
+  ) {
+    var url_image = "";
+    if (listValue.patent_images) {
+      url_image = `https://researcher.kims-rmuti.com/file-upload/patent-upload/${listValue.patent_images}`;
+    } else {
+      url_image = no_img_research;
+    }
+
+    // console.log(url_image);
+    return (
+      <SplideSlide key={i}>
+        <div className="card card-bg-innovation card-innovation">
+          <div className="card__image-holder">
+            <img
+              className="card__image img-innovation"
+              src={url_image}
+              onError={(e) => (
+                (e.target.onerror = null), (e.target.src = no_img_research)
+              )}
+              alt="co_innovation_image"
+            />
+          </div>
+          <div className="card-innovation-title">
+            <h2 className="innovation-title" style={{ paddingTop: "0.5rem" }}>
+              {listValue.patent_name_th}
+            </h2>
+            <small className="innovation">
+              <FcManager size={15} /> : {listValue.patent_application}
+            </small>
+          </div>
+          <div className="descriptions">
+            <h5 className="title-hover">{listValue.patent_name_th}</h5>
+            <p>
+              {t("innovation.details")} :{" "}
+              {listValue.innovation_detail
+                ? listValue.innovation_detail.replace(
+                    /<[^>]+>|&nbsp;|&quot;/g,
+                    ""
+                  )
+                : "-"}
+            </p>
+            <p>
+              {t("innovation.productionamount")} :
+              {listValue.co_researcher_pi_amount
+                ? listValue.co_researcher_pi_amount
+                : listValue.innovation_amount}{" "}
+              {t("innovation.item")}
+            </p>
+            <p>
+              {t("innovation.coordinator")} :{" "}
+              {listValue.co_researcher_pi_coordinator
+                ? listValue.co_researcher_pi_coordinator
+                : "-"}
+            </p>
+            <p>
+              {t("innovation.tel")} :{" "}
+              {listValue.co_researcher_pi_phone
+                ? listValue.co_researcher_pi_phone
+                : "-"}
+            </p>
+            <a href="#" className="btn-innovation">
+              {t("innovation.seemore")}
+            </a>
+          </div>
+        </div>
+      </SplideSlide>
+    );
+  });
+
+  let productdata = getMultipleRandom(community, 15).map(function (
+    listValue,
+    i
+  ) {
+    return (
+      <SplideSlide key={i}>
+        <div className="card card-bg-innovation card-innovation">
+          <div className="card__image-holder">
+            <img
+              className="card__image img-innovation"
+              src={
+                listValue.co_researcher_pi_image
+                  ? `https://researcher.kims-rmuti.com/file-upload/co_innovationproduct_upload/${listValue.co_researcher_pi_image}`
+                  : `https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/${listValue.co_researcher_pi_image}`
+              }
+              alt="co_researcher_pi_image"
+            />
+          </div>
+          <div className="card-innovation-title">
+            <h2 className="innovation-title" style={{ paddingTop: "0.5rem" }}>
+              {listValue.co_researcher_pi_name
+                ? listValue.co_researcher_pi_name
+                : listValue.innovation_name}
+            </h2>
+            <small className="innovation">
+              ราคา:{" "}
+              {listValue.co_researcher_pi_price
+                ? listValue.co_researcher_pi_price
+                : listValue.innovation_price}{" "}
+              บาท
+            </small>
+          </div>
+          <div className="descriptions">
+            <h5 className="title-hover">
+              {" "}
+              {listValue.co_researcher_pi_name
+                ? listValue.co_researcher_pi_name
+                : listValue.innovation_name}
+            </h5>
+            <p>
+              รายละเอียด :{" "}
+              {listValue.co_researcher_pi_details
+                ? listValue.co_researcher_pi_details
+                : listValue.co_researcher_pi_details}{" "}
+            </p>
+            <p>
+              จำนวนการผลิต :
+              {listValue.co_researcher_pi_amount
+                ? listValue.co_researcher_pi_amount
+                : listValue.innovation_amount}{" "}
+              ชิ้น
+            </p>
+            <p>
+              ผู้ประสานงาน :{" "}
+              {listValue.co_researcher_pi_coordinator
+                ? listValue.co_researcher_pi_coordinator
+                : "-"}
+            </p>
+            <p>
+              โทรศัพท์ :{" "}
+              {listValue.co_researcher_pi_phone
+                ? listValue.co_researcher_pi_phone
+                : "-"}
+            </p>
+            <a href="#" className="btn-innovation">
+              ดูเพิ่มเติม
+            </a>
+          </div>
+        </div>
+      </SplideSlide>
+    );
+  });
+
+  let creativedata = getMultipleRandom(co_operation, 15).map(function (
+    listValue,
+    i
+  ) {
+    return (
+      <SplideSlide key={i}>
+        <div className="card card-bg-innovation card-innovation">
+          <div className="card__image-holder">
+            <img
+              className="card__image img-innovation"
+              src={
+                listValue.co_researcher_pi_image
+                  ? `https://researcher.kims-rmuti.com/file-upload/co_innovationproduct_upload/${listValue.co_researcher_pi_image}`
+                  : `https://researcher.kims-rmuti.com/file-upload/us_innovation-upload/${listValue.co_researcher_pi_image}`
+              }
+              alt="co_researcher_pi_image"
+            />
+          </div>
+          <div className="card-innovation-title">
+            <h2 className="innovation-title" style={{ paddingTop: "0.5rem" }}>
+              {listValue.co_researcher_pi_name
+                ? listValue.co_researcher_pi_name
+                : listValue.innovation_name}
+            </h2>
+            <small className="innovation">
+              ราคา:{" "}
+              {listValue.co_researcher_pi_price
+                ? listValue.co_researcher_pi_price
+                : listValue.innovation_price}{" "}
+              บาท
+            </small>
+          </div>
+          <div className="descriptions">
+            <h5 className="title-hover">
+              {" "}
+              {listValue.co_researcher_pi_name
+                ? listValue.co_researcher_pi_name
+                : listValue.innovation_name}
+            </h5>
+            <p>
+              รายละเอียด :{" "}
+              {listValue.co_researcher_pi_details
+                ? listValue.co_researcher_pi_details
+                : listValue.co_researcher_pi_details}{" "}
+            </p>
+            <p>
+              จำนวนการผลิต :
+              {listValue.co_researcher_pi_amount
+                ? listValue.co_researcher_pi_amount
+                : listValue.innovation_amount}{" "}
+              ชิ้น
+            </p>
+            <p>
+              ผู้ประสานงาน :{" "}
+              {listValue.co_researcher_pi_coordinator
+                ? listValue.co_researcher_pi_coordinator
+                : "-"}
+            </p>
+            <p>
+              โทรศัพท์ :{" "}
+              {listValue.co_researcher_pi_phone
+                ? listValue.co_researcher_pi_phone
+                : "-"}
+            </p>
+            <a href="#" className="btn-innovation">
+              ดูเพิ่มเติม
+            </a>
+          </div>
+        </div>
+      </SplideSlide>
+    );
+  });
+
+  const options_top = {
+    type: "loop",
+    gap: "1rem",
+    perPage: 4,
+    perMove: 1,
+    interval: 3000,
+    pagination: false,
+    speed: 2000,
+    start: 10,
+    breakpoints: {
+      2560: {
+        perPage: 4,
+      },
+      1440: {
+        perPage: 3,
+      },
+      1024: {
+        perPage: 3,
+      },
+      768: {
+        perPage: 2,
+      },
+      640: {
+        perPage: 1,
+      },
+    },
+    autoplay: true,
+    pauseOnHover: true,
+    resetProgress: false,
+  };
+
+  const options = {
+    type: "loop",
+    gap: "1rem",
+    perPage: 5,
+    perMove: 1,
+    interval: 2500,
+    pagination: false,
+    speed: 2000,
+    breakpoints: {
+      2560: {
+        perPage: 5,
+      },
+      1440: {
+        perPage: 4,
+      },
+      1024: {
+        perPage: 4,
+      },
+      768: {
+        perPage: 3,
+      },
+      640: {
+        perPage: 2,
+      },
+    },
+    autoplay: true,
+    pauseOnHover: true,
+    resetProgress: false,
+  };
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-force-tabpanel-${index}`}
-      aria-labelledby={`scrollable-force-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+    <div className="body-detail" >
+      <div style={{ padding: "15px", margin: "0px 20px 0px 20px" }}>
+        <Row>
+          <Col md={12}>
+            <div
+              style={{
+                backgroundImage: `url(${background_product})`,
+                backgroundSize: "cover",
+                borderRadius: "20px",
+                padding: "0.5rem 0.5rem 0.5rem 2rem",
+                boxShadow: "2px 4px 8px 4px #e56f2d78",
+              }}
+            >
+              <div className="cards">
+                <Row style={{ width: "100%" }}>
+                  <Col md={12} style={{ textAlign: "right" }}>
+                    <h6 style={{ color: "white", fontFamily: "Prompt" }}>
+                      {t("innovation.viewall")}
+                    </h6>
+                  </Col>
+                  <Col sm={4} md={4} lg={3}>
+                    <div className="title-center">
+                      <div className="bg-title">
+                        <Row>
+                          <Col md={12}>
+                            <h1
+                              className="hit-the-floor"
+                              style={{ color: "white", fontFamily: "Prompt" }}
+                            >
+                              {t("patent.researcher")}
+                            </h1>
+                          </Col>
+                        </Row>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col sm={8} md={8} lg={9}>
+                    {researcher.length > 0 ? (
+                      <Splide
+                        options={options_top}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {innovationdata}
+                      </Splide>
+                    ) : null}
+                  </Col>
+                  <Col md={12}>
+                    {researcher.length > 0 ? (
+                      <Splide
+                        options={options}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {innovationdata}
+                      </Splide>
+                    ) : null}
+                  </Col>
+                </Row>
+              </div>
+            </div>
+          </Col>
+          <Col md={12} style={{ marginTop: "2rem" }}>
+            <div
+              style={{
+                backgroundImage: `url(${background_product})`,
+                backgroundSize: "cover",
+                borderRadius: "20px",
+                padding: "0.5rem 0.5rem 0.5rem 2rem",
+                boxShadow: "2px 4px 8px 4px #e56f2d78",
+              }}
+            >
+              <div className="cards">
+                <Row style={{ width: "100%" }}>
+                  <Col sm={4} md={4} lg={3}>
+                    <div className="title-center">
+                      <div className="bg-title">
+                        <Row>
+                          <Col md={12}>
+                            <h1
+                              className="hit-the-floor"
+                              style={{ color: "white", fontFamily: "Prompt" }}
+                            >
+                              {t("patent.community")}
+                            </h1>
+                          </Col>
+                        </Row>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col sm={8} md={8} lg={9}>
+                    {community.length > 0 ? (
+                      <Splide
+                        options={options_top}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {productdata}
+                      </Splide>
+                    ) : null}
+                  </Col>
+                  <Col md={12}>
+                    {community.length > 0 ? (
+                      <Splide
+                        options={options}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {productdata}
+                      </Splide>
+                    ) : null}
+                  </Col>
+                </Row>
+              </div>
+            </div>
+          </Col>
+          <Col md={12} style={{ marginTop: "2rem" }}>
+            <div
+              style={{
+                backgroundImage: `url(${background_product})`,
+                backgroundSize: "cover",
+                borderRadius: "20px",
+                padding: "0.5rem 0.5rem 0.5rem 2rem",
+                boxShadow: "2px 4px 8px 4px #e56f2d78",
+              }}
+            >
+              <div className="cards">
+                <Row style={{ width: "100%" }}>
+                  <Col sm={4} md={4} lg={3}>
+                    <div className="title-center">
+                      <div className="bg-title">
+                        <Row>
+                          <Col md={12}>
+                            <h1
+                              className="hit-the-floor"
+                              style={{ color: "white", fontFamily: "Prompt" }}
+                            >
+                              {t("patent.co_operation")}
+                            </h1>
+                          </Col>
+                        </Row>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col sm={8} md={8} lg={9}>
+                    {co_operation.length > 0 ? (
+                      <Splide
+                        options={options_top}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {creativedata}
+                      </Splide>
+                    ) : null}
+                  </Col>
+                  <Col md={12}>
+                    {co_operation.length > 0 ? (
+                      <Splide
+                        options={options}
+                        aria-labelledby="autoplay-example-heading"
+                      >
+                        {creativedata}
+                      </Splide>
+                    ) : null}
+                  </Col>
+                </Row>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  abRoot: {
-    backgroundColor: "bule",
-  },
-  abStatic: {
-    border: "solid blue 2px",
-  },
-  appbar: {
-    alignItems: "center",
-    backgroundColor: "rgba(219, 219, 219, 0.459)",
-  },
-
-  root: {
-    flexGrow: 1,
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-  },
-
-  customLabel: {
-    fontFamily: "Prompt",
-    fontWeight: "bold",
-    color: "black",
-  },
-
-  round: {
-    borderRadius: "50%",
-    border: "4px solid rgb(223, 223, 223)",
-    width: "100%",
-    boxShadow:
-      "rgba(0, 0, 0, 0.293) 0px 19px 38px, rgba(0, 0, 0, 0.129) 0px 15px 12px",
-    [theme.breakpoints.up("sm")]: {
-      width: "65%",
-    },
-  },
-
-  underlineCol: {
-    borderBottom: "2px solid rgb(211, 211, 211)",
-    paddingTop: 12,
-  },
-
-  tabpanel: {
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-
-  headerLabel: {
-    position: "relative",
-    fontFamily: "Prompt",
-    fontWeight: "bold",
-    color: "black",
-    zIndex: 1,
-
-    textAlign: "center",
-
-    "&::after": {
-      position: "absolute",
-      content: '""',
-      top: 10,
-      borderBottom: "3px solid black",
-      width: 120,
-      left: "50%",
-      marginTop: 10,
-      marginLeft: "-60px",
-      bottom: 0,
-    },
-  },
-
-  cardlayout: {
-    marginTop: 20,
-    boxShadow:
-      "rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px",
-    [theme.breakpoints.up("sm")]: {
-      marginTop: 0,
-    },
-  },
-
-  tabsBg: {
-    background:
-      "linear-gradient(90deg,rgba(240, 99, 0, 1) 0%,rgba(255, 115, 0, 1) 38%,rgba(254, 148, 0, 1) 100%)",
-  },
-}));
-
-function SearchPageCoRe(props) {
-  const [Patentus, setPatentus] = useState([]);
-  const [Patentcommu, setPatentcommu] = useState([]);
-  const [Patentcoop, setPatentcoop] = useState([]);
-
-  // const [page, setPage] = useState(1);
-  // const [count, setCount] = useState(0);
-
-  // const classes = useStyles();
-
-  const classes = useStyles();
-
-  const apiUrl = "https://kmapi.kims-rmuti.com";
-  const localUrl = "http://localhost:4000";
-
-  //นักวิจัย
-
-  axios
-    .get(`${apiUrl}/api/get/us-patent`)
-    .then((res) => {
-      setPatentus([res.data[0]]);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  //เครือข่ายความร่วมมือ
-
-  axios
-    .get(`${apiUrl}/api/get/co-researcher-patent-commu`)
-    .then((res) => {
-      setPatentcommu(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  //ชุมชน
-
-  axios
-    .get(`${apiUrl}/api/get/co-researcher-patent-coop`)
-    .then((res) => {
-      setPatentcoop([res.data[0]]);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  return (
-    <body className="img-bg">
-      <Box style={{ margin: "-20px 0px 20px 200px" }}>
-        <text
-          style={{
-            fontFamily: "Prompt",
-            fontSize: 50,
-            fontWeight: "bold",
-            color: "#FF9F45",
-          }}
-        >
-          Knowledge & Innovation Management System
-        </text>
-      </Box>
-      <div className="body-detail ">
-        <div style={{ padding: "15px", margin: "0px 20px 0px 20px" }}>
-          <Row>
-            <Col md={4}>
-              <Card
-                className="card-border card1"
-                onClick={() => {
-                  props.history.push({
-                    pathname: "/Research",
-                  });
-                }}
-              >
-                <div>
-                  <img
-                    position="relative"
-                    align="right"
-                    width="512px"
-                    height="750px"
-                    src={research}
-                  />
-                </div>
-
-                {/*  <CardBody>
-                    {Patentus.co_patent_id ? (
-                      <p className="p-4" style={{ fontFamily: "Prompt" }}>
-                        ไม่พบข้อมูล
-                      </p>
-                    ) : (
-                      <Row>
-                        {Patentus.map((listValue) => (
-                          <div>
-                            <div>
-                              <img
-                                className="card-border"
-                                style={{
-                                  objectPosition: "center center",
-                                  padding: 1,
-                                  color: "black",
-                                  fontFamily: "Prompt",
-                                }}
-                                width="100%"
-                                height="auto"
-                                src={`https://km-innovations.rmuti.ac.th/researcher/file-upload/patent-upload/${listValue.patent_images}`}
-                              />
-
-                              <Typography
-                                style={{
-                                  textAlign: "left",
-                                  fontFamily: "Prompt",
-                                }}
-                              >
-                                <br />
-                                <p>
-                                  ชื่อสิทธิบัตร : {listValue.patent_name_th}
-                                </p>
-                                <p>
-                                  วันจดทะเบียน :
-                                  {listValue.patent_date
-                                    ? new Date(
-                                        listValue.patent_date
-                                      ).toLocaleDateString("th-TH", {
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "numeric",
-                                      })
-                                    : ""}
-                                </p>
-                                <p>เลขที่ประกาศ : {listValue.patent_number}</p>
-                                <p>
-                                  <h>ผู้ยื่นขอจดทะเบียน : </h>
-                                  {listValue.patent_application}
-                                </p>
-                                <p>เลขที่คำขอ : {listValue.patent_request}</p>
-                                <p>ประเภทสิทธิบัตร : {listValue.patent_type}</p>
-                                <p>ประเทศ :{listValue.publication_country}</p>
-                                เอกสาร :
-                                {listValue.patent_attachment ? (
-                                  <Button>
-                                    <a
-                                      target="_blank"
-                                      href={`https://researcher.kims-rmuti.com/file-upload/patent-upload/${listValue.patent_attachment}`}
-                                      rel="noreferrer"
-                                    >
-                                      {listValue.patent_attachment.slice(0, 50)}{" "}
-                                    </a>
-                                  </Button>
-                                ) : (
-                                  <p></p>
-                                )}
-                                <p></p>
-                              </Typography>
-                            </div>
-                          </div>
-                        ))}
-                      </Row>
-                    )}
-                    </Card>    
-                  </CardBody> 
-
-                  <Button
-                    align="center"
-                    color="primary"
-                    style={{ fontFamily: "Prompt", fontSize: 20 }}
-                    aria-label="view info project"
-                    component="a"
-                    href="/monitoring/Research"
-                    className={classes.link}
-                    // selected={true}
-                    // classes={{ selected: classes.active }}
-                  >
-                    ทรัพย์สินทางปัญญาอื่นๆ
-                  </Button>*/}
-              </Card>
-            </Col>
-
-            <Col md={4}>
-              <Card
-                className="card-border card1"
-                onClick={() => {
-                  props.history.push({
-                    pathname: "/Chumchon",
-                  });
-                }}
-              >
-                <div>
-                  <img
-                    position="relative"
-                    align="right"
-                    width="512px"
-                    height="750px"
-                    src={chumchon}
-                  />
-                </div>
-                {/*    <CardBody>
-                    {Patentcommu.co_patent_id ? (
-                      <Row>
-                        {Patentcommu.map((listValue) => (
-                          <div>
-                            <div>
-                              <img
-                                className="card-border"
-                                style={{
-                                  objectPosition: "center center",
-                                  padding: 1,
-                                  color: "black",
-                                  fontFamily: "Prompt",
-                                }}
-                                width="100%"
-                                height="auto"
-                                src={`https://researcher.kims-rmuti.com/file-upload/co_patent-upload/${listValue.co_patent_image}`}
-                              />
-
-                              <Typography
-                                style={{
-                                  textAlign: "left",
-                                  fontFamily: "Prompt",
-                                }}
-                              >
-                                <br />
-                                <p>
-                                  ชื่อสิทธิบัตร : {listValue.co_patent_name_th}
-                                </p>
-                                <p>
-                                  วันจดทะเบียน :
-                                  {listValue.co_patent_date
-                                    ? new Date(
-                                        listValue.co_patent_date
-                                      ).toLocaleDateString("th-TH", {
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "numeric",
-                                      })
-                                    : ""}
-                                </p>
-                                <p>
-                                  เลขที่ประกาศ : {listValue.co_patent_numeral}
-                                </p>
-                                <p>
-                                  <h>ผู้ยื่นขอจดทะเบียน : </h>
-                                  {listValue.co_patent_registered_name}
-                                </p>
-                                <p>เลขที่คำขอ : {listValue.patent_request}</p>
-                                <p>
-                                  ประเภทสิทธิบัตร : {listValue.patent_type_id}
-                                </p>
-                                เอกสาร :
-                                {listValue.co_patent_documentation ? (
-                                  <Button>
-                                    <a
-                                      target="_blank"
-                                      href={`https://researcher.kims-rmuti.com/file-upload/patent-upload/${listValue.co_patent_documentation}`}
-                                      rel="noreferrer"
-                                    >
-                                      {listValue.co_patent_documentation.slice(
-                                        0,
-                                        50
-                                      )}{" "}
-                                    </a>
-                                  </Button>
-                                ) : (
-                                  <p></p>
-                                )}
-                                <p></p>
-                              </Typography>
-                            </div>
-                          </div>
-                        ))}
-                      </Row>
-                    ) : (
-                      <p className="p-4" style={{ fontFamily: "Prompt" }}>
-                        ไม่พบข้อมูล
-                      </p>
-                    )}
-                    {/* </Card> 
-                  </CardBody>
-                           
-                  <Button
-                    align="center"
-                    color="primary"
-                    style={{ fontFamily: "Prompt", fontSize: 20 }}
-                    aria-label="view info project"
-                    component="a"
-                    href="/monitoring/Chumchon"
-                    className={classes.link}
-                    // selected={true}
-                    // classes={{ selected: classes.active }}
-                  >
-                    ทรัพย์สินทางปัญญาอื่นๆ
-                  </Button> */}
-              </Card>
-            </Col>
-
-            <Col md={4}>
-              <Card
-                className="card-border card1"
-                onClick={() => {
-                  props.history.push({
-                    pathname: "/CoRe",
-                  });
-                }}
-              >
-                <div>
-                  <img
-                    position="relative"
-                    align="right"
-                    width="512px"
-                    height="750px"
-                    src={core}
-                  />
-                </div>
-                {/*
-                  <CardBody>
-                    {Patentcoop.co_patent_id ? (
-                      <p className="p-4" style={{ fontFamily: "Prompt" }}>
-                        ไม่พบข้อมูล
-                      </p>
-                    ) : (
-                      <Row>
-                        {Patentcoop.map((listValue) => (
-                          <div>
-                            <div>
-                              <img
-                                className="card-border"
-                                style={{
-                                  objectPosition: "center center",
-                                  padding: 1,
-                                  color: "black",
-                                  fontFamily: "Prompt",
-                                }}
-                                width="100%"
-                                height="auto"
-                                src={`https://researcher.kims-rmuti.com/file-upload/co_patent-upload/${listValue.co_patent_image}`}
-                              />
-
-                              <Typography
-                                style={{
-                                  textAlign: "left",
-                                  fontFamily: "Prompt",
-                                }}
-                              >
-                                <br />
-                                <p>
-                                  ชื่อสิทธิบัตร : {listValue.co_patent_name_th}
-                                </p>
-                                <p>
-                                  วันจดทะเบียน :
-                                  {listValue.co_patent_date
-                                    ? new Date(
-                                        listValue.co_patent_date
-                                      ).toLocaleDateString("th-TH", {
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "numeric",
-                                      })
-                                    : ""}
-                                </p>
-                                <p>
-                                  เลขที่ประกาศ : {listValue.co_patent_numeral}
-                                </p>
-                                <p>
-                                  <h>ผู้ยื่นขอจดทะเบียน : </h>
-                                  {listValue.co_patent_registered_name}
-                                </p>
-                                <p>เลขที่คำขอ : {listValue.patent_request}</p>
-                                <p>
-                                  ประเภทสิทธิบัตร : {listValue.patent_type_id}
-                                </p>
-                                เอกสาร :
-                                {listValue.co_patent_documentation ? (
-                                  <Button>
-                                    <a
-                                      target="_blank"
-                                      href={`https://researcher.kims-rmuti.com/file-upload/patent-upload/${listValue.co_patent_documentation}`}
-                                      rel="noreferrer"
-                                    >
-                                      {listValue.co_patent_documentation.slice(
-                                        0,
-                                        50
-                                      )}{" "}
-                                    </a>
-                                  </Button>
-                                ) : (
-                                  <p></p>
-                                )}
-                                <p></p>
-                              </Typography>
-                            </div>
-                          </div>
-                        ))}
-                      </Row>
-                    )}
-                    {/* </Card> 
-                  </CardBody>
-
-                  <Button
-                    align="center"
-                    color="primary"
-                    style={{ fontFamily: "Prompt", fontSize: 20 }}
-                    aria-label="view info project"
-                    component="a"
-                    href="/monitoring/CoRe"
-                    className={classes.link}
-                    // selected={true}
-                    // classes={{ selected: classes.active }}
-                  >
-                    ทรัพย์สินทางปัญญาอื่นๆ
-                  </Button>
-                */}
-              </Card>
-            </Col>
-          </Row>
-        </div>
-      </div>
-    </body>
-  );
-}
-
-export default withRouter(SearchPageCoRe);
+export default withRouter(Patent);

@@ -6,13 +6,13 @@
 }
 
 .link_feature:hover {
-  background-color: #ececec;
+  background-color: rgb(246, 168, 52);
   border-radius: 4px;
   cursor: pointer;
 }
 
 .link_feature:hover a {
-  color: #555; /*some random color*/
+  color: rgb(255, 255, 255); /*some random color*/
 }
 
 .linkexternal {
@@ -54,6 +54,11 @@ body {
   display: flex;
   text-align: center;
   flex-direction: column;
+  background-color: #acd1e7 !important;
+  font-family: "Prompt" !important;
+}
+.row{
+  width: 100%;
 }
 
 code {
@@ -118,7 +123,7 @@ div.co-reseacher-group {
 }
 
 .list {
-  height: 250px;
+  max-height: 250px;
   /* width: 200px; */
   overflow-y: scroll;
 }
@@ -189,14 +194,6 @@ div.co-reseacher-group {
   background-color: #461ac6;
 }
 
-.rc-body {
-  background-color: #286b7562;
-}
-
-.rc-body2 {
-  background-color: #026372;
-}
-
 .rc-body3 {
   background-color: #ffffff;
 }
@@ -225,13 +222,12 @@ div.co-reseacher-group {
   /* margin-bottom: 20px; */
 }
 
-
 .bg {
   padding-top: 10px;
   padding-bottom: 10px;
   position: relative;
   display: block;
-  background: rgba(108, 181, 223, 0.52);
+  /* background: rgba(108, 181, 223, 0.52); */
   /* url("./images/bg-img.jpg"); */
   background-position: bottom;
   background-repeat: no-repeat;
@@ -251,7 +247,6 @@ div.co-reseacher-group {
   background-size: cover;
   background-attachment: fixed;
 }
-
 
 .img-bg2 {
   padding-top: 30px;
@@ -317,9 +312,9 @@ div.co-reseacher-group {
 }
 
 .box-shadow-right {
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
-
 
 .card-border {
   /* border: 2px solid #f6a834 !important; */
@@ -331,17 +326,13 @@ div.co-reseacher-group {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
-
 .card-border2 {
   /* border: 1px solid rgb(255, 153, 0) !important; */
   box-shadow: rgba(138, 138, 138, 0.19) 5px 5px 5px,
     rgba(20, 20, 20, 0.23) 2px 2px 2px;
 }
 
-
-
 .img-shadow {
-
   /* box-shadow: 3px 3px 1px #ccc;
   -webkit-box-shadow: 3px 3px 1px #ccc;
   -moz-box-shadow: 3px 3px 1px #ccc; */
@@ -350,6 +341,7 @@ div.co-reseacher-group {
 }
 
 .body-detail {
+  background: rgb(173 210 232);
   /* margin-top: 30px; */
   /* display: table; */
   /* width: 80%; */

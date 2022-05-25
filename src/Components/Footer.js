@@ -1,62 +1,83 @@
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import "../Css/footer.css";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import { Row, Col } from "reactstrap";
+import React from "react";
+import "../Css/footer.scss";
 
-
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    alignItems: "center",
-    //borderTop: "30px",
-    //borderTop: "6px solid rgb(255, 166, 0)",
-    background:
-      "linear-gradient(90deg, #d26625 0%, #d26625 45%, rgba(244,90,2,1) 90%)",
-    [theme.breakpoints.up("sm")]: {
-      borderTop: "6px solid rgb(255, 166, 0)",
-      background: "rgb(238, 238, 238)",
-      // borderLeft: "240px",
-      // background:
-      // "linear-gradient(180deg, rgba(240,99,0,0.2) 0%, rgba(255,105,0,0.1) 45%, rgba(211,77,0,0.08) 90%)"
-    },
-  },
-  textColor: {
-    color: "rgb(240, 240, 240)",
-    fontWeight: "bold",
-    [theme.breakpoints.up("sm")]: {
-      color: "rgb(53, 53, 53)",
-      fontWeight: "bold",
-      fontSize: "14px",
-      textAlign: "right",
-    },
-  },
-}));
+import logo_footer from "../images/logo_footer.png";
+import footer_stiker from "../images/footer_stiker.png";
+import rmutilogo from "../images/rmutilogo.png";
+import sidelogo from "../images/newnrct.png";
 
 export default function Footer() {
-  const classes = useStyles();
   return (
-    <AppBar position="bottom"  color="primary" className={classes.appBar}>
-      {/* <Container maxWidth="md"> */}
-      <Toolbar>
-        <Grid spacing={24} container justify="space-between">
-          <Grid item >
-            <Typography
-               align="center"
-              noWrap
-              variant="body1"
-              className={classes.textColor}
-              style={{ fontFamily: "Prompt"   }}
-            >
-             <p> © 2021 Powered by RMUTI  ||  Made by : <Button a href={`/monitoring/CoResearcher?co_researcher_id=OTY=`}> XOXO Studio Company Limited </Button></p>
-             
-            </Typography>
-          </Grid>
-        </Grid>
-      </Toolbar>
-      {/* </Container> */}
-    </AppBar>
+    <div className="body-detail">
+      <div className="footer-bg">
+        <Row style={{ width: "100%", padding: "2rem", paddingBottom: "1rem" }}>
+          <Col sm={2}>
+            <Row>
+              <Col sm={12} style={{ textAlign: "left" }}>
+                <h6>Made by</h6>
+              </Col>
+              <Col sm={12}>
+                <img src={logo_footer} style={{ width: "80%" }} />
+              </Col>
+            </Row>
+          </Col>
+          <Col sm={2}>
+            <Row>
+              <Col sm={12} style={{ textAlign: "left" }}>
+                <h6>Sponsorship</h6>
+              </Col>
+              <Col sm={6}>
+                <img src={rmutilogo} style={{ width: "80%" }} />
+              </Col>
+              <Col
+                sm={6}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <img src={sidelogo} style={{ width: "100%" }} />
+              </Col>
+            </Row>
+          </Col>
+          <Col sm={7}>
+            <Row>
+              <Col sm={12} style={{ textAlign: "left" }}>
+                <h6>ติดต่อ : </h6>
+              </Col>
+              <Col
+                sm={12}
+                style={{
+                  textAlign: "left",
+                  marginBottom: "1.2rem",
+                  marginTop: "0.2rem",
+                  paddingRight: "2rem",
+                }}
+              >
+                <h6>
+                  Rajamangala University of Technology Isan 744 Suranarai Road,
+                  Muang, Nakhon Ratchasima 30000 Thailand
+                </h6>
+              </Col>
+              <Col sm={12} style={{ textAlign: "left", bottom: "0" }}>
+                <h6>&copy; Copyright 2021 KIL. All Rights Reserved</h6>
+              </Col>
+            </Row>
+          </Col>
+          <Col
+            sm={1}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img src={footer_stiker} style={{ width: "150%" }} />
+          </Col>
+        </Row>
+      </div>
+    </div>
   );
 }

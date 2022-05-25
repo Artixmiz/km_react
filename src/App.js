@@ -15,7 +15,9 @@ import SearchPageCoRe from "./Components/SearchPageCoRe";
 import SearchPageResearch from "./Components/SearchPageResearch";
 import SearchPageProjectSevice from "./Components/SearchPageProjectSevice";
 import SearchMap from "./Components/SearchMap";
-// import Innovation from "./Components/Innovation.js";
+import Innovation from "./Components/Innovation.js";
+import InnovationAll from "./Components/InnovationPage/InnovationAll";
+import InnovationDetail from "./Components/InnovationPage/InnovationDetail";
 import { ListView } from "./Components";
 import Patent from "./Components/Patent.js";
 import Innovat from "./Components/InnovationPage/Innovat";
@@ -25,8 +27,6 @@ import Research from "./Components/PatentPage/Research";
 import CoRe from "./Components/PatentPage/CoRe";
 import Chumchon from "./Components/PatentPage/Chumchon";
 import i18n from "./i18n";
-
-
 
 // import Testbar from "./Components/Testbar";
 
@@ -145,7 +145,14 @@ function App(props) {
         </Route>
 
         <Route path="/Innovation">
-          {/* <Innovation /> */}
+          <Innovation />
+        </Route>
+
+        <Route path="/InnovationAll">
+          <InnovationAll />
+        </Route>
+        <Route path="/InnovationDetail">
+          <InnovationDetail />
         </Route>
 
         <Route path="/Innovat">

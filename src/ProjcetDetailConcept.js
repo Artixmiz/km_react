@@ -372,7 +372,7 @@ function ProjectDetail(props) {
       });
 
     axios
-      .get(`${localUrl}/api/get/concept_proposal/knowledge/${id}`)
+      .get(`${apiUrl}/api/get/concept_proposal/knowledge/${id}`)
       .then((res) => {
         setknowledge(res.data[0].knowledge);
         setoutput(res.data[0].output);
