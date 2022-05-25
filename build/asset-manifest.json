@@ -1,0 +1,42 @@
+{
+  "files": {
+    "main.css": "/monitoring/static/css/main.84828846.chunk.css",
+    "main.js": "/monitoring/static/js/main.1148f817.chunk.js",
+    "main.js.map": "/monitoring/static/js/main.1148f817.chunk.js.map",
+    "runtime-main.js": "/monitoring/static/js/runtime-main.c0387da9.js",
+    "runtime-main.js.map": "/monitoring/static/js/runtime-main.c0387da9.js.map",
+    "static/css/2.130c13c6.chunk.css": "/monitoring/static/css/2.130c13c6.chunk.css",
+    "static/js/2.be924131.chunk.js": "/monitoring/static/js/2.be924131.chunk.js",
+    "static/js/2.be924131.chunk.js.map": "/monitoring/static/js/2.be924131.chunk.js.map",
+    "static/js/3.9d1f7806.chunk.js": "/monitoring/static/js/3.9d1f7806.chunk.js",
+    "static/js/3.9d1f7806.chunk.js.map": "/monitoring/static/js/3.9d1f7806.chunk.js.map",
+    "index.html": "/monitoring/index.html",
+    "static/css/2.130c13c6.chunk.css.map": "/monitoring/static/css/2.130c13c6.chunk.css.map",
+    "static/css/main.84828846.chunk.css.map": "/monitoring/static/css/main.84828846.chunk.css.map",
+    "static/js/2.be924131.chunk.js.LICENSE.txt": "/monitoring/static/js/2.be924131.chunk.js.LICENSE.txt",
+    "static/media/Artboard2.eef1cae6.png": "/monitoring/static/media/Artboard2.eef1cae6.png",
+    "static/media/index.css": "/monitoring/static/media/bg-img.096e6245.jpg",
+    "static/media/bg_innovation.9ae971cf.png": "/monitoring/static/media/bg_innovation.9ae971cf.png",
+    "static/media/bg_product.f2bf8210.png": "/monitoring/static/media/bg_product.f2bf8210.png",
+    "static/media/footer_stiker.257e65d6.png": "/monitoring/static/media/footer_stiker.257e65d6.png",
+    "static/media/getFetch.cjs": "/monitoring/static/media/getFetch.582d29c4.cjs",
+    "static/media/ip.26604f18.png": "/monitoring/static/media/ip.26604f18.png",
+    "static/media/kminn.bda34077.png": "/monitoring/static/media/kminn.bda34077.png",
+    "static/media/logo_footer.b938acbd.png": "/monitoring/static/media/logo_footer.b938acbd.png",
+    "static/media/newnrct.135db279.png": "/monitoring/static/media/newnrct.135db279.png",
+    "static/media/no_img_creative.16abc636.png": "/monitoring/static/media/no_img_creative.16abc636.png",
+    "static/media/no_img_innovation.ab7ed739.png": "/monitoring/static/media/no_img_innovation.ab7ed739.png",
+    "static/media/no_img_product.75182855.png": "/monitoring/static/media/no_img_product.75182855.png",
+    "static/media/no_img_research.568b9bc1.png": "/monitoring/static/media/no_img_research.568b9bc1.png",
+    "static/media/rmuti-black.fb6f7579.png": "/monitoring/static/media/rmuti-black.fb6f7579.png",
+    "static/media/rmuti.3713ce7e.png": "/monitoring/static/media/rmuti.3713ce7e.png",
+    "static/media/rmutilogo.1ee0d7da.png": "/monitoring/static/media/rmutilogo.1ee0d7da.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c0387da9.js",
+    "static/css/2.130c13c6.chunk.css",
+    "static/js/2.be924131.chunk.js",
+    "static/css/main.84828846.chunk.css",
+    "static/js/main.1148f817.chunk.js"
+  ]
+}

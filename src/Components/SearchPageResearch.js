@@ -338,19 +338,7 @@ const SearchPageResearch = (props) => {
   return (
     <body className="bg">
       <div className="body-detail">
-        {/* <Box>
-          <text
-            style={{
-              fontFamily: "Prompt",
-              fontSize: 50,
-              fontWeight: "bold",
-              color: "#FF9F45",
-            }}
-          >
-            {t("title")}
-          </text>
-        </Box> */}
-        <Container maxWidth={false}>
+        <div style={{ padding: "0px 10px 0px 10px" }}>
           <Card className="card-border">
             {/* <CardBody className="card-header-border ">
               <CardTitle
@@ -574,7 +562,7 @@ const SearchPageResearch = (props) => {
               </Col>
             </Row>
           </Card>
-        </Container>
+        </div>
       </div>
     </body>
   );

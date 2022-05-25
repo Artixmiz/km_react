@@ -159,5 +159,35 @@
         "header8": "Sum"
       }
     }
+  },
+
+  "innovation": {
+    "search": "Search",
+    "innovation": "Innovation",
+    "product": "Product",
+    "creative": "Digital media",
+    "seemore": "See more",
+    "price": "Price",
+    "viewall": "View all",
+    "details": "Details",
+    "productionamount": "Production amount",
+    "coordinator": "Coordinator",
+    "tel": "Tel",
+    "item": "item",
+    "baht": "baht",
+    "label_innovation": "Please enter Innovation name.",
+    "label_product": "Please enter Product name.",
+    "label_creative": "Please enter Digital media name.",
+    "label_innovation_group": "Please select a group of Innovation.",
+    "label_product_group": "Please select a group of Product.",
+    "label_creative_group": "Please select a group of Digital media.",
+    "title_more_innovation": "Related Innovations",
+    "title_more_product": "Related Product",
+    "title_more_creative": "Related Digital media"
+  },
+  "patent": {
+    "researcher": "Researcher",
+    "community": "Community",
+    "co_operation": "Co-operation"
   }
 }
