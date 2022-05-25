@@ -915,7 +915,7 @@ function RCbutton(props) {
   // const Paper = React.lazy(() => import("@material-ui/core/Paper"));
 
   return (
-    <body className="rc-body">
+    <body >
       <div className="body-detail">
         <ThemeProvider theme={customTheme}>
           <div className={classes.root}>

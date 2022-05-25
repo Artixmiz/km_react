@@ -15,10 +15,10 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 
 import D3Layer from "./D3Layer";
-
+import { Container } from "@material-ui/core";
 import {
   Col,
-  Container,
+  // Container,
   Row,
   CardTitle,
   CardBody,
@@ -657,59 +657,69 @@ function CoResearcher(props) {
   const dataTeam = mapDataTeam();
 
   return (
-    <body className="tab-body">
+    <body>
       <div className="body-detail">
-        <Container
-          className="themed-container card-header-border img-bg"
-          fluid={true}
-        >
-          <Row
-            style={{ fontFamily: "Prompt" }}
-            className="align-items-center justify-content-md-center"
-          >
-            <Col xs={12} md="auto" className="picposi">
-              {result.map((d, i) => {
-                return d.co_researcher_image ? (
-                  <img
-                    src={`https://researcher.kims-rmuti.com/file-upload/co_researcher-upload/${d.co_researcher_image}`}
-                    width={350}
-                    className="img-shadow"
-                    style={{ borderRadius: 4 }}
-                  />
-                ) : (
-                  <img
-                    width="300px"
-                    src={noImg}
-                    className="img-shadow"
-                    style={{ borderRadius: 4 }}
-                  />
-                );
-              })}
-            </Col>
+      <Container className="pt-4 bg" maxWidth={false}>
+              <Card style={{ backgroundColor: "#fbaa35" }}>
+                <Row
+                  style={{ fontFamily: "Prompt" }}
+                  className="align-items-center justify-content-md-center p-4"
+                >
+                  <Col xs="12" md="3" style={{ height: "100%" }}>
+                    {result.map((d, i) => {
+                      return d.co_researcher_image ? (
+                        <CardImg
+                          src={`https://researcher.kims-rmuti.com/file-upload/co_researcher-upload/${d.co_researcher_image}`}
+                          // width={350}
+                          className="img-shadow"
+                          style={{
+                            objectFit: "cover",
+                            objectPosition: "center center",
+                            borderRadius: 4,
+                            // width: "300px"
+                          }}
+                        />
+                      ) : (
+                        <CardImg
+                          width="300px"
+                          src={noImg}
+                          className="img-shadow"
+                          style={{ borderRadius: 4 }}
+                        />
+                      );
+                    })}
+                  </Col>
 
-            <Grid xs="12" md={6}>
-              <Card style={{ marginTop: 5 }} className="img-shadow">
-                <CardBody className="card-header">
-                  {result.map((d, i) => {
-                    return (
-                      <CardTitle
-                        tag="h6"
-                        style={{ padding: 5, color: "white" }}
-                      >
-                        <h3>{result[0].co_researcher_name_th} </h3>
-                        <CardText style={{ textAlign: "left" }}>
-                          <p>{result[0].co_researcher_history}</p>
-                          {/* <p>มีความร่วมมือกับ : </p> */}
-                        </CardText>
-                      </CardTitle>
-                    );
-                  })}
-                </CardBody>
+                  <Col xs="12" md="9" style={{ height: "100%" }}>
+                    <Card
+                      style={{ marginTop: 5, color: "#156c68" }}
+                      className="img-shadow"
+                    >
+                      <CardBody>
+                        {result.map((d, i) => {
+                          return (
+                            <>
+                              <CardTitle
+                                tag="h6"
+                                style={{ padding: 5, color: "#156c68" }}
+                              >
+                                <h3>{result[0].co_researcher_name_th} </h3>
+                              </CardTitle>
+                              <CardText
+                                style={{ textAlign: "left", color: "#156c68" }}
+                              >
+                                <p>{result[0].co_researcher_history}</p>
+                                {/* <p>มีความร่วมมือกับ : </p> */}
+                              </CardText>
+                            </>
+                          );
+                        })}
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
               </Card>
-            </Grid>
-          </Row>
-        </Container>
-
+            </Container>
         <ThemeProvider theme={customTheme}>
           <div className={classes.root}>
             <AppBar
@@ -781,7 +791,9 @@ function CoResearcher(props) {
               </Tabs>
             </AppBar>
 
-            <TabPanel value={value} index={0} className="tab-body">
+            
+
+            <TabPanel value={value} index={0} className="bg">
               <ThemeProvider theme={customTheme}>
                 <div className={classes.root}>
                   <AppBar
@@ -995,7 +1007,7 @@ function CoResearcher(props) {
                       </TableContainer>
                       {/* </Card> */}
                     </TabPanel>
-                    <TabPanel value={valuePage1} index={1}>
+                    <TabPanel value={valuePage1} index={1} >
                       {/* <Card className="card-header-border card-border"> */}
                       {/* <CardBody className="card-header-border">
                           <CardTitle

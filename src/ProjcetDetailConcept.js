@@ -21,16 +21,16 @@ import { FaArrowAltCircleRight, FaArrowAltCircleDown } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import {
   Col,
-  Container,
   Row,
   CardTitle,
+  CardImg,
   Card,
   CardBody,
   CardText,
   CardSubtitle,
 } from "reactstrap";
 
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Container } from "@material-ui/core";
 
 import { Route, BrowserRouter, Switch, Link } from "react-router-dom";
 
@@ -65,8 +65,9 @@ import { withRouter } from "react-router";
 
 import { RiUser2Line } from "react-icons/ri";
 
-import { useTranslation } from "react-i18next"; 
+import { useTranslation } from "react-i18next";
 import Knowledges from "./Components/ConceptPage/Knowledge";
+import noImg from "./images/no-image.png"
 
 const customTheme = createTheme({
   palette: {
@@ -372,7 +373,7 @@ function ProjectDetail(props) {
       });
 
     axios
-      .get(`${localUrl}/api/get/concept_proposal/knowledge/${id}`)
+      .get(`${apiUrl}/api/get/concept_proposal/knowledge/${id}`)
       .then((res) => {
         setknowledge(res.data[0].knowledge);
         setoutput(res.data[0].output);
@@ -412,7 +413,6 @@ function ProjectDetail(props) {
   const [impactName, setImpactName] = useState("");
   const [impactData, setImpactData] = useState([]);
 
-
   const getGraphaAll = () => {
     setLoading(true);
     axios
@@ -437,8 +437,6 @@ function ProjectDetail(props) {
   };
 
   const retrieveImpact = () => {
-    
-
     console.log(selected);
     if (selected == 0) {
       getGraphaAll();
@@ -647,17 +645,20 @@ function ProjectDetail(props) {
     embedId: PropTypes.string.isRequired,
   };
 
+  
+
   const outputEl = output.map((ListItem) => {
     return (
       <CardBody className="map-border">
-        <img
-          width="100%"
-          src={`https://researcher.kims-rmuti.com/file-upload/knowledge-upload/${ListItem.output_image}`}
-          alt="Card image cap"
-          className="img-shadow"
-          style={{ borderRadius: 4 }}
-        />
-
+          <img
+            // width="100%"
+            src={`https://researcher.kims-rmuti.com/file-upload/innovation-upload/${ListItem.output_image}`}
+            alt="Card image cap"
+            className="img-shadow"
+            style={{ borderRadius: 4 }}
+            onerror={`javascript:this.src=${noImg}`}
+          />
+     
         <CardBody
           style={{
             backgroundColor: "rgba(223, 223, 223, 0.37)",
@@ -693,17 +694,15 @@ function ProjectDetail(props) {
   return (
     <body>
       <div className="body-detail">
-        <Container
-          className="themed-container card-header-border img-bg"
-          fluid={true}
-        >
-          <Row
-            className="align-items-center justify-content-md-center"
-            style={{
-              fontFamily: "Prompt",
-            }}
-          >
-            {/* <Col xs="12" md="auto">
+        <Container className="pt-4 bg" maxWidth={false}>
+          <Card style={{ backgroundColor: "#fbaa35" }}>
+            <Row
+              className=" p-4 align-items-center justify-content-md-center"
+              style={{
+                fontFamily: "Prompt",
+              }}
+            >
+              {/* <Col xs="12" md="auto">
               <img
                 src={`https://www.km-innovations.rmuti.ac.th/researcher/file-upload/co_researcher-upload/community.jpg`}
                 width={350}
@@ -712,68 +711,78 @@ function ProjectDetail(props) {
               />
             </Col> */}
 
-            <Col xs="12" md="9">
-              {project.map((p) => (
-                <Card style={{ marginTop: 5 }} className="img-shadow">
-                  <CardBody className="card-header">
-                    <CardTitle tag="h6" style={{ padding: 5, color: "white" }}>
-                      {p.concept_proposal_name_th}
-                    </CardTitle>
-                    {/* <hr /> */}
-                  </CardBody>
+              <Col xs="12" md="12">
+                {project.map((p) => (
+                  <Card
+                    style={{ marginTop: 5, color: "#156c68" }}
+                    className="img-shadow"
+                  >
+                    <CardBody>
+                      <CardTitle
+                        tag="h6"
+                        style={{
+                          fontWeight: "bold",
+                          padding: 5,
+                          color: "#156c68",
+                        }}
+                      >
+                        {p.concept_proposal_name_th}
+                      </CardTitle>
+                      {/* <hr /> */}
+                    </CardBody>
 
-                  <CardBody>
-                    <CardText style={{ textAlign: "left" }}>
-                      <p>
-                        {user.map((listValue, index) => {
-                          return (
-                            <CardText>
-                              <RiUser2Line size={35} />{" "}
-                              {t("concept_proposal_page.menu1")}:
-                              <Button
-                                a
-                                href={`/monitoring/Researcher?user_idcard=${btoa(
-                                  listValue.user_idcard
-                                )}`}
-                                style={{ fontFamily: "Prompt" }}
-                              >
-                                {listValue.prefix_id
-                                  ? prefix[listValue.prefix_id]
-                                  : " "}{" "}
-                                {listValue.user_first_name_th}{" "}
-                                {listValue.user_last_name_th}
-                              </Button>
-                            </CardText>
-                          );
-                        })}
-                      </p>
+                    <CardBody>
+                      <CardText style={{ textAlign: "left" }}>
+                        <p>
+                          {user.map((listValue, index) => {
+                            return (
+                              <CardText>
+                                <RiUser2Line size={35} />{" "}
+                                {t("concept_proposal_page.menu1")}:
+                                <Button
+                                  a
+                                  href={`/monitoring/Researcher?user_idcard=${btoa(
+                                    listValue.user_idcard
+                                  )}`}
+                                  style={{ fontFamily: "Prompt" }}
+                                >
+                                  {listValue.prefix_id
+                                    ? prefix[listValue.prefix_id]
+                                    : " "}{" "}
+                                  {listValue.user_first_name_th}{" "}
+                                  {listValue.user_last_name_th}
+                                </Button>
+                              </CardText>
+                            );
+                          })}
+                        </p>
 
-                      <p>
-                        <GiMoneyStack size={35} />{" "}
-                        {t("concept_proposal_page.menu2")}:{" "}
-                        {p.concept_budget
-                          ? new Number(p.concept_budget).toLocaleString("en")
-                          : ""}{" "}
-                        บาท
-                      </p>
+                        <p>
+                          <GiMoneyStack size={35} />{" "}
+                          {t("concept_proposal_page.menu2")}:{" "}
+                          {p.concept_budget
+                            ? new Number(p.concept_budget).toLocaleString("en")
+                            : ""}{" "}
+                          บาท
+                        </p>
 
-                      <p>
-                        <GiMoneyStack size={35} />{" "}
-                        {t("concept_proposal_page.menu3")}:{" "}
-                        {sourcefunding.source_funds_name}
-                      </p>
-                      <p>
-                        <GiCalendar size={35} />{" "}
-                        {t("concept_proposal_page.menu4")}: {p.concept_year}
-                      </p>
-                    </CardText>
-                  </CardBody>
-                </Card>
-              ))}
-            </Col>
-          </Row>
+                        <p>
+                          <GiMoneyStack size={35} />{" "}
+                          {t("concept_proposal_page.menu3")}:{" "}
+                          {sourcefunding.source_funds_name}
+                        </p>
+                        <p>
+                          <GiCalendar size={35} />{" "}
+                          {t("concept_proposal_page.menu4")}: {p.concept_year}
+                        </p>
+                      </CardText>
+                    </CardBody>
+                  </Card>
+                ))}
+              </Col>
+            </Row>
+          </Card>
         </Container>
-
         <BrowserRouter basename={"/monitoring"}>
           <ThemeProvider theme={customTheme}>
             <div className={classes.root}>
@@ -852,10 +861,13 @@ function ProjectDetail(props) {
                 )}
               />
 
-              <Container style={{ paddingTop: "25px", paddingBottom: "25px" }}>
+              <Container
+                className="bg"
+                style={{ paddingTop: "25px", paddingBottom: "25px" }}
+              >
                 <Switch>
                   <Route path="/ProjectDetailConcep/knowledege">
-                      <Knowledges concept_proposal_id={idencrypt}/>
+                    <Knowledges concept_proposal_id={idencrypt} />
                   </Route>
                   <Route path={`/ProjectDetailConcep/projectNetwork`}>
                     <ProjectNetwork

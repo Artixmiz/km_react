@@ -45,6 +45,14 @@
   color: #cdfeaa;
 } */
 
+.tooltip .tooltip-inner {
+  background-color: green;
+}
+
+.tooltip .arrow::before {
+  border-left-color: green;
+}
+
 body {
   margin: 0;
   font-family: "Prompt", sans-serif;
