@@ -15,8 +15,8 @@ const ProjectNetwork = (props) => {
   const { t } = useTranslation();
 
   return (
-    <Card className="card-header-border card-border">
-      <CardBody className="card-header-border">
+    <Card className="">
+      <CardBody className="">
         <CardTitle
           tag="h6"
           style={{ padding: 5, color: "black" }}
@@ -24,31 +24,31 @@ const ProjectNetwork = (props) => {
         >
           {t("concept_proposal_page.network.header")}
         </CardTitle>
+
+        {/* <CardBody style={{ marginTop: -14 }}> */}
+        {location.map(({ lat, lng }) => {
+          return (
+            <MapContainer
+              className=""
+              center={[lat, lng]}
+              zoom={6}
+              scrollWheelZoom={true}
+              zoomControl={false}
+              style={{ width: "100%", height: "600px" }}
+            >
+              <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <LayerGroup>
+                <D3Layer location={dataM} />
+              </LayerGroup>
+
+              <ZoomControl position="topright" />
+            </MapContainer>
+          );
+        })}
       </CardBody>
-
-      {/* <CardBody style={{ marginTop: -14 }}> */}
-      {location.map(({ lat, lng }) => {
-        return (
-          <MapContainer
-            className="map-border"
-            center={[lat, lng]}
-            zoom={6}
-            scrollWheelZoom={true}
-            zoomControl={false}
-            style={{ width: "100%", height: "600px" }}
-          >
-            <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <LayerGroup>
-              <D3Layer location={dataM} />
-            </LayerGroup>
-
-            <ZoomControl position="topright" />
-          </MapContainer>
-        );
-      })}
 
       <CardBody>
         <Table hover responsive>

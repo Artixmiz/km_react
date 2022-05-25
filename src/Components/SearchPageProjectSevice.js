@@ -307,10 +307,10 @@ function SearchPageProject(props) {
           </text>
         </Box> */}
         <div>
-          <div >
-          <Container maxWidth={false}>
-            <Card className="card-border">
-              {/* <CardBody className="card-header-border">
+          <div>
+            <Container maxWidth={false}>
+              <Card className="card-border">
+                {/* <CardBody className="card-header-border">
                 <CardTitle
                   tag="h6"
                   style={{
@@ -323,362 +323,372 @@ function SearchPageProject(props) {
                   ค้นหางานบริการวิชาการ
                 </CardTitle>
               </CardBody> */}
-              <CardBody>
-                <div className="">
-                  <Box
-                    component="form"
-                    sx={{
-                      "& .MuiTextField-root": {
-                        m: 2,
-                        width: "100%",
-                        marginTop: "-15px",
-                      },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                  >
-                    <div>
-                      <Row className="align-items-center justify-content-md-center">
-                        <Col md="6" xs="12">
-                          <TextField
-                            id="standard-helperText"
-                            label={t("research.menu4")}
-                            defaultValue="Default Value"
-                            helperText={t("research.menu3")}
-                            InputProps={{ style: { fontFamily: "Prompt" } }}
-                            InputLabelProps={{
-                              style: { fontFamily: "Prompt" },
-                            }}
-                            FormHelperTextProps={{
-                              style: { fontFamily: "Prompt" },
-                            }}
-                            variant="standard"
-                            value={searchTitle}
-                            onChange={onChangeTitle}
-                          />
+                <CardBody>
+                  <div className="">
+                    <Box
+                      component="form"
+                      sx={{
+                        "& .MuiTextField-root": {
+                          m: 2,
+                          width: "100%",
+                          marginTop: "-15px",
+                        },
+                      }}
+                      noValidate
+                      autoComplete="off"
+                    >
+                      <div>
+                        <Row className="align-items-center justify-content-md-center">
+                          <Col md="6" xs="12">
+                            <TextField
+                              id="standard-helperText"
+                              label={t("research.menu4")}
+                              defaultValue="Default Value"
+                              helperText={t("research.menu3")}
+                              InputProps={{ style: { fontFamily: "Prompt" } }}
+                              InputLabelProps={{
+                                style: { fontFamily: "Prompt" },
+                              }}
+                              FormHelperTextProps={{
+                                style: { fontFamily: "Prompt" },
+                              }}
+                              variant="standard"
+                              value={searchTitle}
+                              onChange={onChangeTitle}
+                            />
 
-                          <Form
-                            id="outlined-multiline-flexible"
-                            multiline
-                            Input
-                            type="checkbox"
-                            InputLabelProps={{
-                              style: { fontFamily: "Prompt" },
-                            }}
-                            InputProps={{ style: { fontFamily: "Prompt" } }}
-                            FormHelperTextProps={{
-                              style: { fontFamily: "Prompt" },
-                            }}
-                            label="ประเภทงานบริการวิชาการ"
-                            // value={selected1}
-                            // onChange={handleChange}
-                            helperText="โปรดเลือก"
-                          >
-                            <FormGroup
-                              check
-                              inline
-                              style={{ fontFamily: "Prompt" }}
+                            <Form
+                              id="outlined-multiline-flexible"
+                              multiline
+                              Input
+                              type="checkbox"
+                              InputLabelProps={{
+                                style: { fontFamily: "Prompt" },
+                              }}
+                              InputProps={{ style: { fontFamily: "Prompt" } }}
+                              FormHelperTextProps={{
+                                style: { fontFamily: "Prompt" },
+                              }}
+                              label="ประเภทงานบริการวิชาการ"
+                              // value={selected1}
+                              // onChange={handleChange}
+                              helperText="โปรดเลือก"
                             >
-                              <div>
-                                <img
-                                  width="45"
-                                  height="45"
-                                  aria-label="Placeholder: Image"
-                                  preserveAspectRatio="xMidYMid slice"
-                                  src={`https://researcher.kims-rmuti.com/icon/AS.jpg`}
-                                  style={{ padding: "11px" }}
-                                />
-                                <Input
-                                  type="checkbox"
-                                  onChange={handleChange2}
-                                  value={selected2}
-                                  checked={check2}
-                                  style={{ marginTop: "15px" }}
-                                />
-                                {t("research.menu1")}
-                              </div>
-                            </FormGroup>
+                              <FormGroup
+                                check
+                                inline
+                                style={{ fontFamily: "Prompt" }}
+                              >
+                                <div>
+                                  <img
+                                    width="45"
+                                    height="45"
+                                    aria-label="Placeholder: Image"
+                                    preserveAspectRatio="xMidYMid slice"
+                                    src={`https://researcher.kims-rmuti.com/icon/AS.jpg`}
+                                    style={{ padding: "11px" }}
+                                  />
+                                  <Input
+                                    type="checkbox"
+                                    onChange={handleChange2}
+                                    value={selected2}
+                                    checked={check2}
+                                    style={{ marginTop: "15px" }}
+                                  />
+                                  {t("research.menu1")}
+                                </div>
+                              </FormGroup>
 
-                            <FormGroup
-                              check
-                              inline
-                              style={{ fontFamily: "Prompt" }}
+                              <FormGroup
+                                check
+                                inline
+                                style={{ fontFamily: "Prompt" }}
+                              >
+                                <div>
+                                  <Input
+                                    type="checkbox"
+                                    onChange={handleChange5}
+                                    value={selected5}
+                                    checked={check5}
+                                    style={{ marginTop: "15px" }}
+                                  />
+                                  <img
+                                    width="45"
+                                    height="45"
+                                    aria-label="Placeholder: Image"
+                                    preserveAspectRatio="xMidYMid slice"
+                                    src={`https://researcher.kims-rmuti.com/icon/U2T.jpg`}
+                                    style={{ padding: "11px" }}
+                                  />
+                                  {t("research.menu2")}
+                                </div>
+                              </FormGroup>
+                            </Form>
+                          </Col>
+
+                          <Col md="1" xs="12">
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              size="large"
+                              type="submit"
+                              onClick={retrieveProjects}
+                              style={{ fontFamily: "Prompt", width: "100%" }}
+                              disabled={loading}
+                              startIcon={<FaSearch size={13} />}
                             >
-                              <div>
-                                <Input
-                                  type="checkbox"
-                                  onChange={handleChange5}
-                                  value={selected5}
-                                  checked={check5}
-                                  style={{ marginTop: "15px" }}
-                                />
-                                <img
-                                  width="45"
-                                  height="45"
-                                  aria-label="Placeholder: Image"
-                                  preserveAspectRatio="xMidYMid slice"
-                                  src={`https://researcher.kims-rmuti.com/icon/U2T.jpg`}
-                                  style={{ padding: "11px" }}
-                                />
-                                {t("research.menu2")}
-                              </div>
-                            </FormGroup>
-                          </Form>
-                        </Col>
+                              {loading && <CircularProgress size={22} />}
+                              {!loading && t("search")}
+                            </Button>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Box>
+                  </div>
+                </CardBody>
+              </Card>
 
-                        <Col md="1" xs="12">
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            size="large"
-                            type="submit"
-                            onClick={retrieveProjects}
-                            style={{ fontFamily: "Prompt", width: "100%" }}
-                            disabled={loading}
-                            startIcon={<FaSearch size={13} />}
-                          >
-                            {loading && <CircularProgress size={22} />}
-                            {!loading && t("search")}
-                          </Button>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Box>
-                </div>
-              </CardBody>
-            </Card>
-
-            <Card
-              //className="card-border"
-              style={{ marginTop: "15px", fontFamily: "Prompt" }}
-            >
-              {/* <CardBody className="card-header-border">
+              <Card
+                //className="card-border"
+                style={{ marginTop: "15px", fontFamily: "Prompt" }}
+              >
+                {/* <CardBody className="card-header-border">
                 <CardTitle tag="h6" style={{ fontWeight: "bold" }}>
                   แผนที่แสดงงานบริการวิชาการ / (U2T)
                 </CardTitle>
               </CardBody> */}
-              <Row>
-                <Col>
-                  <MapContainer
-                    center={[13, 105]}
-                    zoom={5}
-                    minZoom={3}
-                    maxZoom={21}
-                    ref={mapRef}
-                    // bounceAtZoomLimits={true}
-                    // maxBoundsViscosity={0.95}
-                    // maxBounds={[
-                    //   [-180, -90],
-                    //   [180, 90]
-                    // ]}
-                    // scrollWheelZoom={true}
-                    zoomControl={false}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      margin: "0",
-                      // borderRadius: "5px",
-                    }}
-                  >
-                    <TileLayer
-                      // attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    {!message
-                      ? projects.map((p, index) => {
-                          return (
-                            <CircleMarker
-                              key={index}
-                              center={[
-                                p.project_latitude ? p.project_latitude : 0,
-                                p.project_longitude ? p.project_longitude : 0,
-                              ]}
-                              // radius={10}
-                              opacity={0}
-                            >
-                              <Marker
-                                position={[
+                <Row>
+                  <Col>
+                    <MapContainer
+                      center={[13, 105]}
+                      zoom={5}
+                      minZoom={3}
+                      maxZoom={21}
+                      ref={mapRef}
+                      // bounceAtZoomLimits={true}
+                      // maxBoundsViscosity={0.95}
+                      // maxBounds={[
+                      //   [-180, -90],
+                      //   [180, 90]
+                      // ]}
+                      // scrollWheelZoom={true}
+                      zoomControl={false}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        margin: "0",
+                        // borderRadius: "5px",
+                      }}
+                    >
+                      <TileLayer
+                        // attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      />
+                      {!message
+                        ? projects.map((p, index) => {
+                            return (
+                              <CircleMarker
+                                key={index}
+                                center={[
                                   p.project_latitude ? p.project_latitude : 0,
                                   p.project_longitude ? p.project_longitude : 0,
                                 ]}
-                                icon={
-                                  new Icon({
-                                    iconUrl:
-                                      p.project_type_id == 1
-                                        ? "https://researcher.kims-rmuti.com/icon/R.jpg"
-                                        : p.project_type_id == 2
-                                        ? "https://researcher.kims-rmuti.com/icon/AS.jpg"
-                                        : p.project_type_id == 5
-                                        ? "https://researcher.kims-rmuti.com/icon/U2T.jpg"
-                                        : "https://cdn1.iconfinder.com/data/icons/social-media-set/24/Reverbnation-128.png",
-                                    iconSize: [26, 26],
-                                    // iconAnchor: [19, 0],
-                                    className: "image-icon",
-                                  })
-                                }
+                                // radius={10}
+                                opacity={0}
                               >
-                                <Popup>
-                                  <CardTitle class="tip__container">
-                                    <text
-                                      style={{
-                                        marginTop: "10px",
-                                        fontFamily: "Prompt",
-                                        fontSize: "20px",
-                                      }}
-                                    >
-                                      งานบริการวิชาการ
-                                    </text>
-                                    <hr />
+                                <Marker
+                                  position={[
+                                    p.project_latitude ? p.project_latitude : 0,
+                                    p.project_longitude
+                                      ? p.project_longitude
+                                      : 0,
+                                  ]}
+                                  icon={
+                                    new Icon({
+                                      iconUrl:
+                                        p.project_type_id == 1
+                                          ? "https://researcher.kims-rmuti.com/icon/R.jpg"
+                                          : p.project_type_id == 2
+                                          ? "https://researcher.kims-rmuti.com/icon/AS.jpg"
+                                          : p.project_type_id == 5
+                                          ? "https://researcher.kims-rmuti.com/icon/U2T.jpg"
+                                          : "https://cdn1.iconfinder.com/data/icons/social-media-set/24/Reverbnation-128.png",
+                                      iconSize: [26, 26],
+                                      // iconAnchor: [19, 0],
+                                      className: "image-icon",
+                                    })
+                                  }
+                                >
+                                  <Popup>
+                                    <CardTitle class="tip__container">
+                                      <text
+                                        style={{
+                                          marginTop: "10px",
+                                          fontFamily: "Prompt",
+                                          fontSize: "20px",
+                                        }}
+                                      >
+                                        งานบริการวิชาการ
+                                      </text>
+                                      <hr />
 
-                                    <text
-                                      style={{
-                                        marginTop: "10px",
-                                        fontFamily: "Prompt",
-                                        fontSize: "15px",
-                                      }}
-                                    >
-                                      {p.project_name_th}
-                                    </text>
-                                    <hr />
+                                      <text
+                                        style={{
+                                          marginTop: "10px",
+                                          fontFamily: "Prompt",
+                                          fontSize: "15px",
+                                        }}
+                                      >
+                                        {p.project_name_th}
+                                      </text>
+                                      <hr />
 
-                                    <IconButton
-                                      color="primary"
-                                      aria-label="view info co"
-                                      onClick={() => {
-                                        console.log(p.concept_id);
-                                        p.project_id
-                                          ? props.history.push({
-                                              pathname:
-                                                "/ProjectDetail/ProjectNetwork",
-                                              search: `?project_id=${btoa(
-                                                p.project_id
-                                              )}`,
-                                            })
-                                          : props.history.push({
-                                              pathname:
-                                                "/ProjectDetailConcep/ProjectNetwork",
-                                              search: `?concep_id=${btoa(
-                                                p.concept_id
-                                              )}`,
-                                            });
-                                      }}
-                                      style={{
-                                        marginTop: "10px",
-                                        fontFamily: "Prompt",
-                                        fontSize: "15px",
-                                      }}
-                                    >
-                                      รายละเอียดเพิ่มเติม{" "}
-                                      <BiInfoCircle size={18} />
-                                    </IconButton>
-                                  </CardTitle>
-                                </Popup>
-                              </Marker>
-                            </CircleMarker>
-                          );
-                        })
-                      : null}
-                    <MinimapControl position="topright" />
-                    {/* {0 &&
+                                      <IconButton
+                                        color="primary"
+                                        aria-label="view info co"
+                                        onClick={() => {
+                                          console.log(p.concept_id);
+                                          p.project_id
+                                            ? props.history.push({
+                                                pathname:
+                                                  "/ProjectDetail/ProjectNetwork",
+                                                search: `?project_id=${btoa(
+                                                  p.project_id
+                                                )}`,
+                                              })
+                                            : props.history.push({
+                                                pathname:
+                                                  "/ProjectDetailConcep/ProjectNetwork",
+                                                search: `?concep_id=${btoa(
+                                                  p.concept_id
+                                                )}`,
+                                              });
+                                        }}
+                                        style={{
+                                          marginTop: "10px",
+                                          fontFamily: "Prompt",
+                                          fontSize: "15px",
+                                        }}
+                                      >
+                                        รายละเอียดเพิ่มเติม{" "}
+                                        <BiInfoCircle size={18} />
+                                      </IconButton>
+                                    </CardTitle>
+                                  </Popup>
+                                </Marker>
+                              </CircleMarker>
+                            );
+                          })
+                        : null}
+                      <MinimapControl position="topright" />
+                      {/* {0 &&
                                         0 ? (
                                           
                                         ) : null} */}
-                  </MapContainer>
-                </Col>
-                <Col md={4}>
-                  {universitys.length ? (
-                    <div className="main-list">
-                      {universitys
-                        .sort((x, y) =>
-                          x.university.localeCompare(y.university, "th")
-                        )
-                        .map((list) => (
-                          <>
-                            <Card className="pt-2 mt-3 me-2">
-                              <Row
-                                className=" align-items-center justify-content-md-center"
-                                style={{ width: "100%" }}
-                              >
-                                <Col md="6">
-                                  <h6>{list.university}</h6>
-                                </Col>
-                                <Col md="4">
-                                  <p>จำนวน {list.data.length} รายการ</p>
-                                </Col>
-                              </Row>
-                            </Card>
+                    </MapContainer>
+                  </Col>
+                  <Col md={4}>
+                    {universitys.length ? (
+                      <div className="main-list">
+                        {universitys
+                          .sort((x, y) =>
+                            x.university.localeCompare(y.university, "th")
+                          )
+                          .map((list) => (
+                            <>
+                              <Card className="pt-2 mt-3 me-2">
+                                <Row
+                                  className=" align-items-center justify-content-md-center"
+                                  style={{ width: "100%" }}
+                                >
+                                  <Col md="6">
+                                    <h6>{list.university}</h6>
+                                  </Col>
+                                  <Col md="4">
+                                    <p>จำนวน {list.data.length} รายการ</p>
+                                  </Col>
+                                </Row>
+                              </Card>
 
-                            {list.data.length ? (
-                              <div className="list">
-                                {list.data
-                                  .sort((x, y) =>
-                                    x.project_name_th.localeCompare(
-                                      y.project_name_th,
-                                      "th"
+                              {list.data.length ? (
+                                <div className="list">
+                                  {list.data
+                                    .sort((x, y) =>
+                                      x.project_name_th.localeCompare(
+                                        y.project_name_th,
+                                        "th"
+                                      )
                                     )
-                                  )
-                                  .map((listdata) => (
-                                    <div className="link_feature">
-                                      <a
-                                        href={
-                                          listdata.project_id
-                                            ? `/monitoring/ProjectDetail/ProjectNetwork?project_id=${btoa(
-                                                listdata.project_id
-                                              )}`
-                                            : `/monitoring/ProjectDetailConcep/ProjectNetwork?concep_id=${btoa(
-                                                listdata.concept_id
-                                              )}`
-                                        }
-                                        className="linkexternal"
-                                      >
-                                        <Row
-                                          className="p-2 align-items-center justify-content-md-center"
-                                          style={{ width: "100%" }}
+                                    .map((listdata) => (
+                                      <div className="link_feature">
+                                        <a
+                                          href={
+                                            listdata.project_id
+                                              ? `/monitoring/ProjectDetail/ProjectNetwork?project_id=${btoa(
+                                                  listdata.project_id
+                                                )}`
+                                              : `/monitoring/ProjectDetailConcep/ProjectNetwork?concep_id=${btoa(
+                                                  listdata.concept_id
+                                                )}`
+                                          }
+                                          className="linkexternal"
                                         >
-                                          <Col md="2">
-                                            <img
-                                              className="rounded-circle mx-auto d-block"
-                                              width={40}
-                                              height={40}
-                                              src={
-                                                listdata.project_type_id == 1
-                                                  ? `https://researcher.kims-rmuti.com/icon/R.jpg`
-                                                  : listdata.project_type_id ==
-                                                    2
-                                                  ? `https://researcher.kims-rmuti.com/icon/AS.jpg`
-                                                  : listdata.project_type_id ==
-                                                    5
-                                                  ? `https://researcher.kims-rmuti.com/icon/U2T.jpg`
-                                                  : noImg
-                                              }
-                                            />
-                                          </Col>
-                                          <Col md="9">
-                                            {listdata.project_name_th}
-                                          </Col>
-                                          <Col md="1">
-                                            <BiLinkExternal size={20} />
-                                          </Col>
-                                        </Row>
-                                      </a>
-                                    </div>
-                                  ))}
-                              </div>
-                            ) : (
-                              <div className="list pt-4">ไม่พบข้อมูล</div>
-                            )}
-                            <hr />
-                          </>
-                        ))}
-                    </div>
-                  ) : (
-                    <div className="main-list pt-4">ไม่พบข้อมูล</div>
-                  )}
+                                          <Row
+                                            className="p-2 align-items-center justify-content-md-center"
+                                            style={{ width: "100%" }}
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom"
+                                            title={listdata.project_name_th}
+                                          >
+                                            <Col md="2">
+                                              <img
+                                                className="rounded-circle mx-auto d-block"
+                                                width={40}
+                                                height={40}
+                                                src={
+                                                  listdata.project_type_id == 1
+                                                    ? `https://researcher.kims-rmuti.com/icon/R.jpg`
+                                                    : listdata.project_type_id ==
+                                                      2
+                                                    ? `https://researcher.kims-rmuti.com/icon/AS.jpg`
+                                                    : listdata.project_type_id ==
+                                                      5
+                                                    ? `https://researcher.kims-rmuti.com/icon/U2T.jpg`
+                                                    : noImg
+                                                }
+                                              />
+                                            </Col>
+                                            <Col md="9">
+                                              <text>
+                                                {listdata.project_name_th.replace(
+                                                  /(.{30})..+/,
+                                                  "$1…"
+                                                )}
+                                              </text>
+                                            </Col>
+                                            <Col md="1">
+                                              <BiLinkExternal size={20} />
+                                            </Col>
+                                          </Row>
+                                        </a>
+                                      </div>
+                                    ))}
+                                </div>
+                              ) : (
+                                <div className="list pt-4">ไม่พบข้อมูล</div>
+                              )}
+                              <hr />
+                            </>
+                          ))}
+                      </div>
+                    ) : (
+                      <div className="main-list pt-4">ไม่พบข้อมูล</div>
+                    )}
 
-                  {/* <div className="list pt-4">ไม่พบข้อมูล</div> */}
-                </Col>
-              </Row>
-            </Card>
+                    {/* <div className="list pt-4">ไม่พบข้อมูล</div> */}
+                  </Col>
+                </Row>
+              </Card>
             </Container>
 
             {/* <Card

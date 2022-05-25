@@ -21,16 +21,16 @@ import { FaArrowAltCircleRight, FaArrowAltCircleDown } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import {
   Col,
-  Container,
   Row,
   CardTitle,
+  CardImg,
   Card,
   CardBody,
   CardText,
   CardSubtitle,
 } from "reactstrap";
 
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Container } from "@material-ui/core";
 
 import { Route, BrowserRouter, Switch, Link } from "react-router-dom";
 
@@ -67,6 +67,7 @@ import { RiUser2Line } from "react-icons/ri";
 
 import { useTranslation } from "react-i18next";
 import Knowledges from "./Components/ConceptPage/Knowledge";
+import noImg from "./images/no-image.png"
 
 import "./Components/Css/researcher.scss";
 
@@ -647,17 +648,20 @@ function ProjectDetail(props) {
     embedId: PropTypes.string.isRequired,
   };
 
+  
+
   const outputEl = output.map((ListItem) => {
     return (
       <CardBody className="map-border">
-        <img
-          width="100%"
-          src={`https://researcher.kims-rmuti.com/file-upload/knowledge-upload/${ListItem.output_image}`}
-          alt="Card image cap"
-          className="img-shadow"
-          style={{ borderRadius: 4 }}
-        />
-
+          <img
+            // width="100%"
+            src={`https://researcher.kims-rmuti.com/file-upload/innovation-upload/${ListItem.output_image}`}
+            alt="Card image cap"
+            className="img-shadow"
+            style={{ borderRadius: 4 }}
+            onerror={`javascript:this.src=${noImg}`}
+          />
+     
         <CardBody
           style={{
             backgroundColor: "rgba(223, 223, 223, 0.37)",

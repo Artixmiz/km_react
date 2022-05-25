@@ -69,7 +69,7 @@ const KnowledgeDetail = (props) => {
         </CardSubtitle> */}
       </CardBody>
 
-      <Row className="justify-content-md-center">
+      <Row className="p-4 align-items-center justify-content-md-center">
         <Col md="3">
           <Card className="card-header-border card-border">
             <CardBody className="card-header-border">
