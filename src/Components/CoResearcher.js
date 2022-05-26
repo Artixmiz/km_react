@@ -110,6 +110,15 @@ import noImg from "../images/no-image.png";
 
 import { useTranslation } from "react-i18next";
 
+import { Route, BrowserRouter, Switch, Link } from "react-router-dom";
+
+import ExpertisePage from "./CoresearcherPage/ExpertistPage";
+import KnowledgePage from "./CoresearcherPage/KnowledgePage";
+import ProductPage from "./CoresearcherPage/ProductPage";
+import InnovationPage from "./CoresearcherPage/InnovationPage";
+import CretivePage from "./CoresearcherPage/CretivePage";
+import ProjectPage from "./CoresearcherPage/ProjectPage";
+
 const customTheme = createTheme({
   palette: {
     secondary: {
@@ -659,561 +668,232 @@ function CoResearcher(props) {
   return (
     <body>
       <div className="body-detail">
-      <Container className="pt-4 bg" maxWidth={false}>
-              <Card style={{ backgroundColor: "#fbaa35" }}>
-                <Row
-                  style={{ fontFamily: "Prompt" }}
-                  className="align-items-center justify-content-md-center p-4"
+        <Container className="pt-4 bg" maxWidth={false}>
+          <Card style={{ backgroundColor: "#fbaa35" }}>
+            <Row
+              style={{ fontFamily: "Prompt" }}
+              className="align-items-center justify-content-md-center p-4"
+            >
+              <Col xs="12" md="3" style={{ height: "100%" }}>
+                {result.map((d, i) => {
+                  return d.co_researcher_image ? (
+                    <CardImg
+                      src={`https://researcher.kims-rmuti.com/file-upload/co_researcher-upload/${d.co_researcher_image}`}
+                      // width={350}
+                      className="img-shadow"
+                      style={{
+                        objectFit: "cover",
+                        objectPosition: "center center",
+                        borderRadius: 4,
+                        // width: "300px"
+                      }}
+                    />
+                  ) : (
+                    <CardImg
+                      width="300px"
+                      src={noImg}
+                      className="img-shadow"
+                      style={{ borderRadius: 4 }}
+                    />
+                  );
+                })}
+              </Col>
+
+              <Col xs="12" md="9" style={{ height: "100%" }}>
+                <Card
+                  style={{ marginTop: 5, color: "#156c68" }}
+                  className="img-shadow"
                 >
-                  <Col xs="12" md="3" style={{ height: "100%" }}>
+                  <CardBody>
                     {result.map((d, i) => {
-                      return d.co_researcher_image ? (
-                        <CardImg
-                          src={`https://researcher.kims-rmuti.com/file-upload/co_researcher-upload/${d.co_researcher_image}`}
-                          // width={350}
-                          className="img-shadow"
-                          style={{
-                            objectFit: "cover",
-                            objectPosition: "center center",
-                            borderRadius: 4,
-                            // width: "300px"
-                          }}
-                        />
-                      ) : (
-                        <CardImg
-                          width="300px"
-                          src={noImg}
-                          className="img-shadow"
-                          style={{ borderRadius: 4 }}
-                        />
+                      return (
+                        <>
+                          <CardTitle
+                            tag="h6"
+                            style={{ padding: 5, color: "#156c68" }}
+                          >
+                            <h3>{result[0].co_researcher_name_th} </h3>
+                          </CardTitle>
+                          <CardText
+                            style={{ textAlign: "left", color: "#156c68" }}
+                          >
+                            <p>{result[0].co_researcher_history}</p>
+                            {/* <p>มีความร่วมมือกับ : </p> */}
+                          </CardText>
+                        </>
                       );
                     })}
-                  </Col>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </Card>
+        </Container>
 
-                  <Col xs="12" md="9" style={{ height: "100%" }}>
-                    <Card
-                      style={{ marginTop: 5, color: "#156c68" }}
-                      className="img-shadow"
-                    >
-                      <CardBody>
-                        {result.map((d, i) => {
-                          return (
-                            <>
-                              <CardTitle
-                                tag="h6"
-                                style={{ padding: 5, color: "#156c68" }}
-                              >
-                                <h3>{result[0].co_researcher_name_th} </h3>
-                              </CardTitle>
-                              <CardText
-                                style={{ textAlign: "left", color: "#156c68" }}
-                              >
-                                <p>{result[0].co_researcher_history}</p>
-                                {/* <p>มีความร่วมมือกับ : </p> */}
-                              </CardText>
-                            </>
-                          );
-                        })}
-                      </CardBody>
-                    </Card>
-                  </Col>
-                </Row>
-              </Card>
-            </Container>
-        <ThemeProvider theme={customTheme}>
-          <div className={classes.root}>
-            <AppBar
-              position="static"
-              color="default"
-              className={classes.appbar}
-            >
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                variant="scrollable"
-                scrollButtons="on"
-                TabIndicatorProps={{
-                  style: { background: "rgb(252, 113, 0)" },
-                }}
-                textColor="secondary"
-                aria-label="scrollable tabs menu"
-                messageErr={messageErr}
-              >
-                <Tab
-                  label={t("agency.tabmenu.menu1")}
-                  className={classes.customLabel}
-                  icon={<AiOutlineApartment size={25} />}
-                  {...a11yProps(0)}
-                />
-                <Tab
-                  label={t("agency.tabmenu.menu2")}
-                  className={classes.customLabel}
-                  icon={<GiGiftOfKnowledge size={25} />}
-                  {...a11yProps(1)}
-                />
-                <Tab
-                  label={t("agency.tabmenu.menu3")}
-                  className={classes.customLabel}
-                  icon={<AiOutlineCoffee size={25} />}
-                  {...a11yProps(2)}
-                />
-
-                <Tab
-                  label={t("agency.tabmenu.menu4")}
-                  className={classes.customLabel}
-                  icon={<HiOutlineLightBulb size={25} />}
-                  {...a11yProps(3)}
-                />
-                <Tab
-                  label={t("agency.tabmenu.menu5")}
-                  className={classes.customLabel}
-                  icon={<HiOutlineLightBulb size={25} />}
-                  {...a11yProps(4)}
-                />
-                <Tab
-                  label={t("agency.tabmenu.menu6")}
-                  className={classes.customLabel}
-                  icon={<FaHandsHelping size={25} />}
-                  {...a11yProps(5)}
-                />
-                <Tab
-                  label={t("agency.tabmenu.menu7")}
-                  className={classes.customLabel}
-                  icon={<AiOutlineReconciliation size={25} />}
-                  {...a11yProps(6)}
-                />
-                <Tab
-                  label={t("agency.tabmenu.menu8")}
-                  className={classes.customLabel}
-                  icon={<AiOutlineUser size={25} />}
-                  {...a11yProps(7)}
-                />
-              </Tabs>
-            </AppBar>
-
-            
-
-            <TabPanel value={value} index={0} className="bg">
-              <ThemeProvider theme={customTheme}>
-                <div className={classes.root}>
+        <BrowserRouter basename={"/monitoring"}>
+          <ThemeProvider theme={customTheme}>
+            <div className={classes.root}>
+              <Route
+                path={"/"}
+                render={(history) => (
                   <AppBar
                     position="static"
                     color="default"
                     className={classes.appbar}
                   >
                     <Tabs
-                      value={valuePage1}
-                      onChange={handleChangePage1}
+                      value={value}
+                      onChange={handleChange}
                       variant="scrollable"
                       scrollButtons="on"
                       TabIndicatorProps={{
                         style: { background: "rgb(252, 113, 0)" },
                       }}
-                      classes={{
-                        root: classes.abRoot,
-                        positionStatic: classes.abStatic,
-                      }}
                       textColor="secondary"
                       aria-label="scrollable tabs menu"
+                      messageErr={messageErr}
                     >
                       <Tab
-                        label="ความเชี่ยวชาญ"
+                        value={`/CoResearcher/expertise`}
+                        label={t("agency.tabmenu.menu1")}
                         className={classes.customLabel}
-                        {...a11yProps(0)}
+                        icon={<AiOutlineApartment size={25} />}
+                        component={Link}
+                        to={`/CoResearcher/expertise?co_researcher_id=${idencrypt}`}
+                        // {...a11yProps(0)}
                       />
                       <Tab
-                        label="รางวัล"
+                        value={`/CoResearcher/knowledge`}
+                        label={t("agency.tabmenu.menu2")}
                         className={classes.customLabel}
-                        {...a11yProps(1)}
+                        icon={<GiGiftOfKnowledge size={25} />}
+                        component={Link}
+                        to={`/CoResearcher/knowledge?co_researcher_id=${idencrypt}`}
+                        // {...a11yProps(1)}
                       />
                       <Tab
-                        label="ใบประกาศ"
+                        label={t("agency.tabmenu.menu3")}
                         className={classes.customLabel}
-                        {...a11yProps(2)}
+                        icon={<AiOutlineCoffee size={25} />}
+                        // {...a11yProps(2)}
+                        value={`/CoResearcher/product`}
+                        component={Link}
+                        to={`/CoResearcher/product?co_researcher_id=${idencrypt}`}
+                      />
+
+                      <Tab
+                        label={t("agency.tabmenu.menu4")}
+                        className={classes.customLabel}
+                        icon={<HiOutlineLightBulb size={25} />}
+                        // {...a11yProps(3)}
+                        value={`/CoResearcher/innovation`}
+                        component={Link}
+                        to={`/CoResearcher/innovation?co_researcher_id=${idencrypt}`}
+                      />
+                      <Tab
+                        label={t("agency.tabmenu.menu5")}
+                        className={classes.customLabel}
+                        icon={<HiOutlineLightBulb size={25} />}
+                        // {...a11yProps(4)}
+                        value={`/CoResearcher/cretive`}
+                        component={Link}
+                        to={`/CoResearcher/cretive?co_researcher_id=${idencrypt}`}
+                      />
+                      <Tab
+                        label={t("agency.tabmenu.menu6")}
+                        className={classes.customLabel}
+                        icon={<FaHandsHelping size={25} />}
+                        // {...a11yProps(5)}
+                        value={`/CoResearcher/projects`}
+                        component={Link}
+                        to={`/CoResearcher/projects?co_researcher_id=${idencrypt}`}
+                      />
+                      <Tab
+                        label={t("agency.tabmenu.menu7")}
+                        className={classes.customLabel}
+                        icon={<AiOutlineReconciliation size={25} />}
+                        {...a11yProps(6)}
+                      />
+                      <Tab
+                        label={t("agency.tabmenu.menu8")}
+                        className={classes.customLabel}
+                        icon={<AiOutlineUser size={25} />}
+                        {...a11yProps(7)}
                       />
                     </Tabs>
                   </AppBar>
+                )}
+              />
 
-                  <div>
-                    <TabPanel value={valuePage1} index={0}>
-                      {/* <Card className="card-header-border card-border "> */}
-                      {/* <CardBody className="card-header-border tab-body ">
-                          <CardTitle
-                            tag="h6"
-                            style={{ padding: 5, color: "white" }}
-                            className={classes.customLabel}
-                          >
-                            ความเชี่ยวชาญ
-                          </CardTitle>
-                        </CardBody> */}
+              <Container
+                className="bg"
+                style={{ paddingTop: "25px", paddingBottom: "25px" }}
+              >
+                <Switch>
+                  <Route path="/CoResearcher/expertise">
+                    <ExpertisePage
+                      co_researcher_id={idencrypt}
+                      classes={classes}
+                      valuePage1={valuePage1}
+                      handleChangePage1={handleChangePage1}
+                      expertise={expertise}
+                      award={award}
+                      certificate={certificate}
+                    />
+                  </Route>
 
-                      <TableContainer
-                        style={{
-                          fontFamily: "Prompt",
-                          padding: "20px 20px 20px 20px",
-                        }}
-                        fluid={true}
-                      >
-                        {expertise.map((listValue, d) => {
-                          return (
-                            <Card
-                              className={useCard.root}
-                              style={{
-                                width: "100%",
-                                margin: "0px 0px 10px 0px",
-                              }}
-                              variant="outlined"
-                            >
-                              <CardContent
-                                className="card-header-border"
-                                elevation={5}
-                                style={{
-                                  width: "100%",
-                                  height: "30%",
-                                  padding: "center",
-                                  backgroundcollor: "red",
-                                }}
-                              >
-                                <CardTitle
-                                  tag="h6"
-                                  style={{
-                                    padding: 5,
-                                    color: "black",
-                                  }}
-                                >
-                                  <Typography
-                                    className={useCard.pos}
-                                    color="textSecondary"
-                                    style={{ fontFamily: "Prompt" }}
-                                  >
-                                    {listValue.expertise_type_name}
-                                  </Typography>
-                                  <CardTitle
-                                    tag="h6"
-                                    style={{
-                                      padding: 5,
-                                      color: "black",
-                                      fontSize: 18,
-                                    }}
-                                    className={classes.customLabel}
-                                  >
-                                    {listValue.co_researcher_expertise}
-                                  </CardTitle>
+                  <Route path="/CoResearcher/knowledge">
+                    <KnowledgePage
+                      co_researcher_id={idencrypt}
+                      knowledge={knowledge}
+                      classes={classes}
+                    />
+                  </Route>
 
-                                  <h
-                                    style={{
-                                      padding: "20px",
-                                      fontFamily: "Prompt",
-                                    }}
-                                  >
-                                    {listValue.co_researcher_expertise_details}
-                                  </h>
-                                  <Typography
-                                    align="left"
-                                    style={{ fontFamily: "Prompt" }}
-                                  ></Typography>
-                                </CardTitle>
+                  <Route path="/CoResearcher/product">
+                    <ProductPage
+                      co_researcher_id={idencrypt}
+                      innovationimg2={innovationimg2}
+                      classes={classes}
+                    />
+                  </Route>
 
-                                <CardBody className="card-header-color">
-                                  <Row>
-                                    <Col md={5}>
-                                      <CardTitle
-                                        tag="h6"
-                                        style={{ padding: 5, color: "black" }}
-                                        className={
-                                          (classes.customLabel,
-                                          classes.headerLabel)
-                                        }
-                                      >
-                                        รูปภาพ
-                                      </CardTitle>
-                                      <p></p>
-                                      <AwesomeSlider bullets={false}>
-                                        {listValue.images.map(
-                                          (listitem, index) => {
-                                            return (
-                                              <Col md="5">
-                                                <img
-                                                  className="card-border"
-                                                  style={{
-                                                    objectPosition:
-                                                      "center center",
-                                                    padding: 1,
-                                                    color: "black",
-                                                  }}
-                                                  width="100%"
-                                                  height="auto"
-                                                  src={`https://researcher.kims-rmuti.com/file-upload/co_expertise-upload/${listitem.co_ex_image}`}
-                                                />
-                                              </Col>
-                                            );
-                                          }
-                                        )}
-                                      </AwesomeSlider>
-                                      {/* <CardImg
-                                            top
-                                            style={{
-                                              backgroundSize: "cover",
-                                            }}
-                                            src={`https://researcher.kims-rmuti.com/file-upload/co_expertise-upload/${listValue.co_researcher_expertise_image}`}
-                                            height="auto"
-                                            width="320"
-                                          /> */}
-                                    </Col>
+                  <Route path="/CoResearcher/innovation">
+                    <InnovationPage
+                      co_researcher_id={idencrypt}
+                      innovationimg1={innovationimg1}
+                      classes={classes}
+                    />
+                  </Route>
 
-                                    <Col md="7">
-                                      <CardTitle
-                                        tag="h6"
-                                        style={{ padding: 5, color: "black" }}
-                                        className={
-                                          (classes.customLabel,
-                                          classes.headerLabel)
-                                        }
-                                      >
-                                        วิดีโอ
-                                      </CardTitle>
+                  <Route path="/CoResearcher/cretive">
+                    <CretivePage
+                      co_researcher_id={idencrypt}
+                      value={value}
+                      dataM={dataM}
+                      classes={classes}
+                      projects={projects}
+                    />
+                  </Route>
 
-                                      <div>
-                                        {listValue.co_researcher_expertise_vdo ? (
-                                          <YoutubeEmbed
-                                            embedId={
-                                              listValue.co_researcher_expertise_vdo
-                                            }
-                                          />
-                                        ) : (
-                                          <div>
-                                            <p
-                                              className="block-example border border-0 border-dark"
-                                              align="center"
-                                              style={{
-                                                padding: "160px",
-                                                fontFamily: "Prompt",
-                                                fontSize: 18,
-                                              }}
-                                            >
-                                              No_Video
-                                            </p>
-                                          </div>
-                                        )}
-                                      </div>
-                                    </Col>
-                                  </Row>
-                                </CardBody>
-                                <p></p>
-                              </CardContent>
-                            </Card>
-                          );
-                        })}
-                      </TableContainer>
-                      {/* </Card> */}
-                    </TabPanel>
-                    <TabPanel value={valuePage1} index={1} >
-                      {/* <Card className="card-header-border card-border"> */}
-                      {/* <CardBody className="card-header-border">
-                          <CardTitle
-                            tag="h6"
-                            style={{ padding: 5, color: "black" }}
-                            className={
-                              (classes.customLabel, classes.headerLabel)
-                            }
-                          >
-                            รางวัล
-                          </CardTitle>
-                        </CardBody> */}
-                      <Grid container spacing={2} columns={16}>
-                        {award.map((listValue, index) => {
-                          return (
-                            <Grid item xs={6}>
-                              <Card
-                                className="card-header-border card-border"
-                                style={{
-                                  margin: "20px 20px 20px 20px",
-                                  width: "40",
-                                  height: "auto",
-                                  fontFamily: "Prompt",
-                                }}
-                              >
-                                <CardBody className="card-header-border">
-                                  <Typography
-                                    className={classes.customLabel}
-                                    style={{
-                                      color: "blue",
-                                      fontFamily: "Prompt",
-                                    }}
-                                  >
-                                    {listValue.co_researcher_award_name_th}
-                                    <p>
-                                      {listValue.co_researcher_award_name_en}
-                                    </p>
-                                  </Typography>
-                                  <hr
-                                    style={{
-                                      marginLeft: 4,
-                                      marginRight: 4,
-                                    }}
-                                  />
-                                  <Typography style={{ fontFamily: "Prompt" }}>
-                                    {listValue.co_researcher_award_Portfolio_th}
-                                  </Typography>
-                                  <p></p>
-                                  <p>
-                                    <img
-                                      src={`https://researcher.kims-rmuti.com/file-upload/co-award-upload/${listValue.co_researcher_award_images}`}
-                                      height="170"
-                                      width="auto"
-                                    />
-                                  </p>
-                                  ผู้มอบรางวัล: &nbsp;
-                                  {listValue.co_researcher_award_giver}
-                                  <Typography
-                                    className={useCard.pos}
-                                    color="textSecondary"
-                                    style={{ fontFamily: "Prompt" }}
-                                  >
-                                    {listValue.co_researcher_award_detail}
-                                  </Typography>
-                                  <Typography
-                                    className={useCard.pos}
-                                    color="textSecondary"
-                                    style={{ fontFamily: "Prompt" }}
-                                  >
-                                    {listValue.co_researcher_award_date
-                                      ? new Date(
-                                          listValue.co_researcher_award_date
-                                        ).toLocaleDateString("th-TH", {
-                                          year: "numeric",
-                                          month: "long",
-                                          day: "numeric",
-                                          weekday: "long",
-                                        })
-                                      : ""}
-                                  </Typography>
-                                </CardBody>
-                              </Card>
-                            </Grid>
-                          );
-                        })}
-                      </Grid>
-                      {/* </Card> */}
-                    </TabPanel>
+                  <Route path="/CoResearcher/projects">
+                    <ProjectPage
+                      co_researcher_id={idencrypt}
+                      classes={classes}
+                      valuePage1={valuePage1}
+                      patent={patent}
+                      publication={publication}
+                      handleChangePage1={handleChangePage1}
+                    />
+                  </Route>
+                </Switch>
+              </Container>
 
-                    <TabPanel value={valuePage1} index={2}>
-                      {/* <Card className="card-header-border card-border">
-                        <CardBody className="card-header-border">
-                          <CardTitle
-                            tag="h6"
-                            style={{ padding: 5, color: "black" }}
-                            className={
-                              (classes.customLabel, classes.headerLabel)
-                            }
-                          >
-                            ใบประกาศ
-                          </CardTitle>
-                        </CardBody> */}
-                      <Grid container spacing={2} columns={16}>
-                        {certificate.map((listValue, index) => {
-                          return (
-                            <Grid item xs={6}>
-                              <Card
-                                className="card-header-border card-border"
-                                style={{
-                                  margin: "20px 20px 20px 20px",
-                                  width: "40",
-                                  height: "auto",
-                                  fontFamily: "Prompt",
-                                }}
-                              >
-                                <CardBody className="card-header-border">
-                                  <Typography
-                                    className={classes.customLabel}
-                                    style={{
-                                      color: "blue",
-                                      fontFamily: "Prompt",
-                                    }}
-                                  >
-                                    {listValue.co_certificate_name_th}
-                                    <p>{listValue.co_certificate_agency}</p>
-                                  </Typography>
-                                  <hr
-                                    style={{
-                                      marginLeft: 4,
-                                      marginRight: 4,
-                                    }}
-                                  />
-                                  <p>{listValue.co_certificate_agency}</p>
-                                  <p>
-                                    <img
-                                      src={`https://researcher.kims-rmuti.com/file-upload/co_certificate-upload/${listValue.co_certificate_image}`}
-                                      height="200"
-                                      width="auto"
-                                    />
-                                  </p>
+              <TabPanel value={value} index={0} className="bg"></TabPanel>
 
-                                  <Typography style={{ fontFamily: "Prompt" }}>
-                                    <Card.Text>
-                                      <p></p>
-                                      อบรม วันที่ :&nbsp;
-                                      {listValue.co_certificate_start
-                                        ? new Date(
-                                            listValue.co_certificate_start
-                                          ).toLocaleDateString("th-TH", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                            weekday: "long",
-                                          })
-                                        : ""}
-                                      <Typography
-                                        style={{ fontFamily: "Prompt" }}
-                                      >
-                                        ถึง :&nbsp;{" "}
-                                        {listValue.co_certificate_end
-                                          ? new Date(
-                                              listValue.co_certificate_start
-                                            ).toLocaleDateString("th-TH", {
-                                              year: "numeric",
-                                              month: "long",
-                                              day: "numeric",
-                                              weekday: "long",
-                                            })
-                                          : ""}
-                                      </Typography>
-                                      <Typography
-                                        align="center"
-                                        className={useCard.pos}
-                                        color="textSecondary"
-                                        style={{ fontFamily: "Prompt" }}
-                                      >
-                                        สถานที่ :&nbsp;
-                                        {listValue.co_certificate_venue}
-                                      </Typography>
-                                      <Typography
-                                        align="center"
-                                        className={useCard.pos}
-                                        color="textSecondary"
-                                        style={{ fontFamily: "Prompt" }}
-                                      >
-                                        ประเทศ :{" "}
-                                        {listValue.co_certificate_country}
-                                      </Typography>
-                                    </Card.Text>
-                                  </Typography>
-                                </CardBody>
-                              </Card>
-                            </Grid>
-                          );
-                        })}
-                      </Grid>
-                      {/* </Card> */}
-                    </TabPanel>
-                  </div>
-                </div>
-              </ThemeProvider>
-            </TabPanel>
-
-            <TabPanel value={value} index={1} className="tab-body">
-              {/* <Card className="card-header-border card-border"> */}
-              {/* <CardBody className="card-header-border">
+              <TabPanel value={value} index={1} className="tab-body">
+                {/* <Card className="card-header-border card-border"> */}
+                {/* <CardBody className="card-header-border">
                   <CardTitle
                     tag="h6"
                     style={{ padding: 5, color: "black" }}
@@ -1222,147 +902,13 @@ function CoResearcher(props) {
                     ความรู้
                   </CardTitle>
                 </CardBody> */}
-              <TableContainer
-                style={{
-                  fontFamily: "Prompt",
-                  padding: "20px 20px 20px 20px",
-                }}
-                fluid={true}
-              >
-                {knowledge.map((listValue, ListItem) => {
-                  return (
-                    <Card
-                      className={useCard.root}
-                      style={{
-                        width: "100%",
-                        margin: "0px 0px 10px 0px",
-                      }}
-                      variant="outlined"
-                    >
-                      <CardContent
-                        className="card-header-border"
-                        elevation={5}
-                        style={{
-                          width: "100%",
-                          height: "30%",
-                          padding: "center",
-                          backgroundcollor: "red",
-                        }}
-                      >
-                        <CardTitle
-                          tag="h6"
-                          style={{ padding: 5, color: "black" }}
-                        >
-                          <CardTitle
-                            tag="h6"
-                            style={{
-                              padding: 5,
-                              color: "black",
-                              fontSize: 18,
-                            }}
-                            className={classes.customLabel}
-                          >
-                            {listValue.co_researcher_knowledge_name}
-                          </CardTitle>
 
-                          <h
-                            style={{
-                              padding: "20px",
-                              fontFamily: "Prompt",
-                            }}
-                          >
-                            {listValue.co_researcher_knowledge_detail}
-                          </h>
-                        </CardTitle>
+                {/* </Card> */}
+              </TabPanel>
 
-                        <CardSubtitle
-                          tag="p"
-                          className="text-muted"
-                          style={{ fontSize: 14 }}
-                        ></CardSubtitle>
-
-                        <CardBody className="card-header-color">
-                          <Row>
-                            <Col md={5}>
-                              <CardTitle
-                                tag="h6"
-                                style={{ padding: 5, color: "black" }}
-                                className={
-                                  (classes.customLabel, classes.headerLabel)
-                                }
-                              >
-                                รูปภาพ
-                              </CardTitle>
-
-                              <AwesomeSlider bullets={false}>
-                                {listValue.images.map((listitem, index) => {
-                                  return (
-                                    <Col md="5">
-                                      <img
-                                        className="card-border"
-                                        style={{
-                                          objectPosition: "center center",
-                                          padding: 1,
-                                          color: "black",
-                                        }}
-                                        width="100%"
-                                        height="auto"
-                                        src={`https://researcher.kims-rmuti.com/file-upload/co-knowledge-upload/${listitem.co_kl_image}`}
-                                      />
-                                    </Col>
-                                  );
-                                })}
-                              </AwesomeSlider>
-                            </Col>
-
-                            <Col md="7">
-                              <CardTitle
-                                tag="h6"
-                                style={{ padding: 5, color: "black" }}
-                                className={
-                                  (classes.customLabel, classes.headerLabel)
-                                }
-                              >
-                                วิดีโอ
-                              </CardTitle>
-
-                              <div>
-                                {listValue.co_researcher_knowledge_videolink ? (
-                                  <YoutubeEmbed
-                                    embedId={
-                                      listValue.co_researcher_knowledge_videolink
-                                    }
-                                  />
-                                ) : (
-                                  <div>
-                                    <p
-                                      className="block-example border border-0 border-dark"
-                                      align="center"
-                                      style={{
-                                        padding: "160px",
-                                        fontFamily: "Prompt",
-                                        fontSize: 18,
-                                      }}
-                                    >
-                                      No_Video
-                                    </p>
-                                  </div>
-                                )}
-                              </div>
-                            </Col>
-                          </Row>
-                        </CardBody>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </TableContainer>
-              {/* </Card> */}
-            </TabPanel>
-
-            <TabPanel value={value} index={2} className="tab-body">
-              <Card>
-                {/* <CardBody className="card-header-border">
+              <TabPanel value={value} index={2} className="tab-body">
+                <Card>
+                  {/* <CardBody className="card-header-border">
                   <CardTitle
                     tag="h6"
                     style={{ padding: 5, color: "black" }}
@@ -1371,154 +917,13 @@ function CoResearcher(props) {
                     ผลิตภัณฑ์
                   </CardTitle>
                 </CardBody> */}
-                <Card>
-                  <CardBody>
-                    <Grid container spacing={2} columns={16}>
-                      {innovationimg2.map(
-                        (listValue, index, innovation_type) => {
-                          return (
-                            <Grid item xs={3}>
-                              <Card
-                                className="card-header-border card-border"
-                                style={{
-                                  margin: "20px 20px 20px 20px",
-                                  width: "40",
-                                  fontFamily: "Prompt",
-                                  height: 700,
-                                }}
-                              >
-                                <CardBody
-                                  // className="card-border"
-                                  key={innovation_type}
-                                  style={{
-                                    fontFamily: "Prompt",
-                                    height: 100,
-                                  }}
-                                >
-                                  <Typography
-                                    style={{
-                                      color: "blue",
-                                      fontFamily: "Prompt",
-                                    }}
-                                  >
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        ชื่อผลิตภัณฑ์ :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_name}
-                                    </p>
-                                    {/* <Typography className={useCard.pos}>
-                                <p>
-                                  <h className={classes.customLabel}>
-                                    รายละเอียด :{" "}
-                                  </h>
-                                  {listValue.co_researcher_pi_details}
-                                </p>
-                              </Typography> */}
-                                  </Typography>
-                                  <p></p>
-                                  <p>
-                                    <AwesomeSlider bullets={false}>
-                                      {listValue.images.map(
-                                        (listitem, index) => {
-                                          return (
-                                            <Col md="5">
-                                              <img
-                                                className="card-border"
-                                                style={{
-                                                  objectPosition:
-                                                    "center center",
-                                                  padding: 1,
-                                                  color: "black",
-                                                }}
-                                                width="100%"
-                                                height="auto"
-                                                src={`https://researcher.kims-rmuti.com/file-upload/co_innovationproduct_upload/${listitem.co_innovation_image}`}
-                                              />
-                                            </Col>
-                                          );
-                                        }
-                                      )}
-                                    </AwesomeSlider>
-                                  </p>
-
-                                  <Typography
-                                    className={useCard.pos}
-                                    style={{
-                                      textAlign: "left",
-                                      fontFamily: "Prompt",
-                                    }}
-                                  >
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        จำนวนการผลิต :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_amount} ชิ้น
-                                    </p>
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        ราคา :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_price} บาท
-                                    </p>
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        ผู้ประสานงาน :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_coordinator}
-                                    </p>
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        โทรศัพท์ :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_phone}
-                                    </p>
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        Facebook :{" "}
-                                      </h>
-                                      <Button
-                                        a
-                                        href={
-                                          listValue.co_researcher_pi_facebook
-                                        }
-                                        style={{ fontSize: "smaller" }}
-                                      >
-                                        {listValue.co_researcher_pi_facebook.slice(
-                                          8,
-                                          25
-                                        )}
-                                      </Button>
-                                    </p>
-
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        Line :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_line}
-                                    </p>
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        Email :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_mail}
-                                    </p>
-                                    <p></p>
-                                  </Typography>
-                                </CardBody>
-                              </Card>
-                            </Grid>
-                          );
-                        }
-                      )}
-                    </Grid>
-                  </CardBody>
                 </Card>
-              </Card>
-            </TabPanel>
+              </TabPanel>
 
-            <TabPanel value={value} index={3} className="tab-body">
-              <Card className="card-header-border card-border">
+              <TabPanel value={value} index={3} className="tab-body"></TabPanel>
+
+              <TabPanel value={value} index={4} className="tab-body">
+                {/* <Card className="card-header-border card-border"> */}
                 {/* <CardBody className="card-header-border">
                   <CardTitle
                     tag="h6"
@@ -1528,1052 +933,418 @@ function CoResearcher(props) {
                     นวัตกรรม
                   </CardTitle>
                 </CardBody> */}
-                <Card>
-                  <CardBody>
-                    <Grid container spacing={2} columns={16}>
-                      {innovationimg1.map(
-                        (listValue, index, innovation_type) => {
-                          return (
-                            <Grid item xs={3}>
-                              <Card
-                                className="card-header-border card-border"
-                                style={{
-                                  margin: "20px 20px 20px 20px",
-                                  width: "40",
-                                  fontFamily: "Prompt",
-                                  height: 750,
-                                }}
-                              >
-                                <CardBody
-                                  className="card-border"
-                                  key={innovation_type}
-                                  style={{
-                                    fontFamily: "Prompt",
-                                    height: 100,
-                                  }}
+
+                {/* </Card> */}
+              </TabPanel>
+
+              <div></div>
+
+              <TabPanel value={value} index={6} className="tab-body"></TabPanel>
+
+              {result.map((listValue, index) => {
+                return (
+                  // listValue.co_researcher_vdo ? (
+
+                  // <TabPanel value={value} index={6}>
+                  //   <Row>
+                  //     <Col md={6}>
+                  //       <Card className="card-header-border card-border">
+                  //         <CardBody className="card-header-border">
+                  //           <CardTitle
+                  //             tag="h6"
+                  //             style={{ padding: 5, color: "black" }}
+                  //             className={(classes.customLabel, classes.headerLabel)}
+                  //           >
+                  //             ข้อมูลติดต่อ
+                  //           </CardTitle>
+                  //         </CardBody>
+
+                  //         <div className="row no-gutters">
+                  //           <div className="col-md-4">
+                  //             {result.map((d, listValue) => {
+                  //               return (
+                  //                 <img
+                  //                   width="200"
+                  //                   height="auto"
+                  //                   aria-label="Placeholder: Image"
+                  //                   preserveAspectRatio="xMidYMid slice"
+                  //                   src={`https://researcher.kims-rmuti.com/file-upload/co_researcher-upload/${d.co_researcher_image}`}
+                  //                   style={{ padding: "10px" }}
+                  //                 />
+                  //               );
+                  //             })}
+                  //           </div>
+
+                  //           <div className="col-md-8">
+                  //             <div
+                  //               className="card-body"
+                  //               style={{ fontFamily: "Prompt" }}
+                  //             >
+                  //               {result.map((d) => {
+                  //                 return (
+                  //                   <div>
+                  //                     <p className="card-title" align="left">
+                  //                       <PersonIcon />
+                  //                       &nbsp;Name : {d.coordinator_name_th}{" "}
+                  //                       {d.coordinator_lastname_th}
+                  //                     </p>
+
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "green" }}
+                  //                     >
+                  //                       <CallIcon />
+                  //                       &nbsp; โทรศัพท์ : &nbsp;
+                  //                       {d.co_researcher_phone}
+                  //                     </p>
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "red" }}
+                  //                     >
+                  //                       <EmailIcon />
+                  //                       &nbsp; Email : &nbsp;{d.co_researcher_mail}
+                  //                     </p>
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "blue" }}
+                  //                     >
+                  //                       <FacebookIcon />
+                  //                       &nbsp; Facebook :{" "}
+                  //                       {d.co_researcher_facebook ? (
+                  //                         <Button
+                  //                           a
+                  //                           href={d.co_researcher_facebook}
+                  //                           style={{
+                  //                             fontSize: "smaller",
+                  //                             color: "blue",
+                  //                             fontFamily: "Prompt",
+                  //                           }}
+                  //                         >
+                  //                           {d.co_researcher_name_th}{" "}
+                  //                         </Button>
+                  //                       ) : (
+                  //                         " "
+                  //                       )}
+                  //                     </p>
+
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "blue" }}
+                  //                     >
+                  //                       <TwitterIcon />
+                  //                       &nbsp; Twitter : {d.co_researcher_twitter}
+                  //                     </p>
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "green" }}
+                  //                     >
+                  //                       <ChatBubbleIcon />
+                  //                       &nbsp; Line : {d.co_researcher_line}
+                  //                     </p>
+
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "black" }}
+                  //                     >
+                  //                       <InstagramIcon />
+                  //                       &nbsp; Instagram : {d.co_researcher_ig}
+                  //                     </p>
+                  //                     <p className="card-text" align="left">
+                  //                       <LanguageIcon />
+                  //                       &nbsp; Website :{" "}
+                  //                       <Button
+                  //                         a
+                  //                         href={d.co_researcher_website}
+                  //                         style={{
+                  //                           fontSize: "small",
+                  //                           color: "blue",
+                  //                           fontFamily: "Prompt",
+                  //                         }}
+                  //                       >
+                  //                         {d.co_researcher_website}
+                  //                       </Button>
+                  //                     </p>
+                  //                   </div>
+                  //                 );
+                  //               })}
+                  //             </div>
+                  //           </div>
+                  //         </div>
+                  //       </Card>
+                  //     </Col>
+
+                  //     <Col xs={6}>
+                  //       <div>
+                  //         {result.map((d, listValue) => {
+                  //           return (
+                  //             <div>
+                  //               {d.co_researcher_vdo ? (
+                  //                 <YoutubeEmbed embedId={d.co_researcher_vdo} />
+                  //               ) : (
+                  //                 <div>
+                  //                   <p
+                  //                     className={classes.customLabel}
+                  //                     align="center"
+                  //                     style={{
+                  //                       padding: "160px",
+                  //                       fontFamily: "Prompt",
+                  //                     }}
+                  //                   >
+                  //                     {" "}
+                  //                     not video{" "}
+                  //                   </p>{" "}
+                  //                 </div>
+                  //               )}
+                  //             </div>
+                  //           );
+                  //         })}
+                  //       </div>
+                  //     </Col>
+                  //   </Row>
+                  //   <p></p>
+
+                  //   <Row>
+                  //     <div>
+                  //       <Card className="card-header-border card-border">
+                  //         <CardBody className="card-header-border">
+                  //           <CardTitle
+                  //             tag="h6"
+                  //             style={{ padding: 5, color: "black" }}
+                  //             className={(classes.customLabel, classes.headerLabel)}
+                  //           >
+                  //             พื้นที่ติดต่อ
+                  //           </CardTitle>
+                  //         </CardBody>
+
+                  //         <MapContainer
+                  //           className="map-border"
+                  //           center={[13, 100]}
+                  //           zoom={6}
+                  //           scrollWheelZoom={true}
+                  //           zoomControl={false}
+                  //           style={{ width: "100%", height: "50vh" }}
+                  //         >
+                  //           <TileLayer
+                  //             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  //             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  //           />
+                  //           <ZoomControl position="topright" />
+                  //           {markermap}
+                  //         </MapContainer>
+
+                  //         {/* </CardBody> */}
+                  //       </Card>
+                  //     </div>
+                  //   </Row>
+                  // </TabPanel>
+
+                  // ) : (
+                  //   <TabPanel value={value} index={6}>
+                  //   <Row>
+                  //     <Col xs={6}>
+                  //       <div>
+                  //         <Card className="card-header-border card-border">
+                  //           <CardBody className="card-header-border">
+                  //             <CardTitle
+                  //               tag="h6"
+                  //               style={{ padding: 5, color: "black" }}
+                  //               className={(classes.customLabel, classes.headerLabel)}
+                  //             >
+                  //               พื้นที่ติดต่อ
+                  //             </CardTitle>
+                  //           </CardBody>
+
+                  //           <MapContainer
+                  //             className="map-border"
+                  //             center={[13, 100]}
+                  //             zoom={6}
+                  //             scrollWheelZoom={true}
+                  //             zoomControl={false}
+                  //             style={{ width: "100%", height: "50vh" }}
+                  //           >
+                  //             <TileLayer
+                  //               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  //               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  //             />
+                  //             <ZoomControl position="topright" />
+                  //             {markermap}
+                  //           </MapContainer>
+
+                  //           {/* </CardBody> */}
+                  //         </Card>
+                  //       </div>
+                  //     </Col>
+
+                  //     <Col md={6}>
+                  //       <Card className="card-header-border card-border">
+                  //         <CardBody className="card-header-border">
+                  //           <CardTitle
+                  //             tag="h6"
+                  //             style={{ padding: 5, color: "black" }}
+                  //             className={(classes.customLabel, classes.headerLabel)}
+                  //           >
+                  //             ข้อมูลติดต่อ
+                  //           </CardTitle>
+                  //         </CardBody>
+
+                  //         <div className="row no-gutters">
+                  //           <div className="col-md-4">
+                  //             {result.map((d) => {
+                  //               return (
+                  //                 <img
+                  //                   width="200"
+                  //                   height="auto"
+                  //                   aria-label="Placeholder: Image"
+                  //                   preserveAspectRatio="xMidYMid slice"
+                  //                   src={`https://researcher.kims-rmuti.com/file-upload/co_researcher-upload/${d.co_researcher_image}`}
+                  //                   style={{ padding: "10px" }}
+                  //                 />
+                  //               );
+                  //             })}
+                  //           </div>
+
+                  //           <div className="col-md-8">
+                  //             <div
+                  //               className="card-body"
+                  //               style={{ fontFamily: "Prompt" }}
+                  //             >
+                  //               {result.map((d) => {
+                  //                 return (
+                  //                   <div>
+                  //                     <p className="card-title" align="left">
+                  //                       <PersonIcon />
+                  //                       &nbsp;Name : {d.coordinator_name_th}{" "}
+                  //                       {d.coordinator_lastname_th}
+                  //                     </p>
+
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "green" }}
+                  //                     >
+                  //                       <CallIcon />
+                  //                       &nbsp; โทรศัพท์ :{d.co_researcher_phone}
+                  //                     </p>
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "red" }}
+                  //                     >
+                  //                       <EmailIcon />
+                  //                       &nbsp; Email : {d.co_researcher_mail}
+                  //                     </p>
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "blue" }}
+                  //                     >
+                  //                       <FacebookIcon />
+                  //                       &nbsp; Facebook :{" "}
+                  //                       {d.co_researcher_facebook ? (
+                  //                         <Button a href={d.co_researcher_facebook} style={{ fontSize: "smaller", color: "blue",
+                  //                         fontFamily: "Prompt",}} >
+                  //                         {d.co_researcher_name_th} </Button>
+
+                  //                       ) : (" ")}
+
+                  //                     </p>
+
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "blue" }}
+                  //                     >
+                  //                       <TwitterIcon />
+                  //                       &nbsp; Twitter : {d.co_researcher_twitter}
+                  //                     </p>
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "green" }}
+                  //                     >
+                  //                       <ChatBubbleIcon />
+                  //                       &nbsp; Line : {d.co_researcher_line}
+                  //                     </p>
+
+                  //                     <p
+                  //                       className="card-text"
+                  //                       align="left"
+                  //                       style={{ color: "black" }}
+                  //                     >
+                  //                       <InstagramIcon />
+                  //                       &nbsp; Instagram : {d.co_researcher_ig}
+                  //                     </p>
+                  //                     <p className="card-text" align="left">
+                  //                       <LanguageIcon />
+                  //                       &nbsp; Website :{" "}
+                  //                       <Button a href={d.co_researcher_website} style={{ fontSize:"small" , color: "blue",
+                  //                       fontFamily: "Prompt",}}>
+
+                  //                         {d.co_researcher_website}
+                  //                       </Button>
+                  //                     </p>
+                  //                   </div>
+                  //                 );
+                  //               })}
+                  //             </div>
+                  //           </div>
+                  //         </div>
+                  //       </Card>
+                  //     </Col>
+                  //   </Row>
+                  // </TabPanel>
+
+                  // )
+
+                  <TabPanel value={value} index={7} className="tab-body">
+                    <Row>
+                      <Col xs={6}>
+                        <div>
+                          <Card className="card-header-border card-border">
+                            <Card>
+                              <CardBody className="card-header-border">
+                                <CardTitle
+                                  tag="h6"
+                                  style={{ padding: 5, color: "black" }}
+                                  className={
+                                    (classes.customLabel, classes.headerLabel)
+                                  }
                                 >
-                                  <Typography
-                                    style={{
-                                      color: "blue",
-                                      fontFamily: "Prompt",
-                                    }}
-                                  >
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        ชื่อนวัตกรรม :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_name}
-                                    </p>
-                                    {/* <Typography className={useCard.pos}>
-                                <p>
-                                  <h className={classes.customLabel}>
-                                    รายละเอียด :{" "}
-                                  </h>
-                                  {listValue.co_researcher_pi_details}
-                                </p>
-                                  </Typography> */}
-                                  </Typography>
-                                  <p></p>
-                                  <p>
-                                    <AwesomeSlider bullets={false}>
-                                      {listValue.images.map(
-                                        (listitem, index) => {
-                                          return (
-                                            <Col md="5">
-                                              <img
-                                                className="card-border"
-                                                style={{
-                                                  objectPosition:
-                                                    "center center",
-                                                  padding: 1,
-                                                  color: "black",
-                                                }}
-                                                width="100%"
-                                                height="auto"
-                                                src={`https://researcher.kims-rmuti.com/file-upload/co_innovationproduct_upload/${listitem.co_innovation_image}`}
-                                              />
-                                            </Col>
-                                          );
-                                        }
-                                      )}
-                                    </AwesomeSlider>
-                                  </p>
+                                  ตำแหน่งที่ตั้ง
+                                </CardTitle>
+                              </CardBody>
 
-                                  <Typography
-                                    className={useCard.pos}
-                                    style={{ textAlign: "left" }}
-                                  >
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        จำนวนการผลิต :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_amount} ชิ้น
-                                    </p>
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        ราคา :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_price} บาท
-                                    </p>
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        ผู้ประสานงาน :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_coordinator}
-                                    </p>
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        โทรศัพท์ :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_phone}
-                                    </p>
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        Facebook :{" "}
-                                      </h>
-
-                                      <Button
-                                        a
-                                        href={
-                                          listValue.co_researcher_pi_facebook
-                                        }
-                                      >
-                                        {listValue.co_researcher_pi_facebook.slice(
-                                          8,
-                                          25
-                                        )}
-                                      </Button>
-                                    </p>
-
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        Line :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_line}
-                                    </p>
-                                    <p>
-                                      <h className={classes.customLabel}>
-                                        Email :{" "}
-                                      </h>
-                                      {listValue.co_researcher_pi_mail}
-                                    </p>
-                                    <p></p>
-                                  </Typography>
-                                </CardBody>
-                              </Card>
-                            </Grid>
-                          );
-                        }
-                      )}
-                    </Grid>
-                  </CardBody>
-                </Card>
-              </Card>
-            </TabPanel>
-
-            <TabPanel value={value} index={4} className="tab-body">
-              {/* <Card className="card-header-border card-border"> */}
-              {/* <CardBody className="card-header-border">
-                  <CardTitle
-                    tag="h6"
-                    style={{ padding: 5, color: "black" }}
-                    className={(classes.customLabel, classes.headerLabel)}
-                  >
-                    นวัตกรรม
-                  </CardTitle>
-                </CardBody> */}
-
-              {/* </Card> */}
-            </TabPanel>
-
-            <div>
-              <Row>
-                <TabPanel value={value} index={5} className="tab-body">
-                  <Card style={{ marginTop: "15px", fontFamily: "Prompt" }}>
-                    {/* <CardBody className="card-header-border">
-                        <CardTitle
-                          tag="h6"
-                          style={{
-                            padding: 5,
-                            color: "black",
-                            fontFamily: "Prompt",
-                          }}
-                          className={(classes.customLabel, classes.headerLabel)}
-                        >
-                          แผนที่แสดงโครงการดำเนินงาน
-                        </CardTitle>
-                      </CardBody> */}
-
-                    <MapContainer
-                      className="map-border"
-                      center={[13, 100]}
-                      zoom={3}
-                      scrollWheelZoom={true}
-                      zoomControl={false}
-                      style={{ width: "100%", height: "600px" }}
-                    >
-                      <TileLayer
-                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                      />
-
-                      <ZoomControl position="topright" />
-                      <D3Layer location={dataM} />
-                    </MapContainer>
-                  </Card>
-
-                  <p></p>
-
-                  <Card className="card-header-border card-border">
-                    <Card>
-                      <CardBody className="card-header-border card-border">
-                        <CardTitle
-                          tag="h6"
-                          style={{ padding: 5, color: "black" }}
-                          className={(classes.customLabel, classes.headerLabel)}
-                        >
-                          โครงการดำเนินงาน
-                        </CardTitle>
-                      </CardBody>
-
-                      <TableContainer
-                        className="card-header-border card-border"
-                        style={{
-                          fontFamily: "Prompt",
-                          padding: "20px 20px 20px 20px",
-                        }}
-                      >
-                        <Grid container spacing={2} columns={16}>
-                          {projects.map((listValue, index, project_type, l) => {
-                            return (
-                              <Grid item xs={6}>
-                                <Card
-                                  className=" card-border"
-                                  variant="outlined"
-                                  key={project_type}
-                                  style={{
-                                    margin: "0px 0px 10px 0px",
-                                    fontFamily: "Prompt",
-                                  }}
-                                >
-                                  <CardBody>
-                                    <CardContent>
-                                      {/* <img
-                                      width="auto"
-                                      height="170"
-                                      aria-label="Placeholder: Image"
-                                      preserveAspectRatio="xMidYMid slice"
-                                      src={`https://www.km-innovations.rmuti.ac.th/researcher/file-upload/co_researcher-upload/${listValue.co_researcher_image}`}
-                                      style={{ padding: "10px" }}
-                                    /> */}
-                                      <p>
-                                        <Typography
-                                          align="left"
-                                          style={{ fontFamily: "Prompt" }}
-                                          gutterBottom
-                                        >
-                                          <h className={classes.customLabel}>
-                                            {listValue.concept_proposal_name_th}
-                                            <br></br>{" "}
-                                          </h>
-                                          {listValue.concept_proposal_name_en}
-                                        </Typography>
-                                      </p>
-                                      <p>
-                                        <Typography
-                                          align="left"
-                                          style={{ fontFamily: "Prompt" }}
-                                        >
-                                          <h className={classes.customLabel}>
-                                            งบประมาณ : &nbsp;{" "}
-                                          </h>
-                                          {listValue.concept_budget
-                                            ? new Number(
-                                                listValue.concept_budget
-                                              ).toLocaleString("en")
-                                            : ""}{" "}
-                                          บาท
-                                        </Typography>
-                                      </p>
-                                      <p>
-                                        <Typography
-                                          align="left"
-                                          style={{ fontFamily: "Prompt" }}
-                                        >
-                                          <h className={classes.customLabel}>
-                                            ปี : &nbsp;{" "}
-                                          </h>{" "}
-                                          {listValue.concept_year}
-                                        </Typography>
-                                      </p>
-                                      <p>
-                                        <Typography
-                                          align="left"
-                                          style={{ fontFamily: "Prompt" }}
-                                        >
-                                          <h className={classes.customLabel}>
-                                            ชื่อนักวิจัย : &nbsp;
-                                          </h>
-                                          {listValue.prefix_name_th}
-                                          {listValue.user_first_name_th}&nbsp;
-                                          {listValue.user_last_name_th}
-                                        </Typography>
-                                      </p>
-                                      <p>
-                                        <Typography
-                                          align="left"
-                                          style={{ fontFamily: "Prompt" }}
-                                        >
-                                          <h className={classes.customLabel}>
-                                            หน่วยงาน : &nbsp;
-                                          </h>
-                                          {listValue.name}
-                                        </Typography>
-                                      </p>
-                                      {/* <Button>
-                                      <a
-                                        target="_blank"
-                                        href={`https://researcher.kims-rmuti.com/file-upload/project-upload/${listValue.project_upload}`}
-                                        rel="noreferrer"
-                                      >
-                                        <GetAppIcon />
-                                      </a>
-                                    </Button> */}
-
-                                      <Button
-                                        color="primary"
-                                        style={{ fontFamily: "Prompt" }}
-                                        aria-label="view info project"
-                                        onClick={() => {
-                                          console.log(
-                                            "test" + listValue.project_id
-                                          );
-                                          props.history.push({
-                                            pathname:
-                                              "/ProjectDetail/projectNetwork",
-                                            search: `?project_id=${btoa(
-                                              listValue.project_id
-                                            )}`,
-                                            pathname:
-                                              "/ProjectDetailConcep/projectNetwork",
-
-                                            search: `?concep_id=${btoa(
-                                              listValue.concept_proposal_id
-                                            )}`,
-                                          });
-                                        }}
-                                      >
-                                        รายละเอียดเพิ่มเติม
-                                      </Button>
-                                    </CardContent>
-                                  </CardBody>
-                                </Card>
-                              </Grid>
-                            );
-                          })}
-                        </Grid>
-                      </TableContainer>
-                    </Card>
-                  </Card>
-                </TabPanel>
-              </Row>
-            </div>
-
-            <TabPanel value={value} index={6} className="tab-body">
-              <ThemeProvider theme={customTheme}>
-                <div className={classes.root}>
-                  <AppBar
-                    position="static"
-                    color="default"
-                    className={classes.appbar}
-                  >
-                    <Tabs
-                      value={valuePage1}
-                      onChange={handleChangePage1}
-                      variant="scrollable"
-                      scrollButtons="on"
-                      TabIndicatorProps={{
-                        style: { background: "rgb(252, 113, 0)" },
-                      }}
-                      classes={{
-                        root: classes.abRoot,
-                        positionStatic: classes.abStatic,
-                      }}
-                      textColor="secondary"
-                      aria-label="scrollable tabs menu"
-                    >
-                      <Tab
-                        label="ทรัพย์สินทางปัญญา"
-                        className={classes.customLabel}
-                        {...a11yProps(0)}
-                      />
-                      <Tab
-                        label="เอกสารเผยแพร่"
-                        className={classes.customLabel}
-                        {...a11yProps(1)}
-                      />
-                    </Tabs>
-                  </AppBar>
-                </div>
-
-                <TabPanel value={valuePage1} index={0}>
-                  <Card className="card-header-border card-border">
-                    <CardBody className="card-header-border">
-                      <CardTitle
-                        tag="h6"
-                        style={{ padding: 5, color: "black" }}
-                        className={(classes.customLabel, classes.headerLabel)}
-                      >
-                        ทรัพย์สินทางปัญญา
-                      </CardTitle>
-                    </CardBody>
-                    <TableContainer
-                      component={Paper}
-                      style={{ fontFamily: "Prompt" }}
-                    >
-                      <Timeline align="alternate">
-                        {patent.map((listValue, index) => {
-                          return (
-                            <Grid item xs={4} container justify="center">
-                              <Card
-                                style={{
-                                  width: "30",
-                                  margin: "30px 30px 30px 30px",
-                                  fontFamily: "Prompt",
-                                }}
+                              <MapContainer
+                                className="map-border"
+                                center={[13, 100]}
+                                zoom={6}
+                                scrollWheelZoom={true}
+                                zoomControl={false}
+                                style={{ width: "100%", height: "50vh" }}
                               >
-                                <Card.Img
-                                  variant="top"
-                                  src={`https://researcher.kims-rmuti.com/file-upload/co_patent-upload/${listValue.co_patent_image}`}
-                                  height="auto"
-                                  width="150"
+                                <TileLayer
+                                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
-                                <Card.Body>
-                                  <Card.Title>
-                                    {" "}
-                                    {listValue.co_patent_name_th}
-                                  </Card.Title>
-                                  <Card.Text>
-                                    {listValue.co_patent_name_EN}
+                                <ZoomControl position="topright" />
+                                {markermap}
+                              </MapContainer>
 
-                                    <p>
-                                      {listValue.co_patent_registered_name}
-                                      <p></p>
-                                      วันที่ :&nbsp;
-                                      {listValue.co_patent_date
-                                        ? new Date(
-                                            listValue.co_patent_date
-                                          ).toLocaleDateString("th-TH", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                            weekday: "long",
-                                          })
-                                        : ""}
-                                      <p></p>
-                                      <Typography
-                                        className={useCard.pos}
-                                        color="textSecondary"
-                                        style={{ fontFamily: "Prompt" }}
-                                      >
-                                        ประเภทสิทธิบัตร :&nbsp;
-                                        {listValue.patent_type_name}
-                                      </Typography>
-                                    </p>
-                                    {/* <Typography
-                                      style={{ fontFamily: "Prompt" }}
-                                    >
-                                      ถึง :&nbsp;{" "}
-                                      {listValue.co_certificate_end
-                                        ? new Date(
-                                            listValue.co_certificate_start
-                                          ).toLocaleDateString("th-TH", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                            weekday: "long",
-                                          })
-                                        : ""}
-                                    </Typography>
-                                    <Typography
-                                      align="center"
-                                      className={useCard.pos}
-                                      color="textSecondary"
-                                      style={{ fontFamily: "Prompt" }}
-                                    >
-                                      สถานที่ :&nbsp;
-                                      {listValue.co_certificate_venue}
-                                    </Typography>
-                                    <Typography
-                                      align="center"
-                                      className={useCard.pos}
-                                      color="textSecondary"
-                                      style={{ fontFamily: "Prompt" }}
-                                    >
-                                      ประเทศ :{" "}
-                                      {listValue.co_certificate_country}
-                                    </Typography> */}
-                                  </Card.Text>
-                                </Card.Body>
-                              </Card>
-                            </Grid>
-                          );
-                        })}
-                      </Timeline>
-                    </TableContainer>
-                  </Card>
-                </TabPanel>
+                              {/* </CardBody> */}
+                            </Card>
+                          </Card>
+                        </div>
+                      </Col>
 
-                <TabPanel value={valuePage1} index={1}>
-                  <Card className="card-header-border card-border">
-                    <CardBody className="card-header-border">
-                      <CardTitle
-                        tag="h6"
-                        style={{ padding: 5, color: "black" }}
-                        className={(classes.customLabel, classes.headerLabel)}
-                      >
-                        เอกสารเผยแพร่
-                      </CardTitle>
-                    </CardBody>
-                    <TableContainer
-                      component={Paper}
-                      style={{ fontFamily: "Prompt" }}
-                    >
-                      <Timeline align="alternate">
-                        {publication.map((listValue, index) => {
-                          return (
-                            <TimelineItem>
-                              <TimelineOppositeContent align="left">
-                                <Typography
-                                  variant="body2"
-                                  padding="1px 1px 1px 1px"
-                                >
-                                  {listValue.patent_date}
-                                </Typography>
-                              </TimelineOppositeContent>
-                              <TimelineSeparator>
-                                <TimelineDot
-                                  color="secondary"
-                                  variant="outlined"
-                                  className="card-header-border"
-                                >
-                                  <AiOutlineReconciliation />
-                                </TimelineDot>
-
-                                <TimelineConnector />
-                              </TimelineSeparator>
-
-                              <TimelineContent align="left">
-                                <Paper elevation={5}>
-                                  <Typography
-                                    align="left"
-                                    variant="h6"
-                                    component="h6"
-                                  >
-                                    {listValue.educational_degree}
-                                  </Typography>
-
-                                  <Typography
-                                    align="left"
-                                    style={{
-                                      color: "blue",
-                                      fontFamily: "Prompt",
-                                    }}
-                                  >
-                                    &nbsp;{" "}
-                                    <h
-                                      style={{
-                                        color: "black",
-                                        fontFamily: "Prompt",
-                                      }}
-                                    >
-                                      ชื่อ
-                                    </h>
-                                    : &nbsp;
-                                    {
-                                      listValue.co_researcher_publication_name_th
-                                    }
-                                    &nbsp; (
-                                    {
-                                      listValue.co_researcher_publication_name_en
-                                    }
-                                    )
-                                  </Typography>
-                                  <Typography
-                                    align="left"
-                                    style={{
-                                      color: "blue",
-                                      fontFamily: "Prompt",
-                                    }}
-                                  >
-                                    &nbsp;{" "}
-                                    <h
-                                      style={{
-                                        color: "black",
-                                        fontFamily: "Prompt",
-                                      }}
-                                    >
-                                      ประเภท
-                                    </h>
-                                    : &nbsp;
-                                    {
-                                      listValue.co_researcher_publication_publish
-                                    }
-                                  </Typography>
-                                  <Typography
-                                    align="left"
-                                    style={{
-                                      color: "blue",
-                                      fontFamily: "Prompt",
-                                    }}
-                                  >
-                                    &nbsp;{" "}
-                                    <h
-                                      style={{
-                                        color: "black",
-                                        fontFamily: "Prompt",
-                                      }}
-                                    >
-                                      {" "}
-                                      ประเทศ{" "}
-                                    </h>
-                                    : &nbsp;
-                                    {
-                                      listValue.co_researcher_publication_country
-                                    }
-                                  </Typography>
-                                  <Typography
-                                    align="left"
-                                    style={{
-                                      color: "blue",
-                                      fontFamily: "Prompt",
-                                    }}
-                                  >
-                                    &nbsp;{" "}
-                                    <h
-                                      style={{
-                                        color: "black",
-                                        fontFamily: "Prompt",
-                                      }}
-                                    >
-                                      {" "}
-                                      วันที่{" "}
-                                    </h>
-                                    : &nbsp;
-                                    {listValue.co_researcher_publication_date
-                                      ? new Date(
-                                          listValue.co_researcher_publication_date
-                                        ).toLocaleDateString("th-TH", {
-                                          year: "numeric",
-                                          month: "long",
-                                          day: "numeric",
-                                          weekday: "long",
-                                        })
-                                      : " "}
-                                  </Typography>
-                                  <Typography
-                                    align="left"
-                                    style={{
-                                      color: "blue",
-                                      fontFamily: "Prompt",
-                                    }}
-                                  >
-                                    &nbsp;{" "}
-                                    {
-                                      listValue.co_researcher_publication_type_name
-                                    }
-                                  </Typography>
-                                  <Button>
-                                    <a
-                                      target="_blank"
-                                      href={`https://researcher.kims-rmuti.com/file-upload/publication-upload/${listValue.patent_attachment}`}
-                                      rel="noreferrer"
-                                    >
-                                      {
-                                        listValue.co_researcher_publication_attachment
-                                      }
-                                      <GetAppIcon />
-                                    </a>
-                                  </Button>
-                                </Paper>
-                              </TimelineContent>
-                            </TimelineItem>
-                          );
-                        })}
-                      </Timeline>
-                    </TableContainer>
-                  </Card>
-                </TabPanel>
-              </ThemeProvider>
-            </TabPanel>
-
-            {result.map((listValue, index) => {
-              return (
-                // listValue.co_researcher_vdo ? (
-
-                // <TabPanel value={value} index={6}>
-                //   <Row>
-                //     <Col md={6}>
-                //       <Card className="card-header-border card-border">
-                //         <CardBody className="card-header-border">
-                //           <CardTitle
-                //             tag="h6"
-                //             style={{ padding: 5, color: "black" }}
-                //             className={(classes.customLabel, classes.headerLabel)}
-                //           >
-                //             ข้อมูลติดต่อ
-                //           </CardTitle>
-                //         </CardBody>
-
-                //         <div className="row no-gutters">
-                //           <div className="col-md-4">
-                //             {result.map((d, listValue) => {
-                //               return (
-                //                 <img
-                //                   width="200"
-                //                   height="auto"
-                //                   aria-label="Placeholder: Image"
-                //                   preserveAspectRatio="xMidYMid slice"
-                //                   src={`https://researcher.kims-rmuti.com/file-upload/co_researcher-upload/${d.co_researcher_image}`}
-                //                   style={{ padding: "10px" }}
-                //                 />
-                //               );
-                //             })}
-                //           </div>
-
-                //           <div className="col-md-8">
-                //             <div
-                //               className="card-body"
-                //               style={{ fontFamily: "Prompt" }}
-                //             >
-                //               {result.map((d) => {
-                //                 return (
-                //                   <div>
-                //                     <p className="card-title" align="left">
-                //                       <PersonIcon />
-                //                       &nbsp;Name : {d.coordinator_name_th}{" "}
-                //                       {d.coordinator_lastname_th}
-                //                     </p>
-
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "green" }}
-                //                     >
-                //                       <CallIcon />
-                //                       &nbsp; โทรศัพท์ : &nbsp;
-                //                       {d.co_researcher_phone}
-                //                     </p>
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "red" }}
-                //                     >
-                //                       <EmailIcon />
-                //                       &nbsp; Email : &nbsp;{d.co_researcher_mail}
-                //                     </p>
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "blue" }}
-                //                     >
-                //                       <FacebookIcon />
-                //                       &nbsp; Facebook :{" "}
-                //                       {d.co_researcher_facebook ? (
-                //                         <Button
-                //                           a
-                //                           href={d.co_researcher_facebook}
-                //                           style={{
-                //                             fontSize: "smaller",
-                //                             color: "blue",
-                //                             fontFamily: "Prompt",
-                //                           }}
-                //                         >
-                //                           {d.co_researcher_name_th}{" "}
-                //                         </Button>
-                //                       ) : (
-                //                         " "
-                //                       )}
-                //                     </p>
-
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "blue" }}
-                //                     >
-                //                       <TwitterIcon />
-                //                       &nbsp; Twitter : {d.co_researcher_twitter}
-                //                     </p>
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "green" }}
-                //                     >
-                //                       <ChatBubbleIcon />
-                //                       &nbsp; Line : {d.co_researcher_line}
-                //                     </p>
-
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "black" }}
-                //                     >
-                //                       <InstagramIcon />
-                //                       &nbsp; Instagram : {d.co_researcher_ig}
-                //                     </p>
-                //                     <p className="card-text" align="left">
-                //                       <LanguageIcon />
-                //                       &nbsp; Website :{" "}
-                //                       <Button
-                //                         a
-                //                         href={d.co_researcher_website}
-                //                         style={{
-                //                           fontSize: "small",
-                //                           color: "blue",
-                //                           fontFamily: "Prompt",
-                //                         }}
-                //                       >
-                //                         {d.co_researcher_website}
-                //                       </Button>
-                //                     </p>
-                //                   </div>
-                //                 );
-                //               })}
-                //             </div>
-                //           </div>
-                //         </div>
-                //       </Card>
-                //     </Col>
-
-                //     <Col xs={6}>
-                //       <div>
-                //         {result.map((d, listValue) => {
-                //           return (
-                //             <div>
-                //               {d.co_researcher_vdo ? (
-                //                 <YoutubeEmbed embedId={d.co_researcher_vdo} />
-                //               ) : (
-                //                 <div>
-                //                   <p
-                //                     className={classes.customLabel}
-                //                     align="center"
-                //                     style={{
-                //                       padding: "160px",
-                //                       fontFamily: "Prompt",
-                //                     }}
-                //                   >
-                //                     {" "}
-                //                     not video{" "}
-                //                   </p>{" "}
-                //                 </div>
-                //               )}
-                //             </div>
-                //           );
-                //         })}
-                //       </div>
-                //     </Col>
-                //   </Row>
-                //   <p></p>
-
-                //   <Row>
-                //     <div>
-                //       <Card className="card-header-border card-border">
-                //         <CardBody className="card-header-border">
-                //           <CardTitle
-                //             tag="h6"
-                //             style={{ padding: 5, color: "black" }}
-                //             className={(classes.customLabel, classes.headerLabel)}
-                //           >
-                //             พื้นที่ติดต่อ
-                //           </CardTitle>
-                //         </CardBody>
-
-                //         <MapContainer
-                //           className="map-border"
-                //           center={[13, 100]}
-                //           zoom={6}
-                //           scrollWheelZoom={true}
-                //           zoomControl={false}
-                //           style={{ width: "100%", height: "50vh" }}
-                //         >
-                //           <TileLayer
-                //             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                //             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                //           />
-                //           <ZoomControl position="topright" />
-                //           {markermap}
-                //         </MapContainer>
-
-                //         {/* </CardBody> */}
-                //       </Card>
-                //     </div>
-                //   </Row>
-                // </TabPanel>
-
-                // ) : (
-                //   <TabPanel value={value} index={6}>
-                //   <Row>
-                //     <Col xs={6}>
-                //       <div>
-                //         <Card className="card-header-border card-border">
-                //           <CardBody className="card-header-border">
-                //             <CardTitle
-                //               tag="h6"
-                //               style={{ padding: 5, color: "black" }}
-                //               className={(classes.customLabel, classes.headerLabel)}
-                //             >
-                //               พื้นที่ติดต่อ
-                //             </CardTitle>
-                //           </CardBody>
-
-                //           <MapContainer
-                //             className="map-border"
-                //             center={[13, 100]}
-                //             zoom={6}
-                //             scrollWheelZoom={true}
-                //             zoomControl={false}
-                //             style={{ width: "100%", height: "50vh" }}
-                //           >
-                //             <TileLayer
-                //               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                //               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                //             />
-                //             <ZoomControl position="topright" />
-                //             {markermap}
-                //           </MapContainer>
-
-                //           {/* </CardBody> */}
-                //         </Card>
-                //       </div>
-                //     </Col>
-
-                //     <Col md={6}>
-                //       <Card className="card-header-border card-border">
-                //         <CardBody className="card-header-border">
-                //           <CardTitle
-                //             tag="h6"
-                //             style={{ padding: 5, color: "black" }}
-                //             className={(classes.customLabel, classes.headerLabel)}
-                //           >
-                //             ข้อมูลติดต่อ
-                //           </CardTitle>
-                //         </CardBody>
-
-                //         <div className="row no-gutters">
-                //           <div className="col-md-4">
-                //             {result.map((d) => {
-                //               return (
-                //                 <img
-                //                   width="200"
-                //                   height="auto"
-                //                   aria-label="Placeholder: Image"
-                //                   preserveAspectRatio="xMidYMid slice"
-                //                   src={`https://researcher.kims-rmuti.com/file-upload/co_researcher-upload/${d.co_researcher_image}`}
-                //                   style={{ padding: "10px" }}
-                //                 />
-                //               );
-                //             })}
-                //           </div>
-
-                //           <div className="col-md-8">
-                //             <div
-                //               className="card-body"
-                //               style={{ fontFamily: "Prompt" }}
-                //             >
-                //               {result.map((d) => {
-                //                 return (
-                //                   <div>
-                //                     <p className="card-title" align="left">
-                //                       <PersonIcon />
-                //                       &nbsp;Name : {d.coordinator_name_th}{" "}
-                //                       {d.coordinator_lastname_th}
-                //                     </p>
-
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "green" }}
-                //                     >
-                //                       <CallIcon />
-                //                       &nbsp; โทรศัพท์ :{d.co_researcher_phone}
-                //                     </p>
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "red" }}
-                //                     >
-                //                       <EmailIcon />
-                //                       &nbsp; Email : {d.co_researcher_mail}
-                //                     </p>
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "blue" }}
-                //                     >
-                //                       <FacebookIcon />
-                //                       &nbsp; Facebook :{" "}
-                //                       {d.co_researcher_facebook ? (
-                //                         <Button a href={d.co_researcher_facebook} style={{ fontSize: "smaller", color: "blue",
-                //                         fontFamily: "Prompt",}} >
-                //                         {d.co_researcher_name_th} </Button>
-
-                //                       ) : (" ")}
-
-                //                     </p>
-
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "blue" }}
-                //                     >
-                //                       <TwitterIcon />
-                //                       &nbsp; Twitter : {d.co_researcher_twitter}
-                //                     </p>
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "green" }}
-                //                     >
-                //                       <ChatBubbleIcon />
-                //                       &nbsp; Line : {d.co_researcher_line}
-                //                     </p>
-
-                //                     <p
-                //                       className="card-text"
-                //                       align="left"
-                //                       style={{ color: "black" }}
-                //                     >
-                //                       <InstagramIcon />
-                //                       &nbsp; Instagram : {d.co_researcher_ig}
-                //                     </p>
-                //                     <p className="card-text" align="left">
-                //                       <LanguageIcon />
-                //                       &nbsp; Website :{" "}
-                //                       <Button a href={d.co_researcher_website} style={{ fontSize:"small" , color: "blue",
-                //                       fontFamily: "Prompt",}}>
-
-                //                         {d.co_researcher_website}
-                //                       </Button>
-                //                     </p>
-                //                   </div>
-                //                 );
-                //               })}
-                //             </div>
-                //           </div>
-                //         </div>
-                //       </Card>
-                //     </Col>
-                //   </Row>
-                // </TabPanel>
-
-                // )
-
-                <TabPanel value={value} index={7} className="tab-body">
-                  <Row>
-                    <Col xs={6}>
-                      <div>
-                        <Card className="card-header-border card-border">
-                          <Card>
+                      <Col md={6}>
+                        <Card>
+                          <Card className="card-header-border card-border">
                             <CardBody className="card-header-border">
                               <CardTitle
                                 tag="h6"
@@ -2582,188 +1353,153 @@ function CoResearcher(props) {
                                   (classes.customLabel, classes.headerLabel)
                                 }
                               >
-                                ตำแหน่งที่ตั้ง
+                                ข้อมูลติดต่อ
                               </CardTitle>
                             </CardBody>
 
-                            <MapContainer
-                              className="map-border"
-                              center={[13, 100]}
-                              zoom={6}
-                              scrollWheelZoom={true}
-                              zoomControl={false}
-                              style={{ width: "100%", height: "50vh" }}
-                            >
-                              <TileLayer
-                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                              />
-                              <ZoomControl position="topright" />
-                              {markermap}
-                            </MapContainer>
-
-                            {/* </CardBody> */}
-                          </Card>
-                        </Card>
-                      </div>
-                    </Col>
-
-                    <Col md={6}>
-                      <Card>
-                        <Card className="card-header-border card-border">
-                          <CardBody className="card-header-border">
-                            <CardTitle
-                              tag="h6"
-                              style={{ padding: 5, color: "black" }}
-                              className={
-                                (classes.customLabel, classes.headerLabel)
-                              }
-                            >
-                              ข้อมูลติดต่อ
-                            </CardTitle>
-                          </CardBody>
-
-                          <div className="row no-gutters">
-                            <div className="col-md-4">
-                              {result.map((d) => {
-                                return (
-                                  <img
-                                    width="200"
-                                    height="auto"
-                                    aria-label="Placeholder: Image"
-                                    preserveAspectRatio="xMidYMid slice"
-                                    src={`https://researcher.kims-rmuti.com/file-upload/co_researcher-upload/${d.co_researcher_image}`}
-                                    style={{ padding: "10px" }}
-                                  />
-                                );
-                              })}
-                            </div>
-
-                            <div className="col-md-8">
-                              <div
-                                className="card-body"
-                                style={{ fontFamily: "Prompt" }}
-                              >
+                            <div className="row no-gutters">
+                              <div className="col-md-4">
                                 {result.map((d) => {
                                   return (
-                                    <div>
-                                      <p className="card-title" align="left">
-                                        <PersonIcon /> {""}
-                                        {d.active_coordinator_name_th == 1
-                                          ? "ชื่อ :" +
-                                            " " +
-                                            [d.coordinator_name_th]
-                                          : " "}{" "}
-                                        {d.active_coordinator_lastname_th == 1
-                                          ? [d.coordinator_lastname_th]
-                                          : " "}{" "}
-                                      </p>
-
-                                      <p
-                                        className="card-text"
-                                        align="left"
-                                        style={{ color: "green" }}
-                                      >
-                                        <CallIcon />
-                                        โทรศัพท์ :
-                                        {d.active_co_researcher_phone == 1
-                                          ? d.co_researcher_phone
-                                          : " "}{" "}
-                                      </p>
-                                      <p
-                                        className="card-text"
-                                        align="left"
-                                        style={{ color: "red" }}
-                                      >
-                                        <EmailIcon />
-                                        Email :
-                                        {d.active_co_researcher_mail == 1
-                                          ? d.co_researcher_mail
-                                          : " "}{" "}
-                                      </p>
-                                      <p
-                                        className="card-text"
-                                        align="left"
-                                        style={{ color: "blue" }}
-                                      >
-                                        <FacebookIcon />
-                                        &nbsp; Facebook :{" "}
-                                        {d.co_researcher_facebook ? (
-                                          <Button
-                                            a
-                                            href={d.co_researcher_facebook}
-                                            style={{
-                                              fontSize: "smaller",
-                                              color: "blue",
-                                              fontFamily: "Prompt",
-                                            }}
-                                          >
-                                            {d.co_researcher_name_th}{" "}
-                                          </Button>
-                                        ) : (
-                                          " "
-                                        )}
-                                      </p>
-
-                                      <p
-                                        className="card-text"
-                                        align="left"
-                                        style={{ color: "blue" }}
-                                      >
-                                        <TwitterIcon />
-                                        &nbsp; Twitter :{" "}
-                                        {d.co_researcher_twitter}
-                                      </p>
-                                      <p
-                                        className="card-text"
-                                        align="left"
-                                        style={{ color: "green" }}
-                                      >
-                                        <ChatBubbleIcon />
-                                        &nbsp; Line : {d.co_researcher_line}
-                                      </p>
-
-                                      <p
-                                        className="card-text"
-                                        align="left"
-                                        style={{ color: "black" }}
-                                      >
-                                        <InstagramIcon />
-                                        &nbsp; Instagram : {d.co_researcher_ig}
-                                      </p>
-                                      <p className="card-text" align="left">
-                                        <LanguageIcon />
-                                        &nbsp; Website :
-                                        {d.co_researcher_website ? (
-                                          <Button
-                                            a
-                                            href={d.co_researcher_website}
-                                            style={{ fontSize: 16 }}
-                                          >
-                                            {d.co_researcher_website.slice(
-                                              8,
-                                              35
-                                            )}
-                                          </Button>
-                                        ) : (
-                                          " "
-                                        )}
-                                      </p>
-                                    </div>
+                                    <img
+                                      width="200"
+                                      height="auto"
+                                      aria-label="Placeholder: Image"
+                                      preserveAspectRatio="xMidYMid slice"
+                                      src={`https://researcher.kims-rmuti.com/file-upload/co_researcher-upload/${d.co_researcher_image}`}
+                                      style={{ padding: "10px" }}
+                                    />
                                   );
                                 })}
                               </div>
+
+                              <div className="col-md-8">
+                                <div
+                                  className="card-body"
+                                  style={{ fontFamily: "Prompt" }}
+                                >
+                                  {result.map((d) => {
+                                    return (
+                                      <div>
+                                        <p className="card-title" align="left">
+                                          <PersonIcon /> {""}
+                                          {d.active_coordinator_name_th == 1
+                                            ? "ชื่อ :" +
+                                              " " +
+                                              [d.coordinator_name_th]
+                                            : " "}{" "}
+                                          {d.active_coordinator_lastname_th == 1
+                                            ? [d.coordinator_lastname_th]
+                                            : " "}{" "}
+                                        </p>
+
+                                        <p
+                                          className="card-text"
+                                          align="left"
+                                          style={{ color: "green" }}
+                                        >
+                                          <CallIcon />
+                                          โทรศัพท์ :
+                                          {d.active_co_researcher_phone == 1
+                                            ? d.co_researcher_phone
+                                            : " "}{" "}
+                                        </p>
+                                        <p
+                                          className="card-text"
+                                          align="left"
+                                          style={{ color: "red" }}
+                                        >
+                                          <EmailIcon />
+                                          Email :
+                                          {d.active_co_researcher_mail == 1
+                                            ? d.co_researcher_mail
+                                            : " "}{" "}
+                                        </p>
+                                        <p
+                                          className="card-text"
+                                          align="left"
+                                          style={{ color: "blue" }}
+                                        >
+                                          <FacebookIcon />
+                                          &nbsp; Facebook :{" "}
+                                          {d.co_researcher_facebook ? (
+                                            <Button
+                                              a
+                                              href={d.co_researcher_facebook}
+                                              style={{
+                                                fontSize: "smaller",
+                                                color: "blue",
+                                                fontFamily: "Prompt",
+                                              }}
+                                            >
+                                              {d.co_researcher_name_th}{" "}
+                                            </Button>
+                                          ) : (
+                                            " "
+                                          )}
+                                        </p>
+
+                                        <p
+                                          className="card-text"
+                                          align="left"
+                                          style={{ color: "blue" }}
+                                        >
+                                          <TwitterIcon />
+                                          &nbsp; Twitter :{" "}
+                                          {d.co_researcher_twitter}
+                                        </p>
+                                        <p
+                                          className="card-text"
+                                          align="left"
+                                          style={{ color: "green" }}
+                                        >
+                                          <ChatBubbleIcon />
+                                          &nbsp; Line : {d.co_researcher_line}
+                                        </p>
+
+                                        <p
+                                          className="card-text"
+                                          align="left"
+                                          style={{ color: "black" }}
+                                        >
+                                          <InstagramIcon />
+                                          &nbsp; Instagram :{" "}
+                                          {d.co_researcher_ig}
+                                        </p>
+                                        <p className="card-text" align="left">
+                                          <LanguageIcon />
+                                          &nbsp; Website :
+                                          {d.co_researcher_website ? (
+                                            <Button
+                                              a
+                                              href={d.co_researcher_website}
+                                              style={{ fontSize: 16 }}
+                                            >
+                                              {d.co_researcher_website.slice(
+                                                8,
+                                                35
+                                              )}
+                                            </Button>
+                                          ) : (
+                                            " "
+                                          )}
+                                        </p>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
                             </div>
-                          </div>
+                          </Card>
                         </Card>
-                      </Card>
-                    </Col>
-                  </Row>
-                </TabPanel>
-              );
-            })}
-          </div>
-        </ThemeProvider>
+                      </Col>
+                    </Row>
+                  </TabPanel>
+                );
+              })}
+            </div>
+          </ThemeProvider>
+        </BrowserRouter>
       </div>
     </body>
   );

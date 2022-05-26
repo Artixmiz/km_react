@@ -37,7 +37,7 @@ const apiUrl = "https://kmapi.kims-rmuti.com";
 const localUrl = "http://localhost:4000";
 
 const baseRouteUrl = "/:locale(th|en)?";
-export const baseUrl = i18n.language === "en" ? "" : "/" + i18n.language;
+const baseUrl = i18n.language === "en" ? "" : "/" + i18n.language;
 
 function App(props) {
   const [locationCo, Setdatamap] = useState([]);
@@ -63,6 +63,7 @@ function App(props) {
     getData();
     // const params = new URLSearchParams(document.location.search);
     // const ns = params.get("language");
+
 
     localStorage.getItem("language") === "th"
       ? i18n.changeLanguage("th")
