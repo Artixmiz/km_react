@@ -67,7 +67,10 @@ import { RiUser2Line } from "react-icons/ri";
 
 import { useTranslation } from "react-i18next";
 import Knowledges from "./Components/ConceptPage/Knowledge";
-import noImg from "./images/no-image.png"
+import noImg from "./images/no-image.png";
+
+import "./Components/Css/researcher.scss";
+import "./Components/Css/project.scss";
 
 const customTheme = createTheme({
   palette: {
@@ -107,12 +110,13 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   appbar: {
     alignItems: "center",
-    backgroundColor: "rgba(219, 219, 219, 0.459)",
+    backgroundColor: "#fff",
+    boxShadow: "none",
   },
   root: {
     flexGrow: 1,
     width: "100%",
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
   },
 
   customLabel: {
@@ -186,6 +190,8 @@ TabPanel.propTypes = {
 };
 
 function ProjectDetail(props) {
+  const [loading_profile, setLoading_profile] = useState(true);
+
   const [activeTab, setActiveTab] = useState("1");
 
   const { t } = useTranslation();
@@ -352,6 +358,7 @@ function ProjectDetail(props) {
       .get(`${apiUrl}/api/get/concept_proposal/detail/${id}`)
       .then(async (result) => {
         setproject([result.data[0]]);
+        setLoading_profile(false);
         // console.log(result.data);
         setlocation([
           {
@@ -645,20 +652,18 @@ function ProjectDetail(props) {
     embedId: PropTypes.string.isRequired,
   };
 
-  
-
   const outputEl = output.map((ListItem) => {
     return (
       <CardBody className="map-border">
-          <img
-            // width="100%"
-            src={`https://researcher.kims-rmuti.com/file-upload/innovation-upload/${ListItem.output_image}`}
-            alt="Card image cap"
-            className="img-shadow"
-            style={{ borderRadius: 4 }}
-            onerror={`javascript:this.src=${noImg}`}
-          />
-     
+        <img
+          // width="100%"
+          src={`https://researcher.kims-rmuti.com/file-upload/innovation-upload/${ListItem.output_image}`}
+          alt="Card image cap"
+          className="img-shadow"
+          style={{ borderRadius: 4 }}
+          onerror={`javascript:this.src=${noImg}`}
+        />
+
         <CardBody
           style={{
             backgroundColor: "rgba(223, 223, 223, 0.37)",
@@ -692,47 +697,35 @@ function ProjectDetail(props) {
   });
 
   return (
-    <body>
-      <div className="body-detail">
-        <Container className="pt-4 bg" maxWidth={false}>
-          <Card style={{ backgroundColor: "#fbaa35" }}>
-            <Row
-              className=" p-4 align-items-center justify-content-md-center"
-              style={{
-                fontFamily: "Prompt",
-              }}
-            >
-              {/* <Col xs="12" md="auto">
-              <img
-                src={`https://www.km-innovations.rmuti.ac.th/researcher/file-upload/co_researcher-upload/community.jpg`}
-                width={350}
-                className="img-shadow"
-                style={{ borderRadius: 4 }}
-              />
-            </Col> */}
-
-              <Col xs="12" md="12">
-                {project.map((p) => (
-                  <Card
-                    style={{ marginTop: 5, color: "#156c68" }}
-                    className="img-shadow"
-                  >
-                    <CardBody>
-                      <CardTitle
-                        tag="h6"
-                        style={{
-                          fontWeight: "bold",
-                          padding: 5,
-                          color: "#156c68",
-                        }}
+    <div className="body-detail" style={{ padding: "2rem" }}>
+      <BrowserRouter basename={"/monitoring"}>
+        <div
+          style={{
+            backgroundColor: "#fff",
+            width: "100%",
+            marginTop: "2rem",
+            borderRadius: "15px 15px 0 0",
+          }}
+        >
+          <Row>
+            <Col sm={12}>
+              <div class={`${loading_profile && "demo"}`}></div>
+              {project.map((p) => {
+                return (
+                  <Row>
+                    <Col sm={12}>
+                      <section
+                        className="profile-info"
+                        style={{ marginTop: "20px" }}
                       >
-                        {p.concept_proposal_name_th}
-                      </CardTitle>
-                      {/* <hr /> */}
-                    </CardBody>
-
-                    <CardBody>
-                      <CardText style={{ textAlign: "left" }}>
+                        <h4>
+                          <strong>{p.concept_proposal_name_th}</strong>
+                        </h4>
+                      </section>
+                    </Col>
+                    <Col sm={1} />
+                    <Col sm={10}>
+                      <div style={{ textAlign: "left", paddingLeft: "1rem" }}>
                         <p>
                           {user.map((listValue, index) => {
                             return (
@@ -756,7 +749,6 @@ function ProjectDetail(props) {
                             );
                           })}
                         </p>
-
                         <p>
                           <GiMoneyStack size={35} />{" "}
                           {t("concept_proposal_page.menu2")}:{" "}
@@ -765,7 +757,6 @@ function ProjectDetail(props) {
                             : ""}{" "}
                           บาท
                         </p>
-
                         <p>
                           <GiMoneyStack size={35} />{" "}
                           {t("concept_proposal_page.menu3")}:{" "}
@@ -775,40 +766,42 @@ function ProjectDetail(props) {
                           <GiCalendar size={35} />{" "}
                           {t("concept_proposal_page.menu4")}: {p.concept_year}
                         </p>
-                      </CardText>
-                    </CardBody>
-                  </Card>
-                ))}
-              </Col>
-            </Row>
-          </Card>
-        </Container>
-        <BrowserRouter basename={"/monitoring"}>
-          <ThemeProvider theme={customTheme}>
-            <div className={classes.root}>
-              <Route
-                path={"/"}
-                render={(history) => (
-                  <AppBar
-                    position="static"
-                    color="default"
-                    className={classes.appbar}
-                  >
-                    <Tabs
-                      variant="scrollable"
-                      scrollButtons="on"
-                      TabIndicatorProps={{
-                        style: { background: "rgb(252, 113, 0)" },
-                      }}
-                      textColor="secondary"
-                      value={
-                        history.location.pathname !== "/"
-                          ? history.location.pathname
-                          : false
-                      }
+                      </div>
+                    </Col>
+                  </Row>
+                );
+              })}
+            </Col>
+            <Col sm={12}>
+              <div className="line-bottom" style={{ margin: "1rem 3rem" }} />
+            </Col>
+          </Row>
+          <Row style={{ width: "100%" }}>
+            <Col sm={12}>
+              <section className="statistics">
+                <Route
+                  path={"/"}
+                  render={(history) => (
+                    <AppBar
+                      position="static"
+                      color="default"
+                      className={classes.appbar}
                     >
-                      {/* {console.log(history.location.pathname)} */}
-                      {/* <Tab
+                      <Tabs
+                        variant="scrollable"
+                        scrollButtons="on"
+                        TabIndicatorProps={{
+                          style: { background: "rgb(252, 113, 0)" },
+                        }}
+                        textColor="secondary"
+                        value={
+                          history.location.pathname !== "/"
+                            ? history.location.pathname
+                            : false
+                        }
+                      >
+                        {/* {console.log(history.location.pathname)} */}
+                        {/* <Tab
                         value={`/ProjectDetailConcep/knowledege`}
                         label={t("concept_proposal_page.tabmenu.menu1")}
                         className={classes.customLabel}
@@ -816,60 +809,70 @@ function ProjectDetail(props) {
                         component={Link}
                         to={`/ProjectDetailConcep/knowledege?concep_id=${idencrypt}`}
                       /> */}
-                      <Tab
-                        value={`/ProjectDetailConcep/projectNetwork`}
-                        label={t("concept_proposal_page.tabmenu.menu1")}
-                        className={classes.customLabel}
-                        icon={<BiNetworkChart size={25} />}
-                        component={Link}
-                        to={`/ProjectDetailConcep/projectNetwork?concep_id=${idencrypt}`}
-                      />
-                      <Tab
-                        value={`/ProjectDetailConcep/conceptDetail`}
-                        label={t("concept_proposal_page.tabmenu.menu2")}
-                        className={classes.customLabel}
-                        icon={<BiInfoCircle size={25} />}
-                        component={Link}
-                        to={`/ProjectDetailConcep/conceptDetail?concep_id=${idencrypt}`}
-                      />
-                      <Tab
-                        value={`/ProjectDetailConcep/knowledgeDetail`}
-                        label={t("concept_proposal_page.tabmenu.menu3")}
-                        className={classes.customLabel}
-                        icon={<GiGiftOfKnowledge size={25} />}
-                        component={Link}
-                        to={`/ProjectDetailConcep/knowledgeDetail?concep_id=${idencrypt}`}
-                      />
-                      <Tab
-                        value={`/ProjectDetailConcep/NewknowledgeDetail`}
-                        label={t("concept_proposal_page.tabmenu.menu4")}
-                        className={classes.customLabel}
-                        icon={<GiGiftOfKnowledge size={25} />}
-                        component={Link}
-                        to={`/ProjectDetailConcep/NewknowledgeDetail?concep_id=${idencrypt}`}
-                      />
-                      <Tab
-                        value={`/ProjectDetailConcep/ImpactDetail`}
-                        label={t("concept_proposal_page.tabmenu.menu5")}
-                        className={classes.customLabel}
-                        icon={<GiImpactPoint size={25} />}
-                        component={Link}
-                        to={`/ProjectDetailConcep/ImpactDetail?concep_id=${idencrypt}`}
-                      />
-                    </Tabs>
-                  </AppBar>
-                )}
-              />
-
-              <Container
-                className="bg"
-                style={{ paddingTop: "25px", paddingBottom: "25px" }}
-              >
+                        <Tab
+                          value={`/ProjectDetailConcep/ProjectNetwork`}
+                          label={t("concept_proposal_page.tabmenu.menu1")}
+                          className={classes.customLabel}
+                          icon={<BiNetworkChart size={25} />}
+                          component={Link}
+                          to={`/ProjectDetailConcep/ProjectNetwork?concep_id=${idencrypt}`}
+                        />
+                        <Tab
+                          value={`/ProjectDetailConcep/conceptDetail`}
+                          label={t("concept_proposal_page.tabmenu.menu2")}
+                          className={classes.customLabel}
+                          icon={<BiInfoCircle size={25} />}
+                          component={Link}
+                          to={`/ProjectDetailConcep/conceptDetail?concep_id=${idencrypt}`}
+                        />
+                        <Tab
+                          value={`/ProjectDetailConcep/knowledgeDetail`}
+                          label={t("concept_proposal_page.tabmenu.menu3")}
+                          className={classes.customLabel}
+                          icon={<GiGiftOfKnowledge size={25} />}
+                          component={Link}
+                          to={`/ProjectDetailConcep/knowledgeDetail?concep_id=${idencrypt}`}
+                        />
+                        <Tab
+                          value={`/ProjectDetailConcep/NewknowledgeDetail`}
+                          label={t("concept_proposal_page.tabmenu.menu4")}
+                          className={classes.customLabel}
+                          icon={<GiGiftOfKnowledge size={25} />}
+                          component={Link}
+                          to={`/ProjectDetailConcep/NewknowledgeDetail?concep_id=${idencrypt}`}
+                        />
+                        <Tab
+                          value={`/ProjectDetailConcep/ImpactDetail`}
+                          label={t("concept_proposal_page.tabmenu.menu5")}
+                          className={classes.customLabel}
+                          icon={<GiImpactPoint size={25} />}
+                          component={Link}
+                          to={`/ProjectDetailConcep/ImpactDetail?concep_id=${idencrypt}`}
+                        />
+                      </Tabs>
+                    </AppBar>
+                  )}
+                />
+              </section>
+            </Col>
+          </Row>
+        </div>
+        <div
+          style={{
+            backgroundColor: "rgb(246, 168, 52)",
+            width: "100%",
+            marginTop: "0rem",
+            borderRadius: "0 0 15px 15px",
+          }}
+        >
+          <ThemeProvider theme={customTheme}>
+            <div className={classes.root}>
+              <Container style={{ paddingTop: "25px", paddingBottom: "25px" }}>
                 <Switch>
                   <Route path="/ProjectDetailConcep/knowledege">
                     <Knowledges concept_proposal_id={idencrypt} />
                   </Route>
-                  <Route path={`/ProjectDetailConcep/projectNetwork`}>
+                  <Route path={`/ProjectDetailConcep/ProjectNetwork`}>
                     <ProjectNetwork
                       location={location}
                       dataM={dataM}
@@ -930,9 +933,9 @@ function ProjectDetail(props) {
               </Container>
             </div>
           </ThemeProvider>
-        </BrowserRouter>
-      </div>
-    </body>
+        </div>
+      </BrowserRouter>
+    </div>
   );
 }
 

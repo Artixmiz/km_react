@@ -131,7 +131,7 @@ div.co-reseacher-group {
 }
 
 .list {
-  max-height: 250px;
+   height: 275px;
   /* width: 200px; */
   overflow-y: scroll;
 }
