@@ -141,12 +141,13 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   appbar: {
     alignItems: "center",
-    backgroundColor: "rgba(219, 219, 219, 0.459)",
+    backgroundColor: "#fff",
+    boxShadow:"none"
   },
   root: {
     flexGrow: 1,
     width: "100%",
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
   },
 
   customLabel: {
@@ -832,61 +833,58 @@ function ProjectDetail(props) {
   // });
 
   return (
-    <body>
-      <div className="body-detail">
-        <Container
-          className="themed-container card-header-border img-bg"
-          fluid={true}
+    <div className="body-detail" style={{padding:"2rem"}}>
+      <BrowserRouter basename={"/monitoring"}>
+        <div
+          style={{
+            backgroundColor: "#fff",
+            width: "100%",
+            marginTop: "5rem",
+            borderRadius: "15px 15px 0 0",
+          }}
         >
-          <Row
-            className="align-items-center justify-content-md-center"
-            style={{
-              fontFamily: "Prompt",
-            }}
-          >
-            {/* <Col xs="12" md="auto">
-          <img
-            src={`https://www.km-innovations.rmuti.ac.th/researcher/file-upload/co_researcher-upload/community.jpg`}
-            width={350}
-            className="img-shadow"
-            style={{ borderRadius: 4 }}
-          />
-        </Col> */}
-
-            <Col xs="12" md="9">
-              <Card style={{ marginTop: 5 }} className="img-shadow">
-                <CardBody className="card-header">
-                  <CardTitle tag="h6" style={{ padding: 5, color: "white" }}>
-                    {project.project_name_th}
-                  </CardTitle>
-                  {/* <hr /> */}
-                </CardBody>
-
-                <CardBody>
-                  <CardText style={{ textAlign: "left" }}>
-                    {user.map((listValue, index) => {
-                      return (
-                        <CardText>
-                          <FaRegUser size={35} /> ชื่อนักวิจัย:{" "}
-                          <Button
-                            a
-                            href={`/monitoring/Researcher?user_idcard=${btoa(
-                              listValue.user_idcard
-                            )}`}
-                            style={{ fontFamily: "Prompt" }}
-                          >
-                            {listValue.prefix_id
-                              ? prefix[listValue.prefix_id]
-                              : " "}{" "}
-                            {listValue.user_first_name_th}{" "}
-                            {listValue.user_last_name_th}
-                          </Button>
-                        </CardText>
-                      );
-                    })}
-
+          <Row>
+            <Col sm={12}>
+              <Row>
+                <Col sm={12}>
+                  <section
+                    className="profile-info"
+                    style={{ marginTop: "20px" }}
+                  >
+                    <h4>
+                      <strong> {project.project_name_th}</strong>
+                    </h4>
+                  </section>
+                </Col>
+                <Col sm={1} />
+                <Col sm={10}>
+                  <div style={{ textAlign: "left", paddingLeft: "1rem" }}>
                     <p>
-                      <GiMoneyStack size={35} /> งบประมาณ:{" "}
+                      {user.map((listValue, index) => {
+                        return (
+                          <CardText>
+                            <RiUser2Line size={35} />{" "}
+                            {t("concept_proposal_page.menu1")}:
+                            <Button
+                              a
+                              href={`/monitoring/Researcher?user_idcard=${btoa(
+                                listValue.user_idcard
+                              )}`}
+                              style={{ fontFamily: "Prompt" }}
+                            >
+                              {listValue.prefix_id
+                                ? prefix[listValue.prefix_id]
+                                : " "}{" "}
+                              {listValue.user_first_name_th}{" "}
+                              {listValue.user_last_name_th}
+                            </Button>
+                          </CardText>
+                        );
+                      })}
+                    </p>
+                    <p>
+                      <GiMoneyStack size={35} />{" "}
+                      {t("concept_proposal_page.menu2")}:{" "}
                       {project.project_budget
                         ? new Number(project.project_budget).toLocaleString(
                             "en"
@@ -894,92 +892,106 @@ function ProjectDetail(props) {
                         : ""}
                       บาท
                     </p>
-
                     <p>
-                      <GiMoneyStack size={35} /> แหล่งเงินทุน:{" "}
+                      <GiMoneyStack size={35} />{" "}
+                      {t("concept_proposal_page.menu3")}:{" "}
                       {project.project_funding}
                     </p>
                     <p>
-                      <GiCalendar size={35} /> ปีที่รับ: พ.ศ.{" "}
-                      {project.project_star}
+                      <GiCalendar size={35} />{" "}
+                      {t("concept_proposal_page.menu4")}: {project.project_star}
                     </p>
-                  </CardText>
-                </CardBody>
-              </Card>
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+            <Col sm={12}>
+              <div className="line-bottom" style={{ margin: "1rem 3rem" }} />
             </Col>
           </Row>
-        </Container>
-
-        <BrowserRouter basename={"/monitoring"}>
+          <Row style={{ width: "100%" }}>
+            <Col sm={12}>
+              <section className="statistics">
+                <Route
+                  path={"/"}
+                  render={(history) => (
+                    <AppBar
+                      position="static"
+                      color="default"
+                      className={classes.appbar}
+                    >
+                      <Tabs
+                        variant="scrollable"
+                        scrollButtons="on"
+                        TabIndicatorProps={{
+                          style: { background: "rgb(252, 113, 0)" },
+                        }}
+                        textColor="secondary"
+                        value={
+                          history.location.pathname !== "/"
+                            ? history.location.pathname
+                            : false
+                        }
+                      >
+                        {console.log(history.location.pathname)}
+                        <Tab
+                          value={`/ProjectDetail/projectNetwork`}
+                          label="เครือข่ายงานวิจัย"
+                          className={classes.customLabel}
+                          icon={<BiNetworkChart size={25} />}
+                          component={Link}
+                          to={`/ProjectDetail/projectNetwork?project_id=${idencrypt}`}
+                        />
+                        <Tab
+                          value={`/ProjectDetail/projectDetail`}
+                          label="ข้อมูลงานวิจัย"
+                          className={classes.customLabel}
+                          icon={<BiInfoCircle size={25} />}
+                          component={Link}
+                          to={`/ProjectDetail/projectDetail?project_id=${idencrypt}`}
+                        />
+                        <Tab
+                          value={`/ProjectDetail/knowledgeDetail`}
+                          label="องค์ความรู้"
+                          className={classes.customLabel}
+                          icon={<GiGiftOfKnowledge size={25} />}
+                          component={Link}
+                          to={`/ProjectDetail/knowledgeDetail?project_id=${idencrypt}`}
+                        />
+                        <Tab
+                          value={`/ProjectDetail/NewknowledgeDetail`}
+                          label="องค์ความรู้ใหม่"
+                          className={classes.customLabel}
+                          icon={<GiGiftOfKnowledge size={25} />}
+                          component={Link}
+                          to={`/ProjectDetail/NewknowledgeDetail?project_id=${idencrypt}`}
+                        />
+                        <Tab
+                          value={`/ProjectDetail/ImpactDetail`}
+                          label="ผลกระทบ"
+                          className={classes.customLabel}
+                          icon={<GiImpactPoint size={25} />}
+                          component={Link}
+                          to={`/ProjectDetail/ImpactDetail?project_id=${idencrypt}`}
+                        />
+                      </Tabs>
+                    </AppBar>
+                  )}
+                />
+              </section>
+            </Col>
+          </Row>
+        </div>
+        <div
+          style={{
+            backgroundColor: "rgb(246, 168, 52)",
+            width: "100%",
+            marginTop: "0rem",
+            borderRadius: "0 0 15px 15px",
+          }}
+        >
           <ThemeProvider theme={customTheme}>
             <div className={classes.root}>
-              <Route
-                path={"/"}
-                render={(history) => (
-                  <AppBar
-                    position="static"
-                    color="default"
-                    className={classes.appbar}
-                  >
-                    <Tabs
-                      variant="scrollable"
-                      scrollButtons="on"
-                      TabIndicatorProps={{
-                        style: { background: "rgb(252, 113, 0)" },
-                      }}
-                      textColor="secondary"
-                      value={
-                        history.location.pathname !== "/"
-                          ? history.location.pathname
-                          : false
-                      }
-                    >
-                      {console.log(history.location.pathname)}
-                      <Tab
-                        value={`/ProjectDetail/projectNetwork`}
-                        label="เครือข่ายงานวิจัย"
-                        className={classes.customLabel}
-                        icon={<BiNetworkChart size={25} />}
-                        component={Link}
-                        to={`/ProjectDetail/projectNetwork?project_id=${idencrypt}`}
-                      />
-                      <Tab
-                        value={`/ProjectDetail/projectDetail`}
-                        label="ข้อมูลงานวิจัย"
-                        className={classes.customLabel}
-                        icon={<BiInfoCircle size={25} />}
-                        component={Link}
-                        to={`/ProjectDetail/projectDetail?project_id=${idencrypt}`}
-                      />
-                      <Tab
-                        value={`/ProjectDetail/knowledgeDetail`}
-                        label="องค์ความรู้"
-                        className={classes.customLabel}
-                        icon={<GiGiftOfKnowledge size={25} />}
-                        component={Link}
-                        to={`/ProjectDetail/knowledgeDetail?project_id=${idencrypt}`}
-                      />
-                      <Tab
-                        value={`/ProjectDetail/NewknowledgeDetail`}
-                        label="องค์ความรู้ใหม่"
-                        className={classes.customLabel}
-                        icon={<GiGiftOfKnowledge size={25} />}
-                        component={Link}
-                        to={`/ProjectDetail/NewknowledgeDetail?project_id=${idencrypt}`}
-                      />
-                      <Tab
-                        value={`/ProjectDetail/ImpactDetail`}
-                        label="ผลกระทบ"
-                        className={classes.customLabel}
-                        icon={<GiImpactPoint size={25} />}
-                        component={Link}
-                        to={`/ProjectDetail/ImpactDetail?project_id=${idencrypt}`}
-                      />
-                    </Tabs>
-                  </AppBar>
-                )}
-              />
-
               <Container style={{ paddingTop: "25px", paddingBottom: "25px" }}>
                 <Switch>
                   <Route path={`/ProjectDetail/projectNetwork`}>
@@ -1039,9 +1051,9 @@ function ProjectDetail(props) {
               </Container>
             </div>
           </ThemeProvider>
-        </BrowserRouter>
-      </div>
-    </body>
+        </div>
+      </BrowserRouter>
+    </div>
   );
 }
 

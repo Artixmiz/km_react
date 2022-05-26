@@ -1,0 +1,136 @@
+.card-searcher {
+  background-color: rgb(246, 168, 52);
+  padding: 0.5rem 0 2rem 1.5rem;
+  margin-top: 1.5rem;
+  border-radius: 15px;
+}
+
+.card-university {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+
+  .card-university-body {
+    padding: 1rem;
+    padding-right: 0;
+  }
+}
+.dashboard {
+  // background: rgba(203,203,210,.15);
+  // background: #eef1f5;
+  // font-family: Quicksand;
+
+  .all-card {
+    padding: 30px;
+  }
+
+  .card {
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    margin-bottom: 30px;
+    box-shadow: 14px 13px 0px -5px rgb(159 159 159 / 37%);
+
+    .border-left-pink {
+      border-left: 5px solid #f5365c;
+      border-radius: 5px 0 0 5px;
+    }
+
+    .border-left-orange {
+      border-left: 5px solid #fb9b40;
+      border-radius: 5px 0 0 5px;
+    }
+
+    .border-left-yellow {
+      border-left: 5px solid #ffd600;
+      border-radius: 5px 0 0 5px;
+    }
+
+    .border-left-blue {
+      border-left: 5px solid #11cdef;
+      border-radius: 5px 0 0 5px;
+    }
+    .border-left-green {
+      border-left: 5px solid #11ef99;
+      border-radius: 5px 0 0 5px;
+    }
+
+    .text-title {
+      color: #8898aa;
+      font-weight: 500;
+      // color: #f6a834;
+      // font-size: 14px;
+    }
+
+    .text-amount {
+      font-weight: 600;
+      color: #df8417;
+    }
+
+    .icon-shape {
+      border-radius: 50%;
+      color: #fff;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15) !important;
+    }
+
+    .icon-area {
+      background: #f5365c;
+    }
+
+    .icon-pie {
+      background: #fb6340;
+    }
+
+    .icon-user {
+      background: #ffd600;
+    }
+
+    .icon-percent {
+      background: #11cdef;
+    }
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1300px) {
+  .dashboard .card {
+    .text-title {
+      font-size: 12px;
+    }
+    .text-amount {
+      font-size: 18px;
+    }
+
+    .icon-shape {
+      width: 35px;
+      height: 35px;
+      font-size: 20px;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .icon-shape {
+    display: none !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .icon-shape {
+    display: none !important;
+  }
+}

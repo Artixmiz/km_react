@@ -67,9 +67,10 @@ import { RiUser2Line } from "react-icons/ri";
 
 import { useTranslation } from "react-i18next";
 import Knowledges from "./Components/ConceptPage/Knowledge";
-import noImg from "./images/no-image.png"
+import noImg from "./images/no-image.png";
 
 import "./Components/Css/researcher.scss";
+import "./Components/Css/project.scss";
 
 const customTheme = createTheme({
   palette: {
@@ -110,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
   appbar: {
     alignItems: "center",
     backgroundColor: "#fff",
-    boxShadow:"none"
+    boxShadow: "none",
   },
   root: {
     flexGrow: 1,
@@ -189,6 +190,8 @@ TabPanel.propTypes = {
 };
 
 function ProjectDetail(props) {
+  const [loading_profile, setLoading_profile] = useState(true);
+
   const [activeTab, setActiveTab] = useState("1");
 
   const { t } = useTranslation();
@@ -355,6 +358,7 @@ function ProjectDetail(props) {
       .get(`${apiUrl}/api/get/concept_proposal/detail/${id}`)
       .then(async (result) => {
         setproject([result.data[0]]);
+        setLoading_profile(false);
         // console.log(result.data);
         setlocation([
           {
@@ -648,20 +652,18 @@ function ProjectDetail(props) {
     embedId: PropTypes.string.isRequired,
   };
 
-  
-
   const outputEl = output.map((ListItem) => {
     return (
       <CardBody className="map-border">
-          <img
-            // width="100%"
-            src={`https://researcher.kims-rmuti.com/file-upload/innovation-upload/${ListItem.output_image}`}
-            alt="Card image cap"
-            className="img-shadow"
-            style={{ borderRadius: 4 }}
-            onerror={`javascript:this.src=${noImg}`}
-          />
-     
+        <img
+          // width="100%"
+          src={`https://researcher.kims-rmuti.com/file-upload/innovation-upload/${ListItem.output_image}`}
+          alt="Card image cap"
+          className="img-shadow"
+          style={{ borderRadius: 4 }}
+          onerror={`javascript:this.src=${noImg}`}
+        />
+
         <CardBody
           style={{
             backgroundColor: "rgba(223, 223, 223, 0.37)",
@@ -707,6 +709,7 @@ function ProjectDetail(props) {
         >
           <Row>
             <Col sm={12}>
+              <div class={`${loading_profile && "demo"}`}></div>
               {project.map((p) => {
                 return (
                   <Row>
@@ -807,12 +810,12 @@ function ProjectDetail(props) {
                         to={`/ProjectDetailConcep/knowledege?concep_id=${idencrypt}`}
                       /> */}
                         <Tab
-                          value={`/ProjectDetailConcep/projectNetwork`}
+                          value={`/ProjectDetailConcep/ProjectNetwork`}
                           label={t("concept_proposal_page.tabmenu.menu1")}
                           className={classes.customLabel}
                           icon={<BiNetworkChart size={25} />}
                           component={Link}
-                          to={`/ProjectDetailConcep/projectNetwork?concep_id=${idencrypt}`}
+                          to={`/ProjectDetailConcep/ProjectNetwork?concep_id=${idencrypt}`}
                         />
                         <Tab
                           value={`/ProjectDetailConcep/conceptDetail`}
@@ -869,7 +872,7 @@ function ProjectDetail(props) {
                   <Route path="/ProjectDetailConcep/knowledege">
                     <Knowledges concept_proposal_id={idencrypt} />
                   </Route>
-                  <Route path={`/ProjectDetailConcep/projectNetwork`}>
+                  <Route path={`/ProjectDetailConcep/ProjectNetwork`}>
                     <ProjectNetwork
                       location={location}
                       dataM={dataM}
