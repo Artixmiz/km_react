@@ -37,6 +37,8 @@ import {
   CardText,
   CardImg,
 } from "reactstrap";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const customTheme = createTheme({
   palette: {
@@ -73,21 +75,66 @@ function a11yProps(index) {
   };
 }
 
-export default function expertisePage(props) {
+export default function ExpertisePage(props) {
   const {
+    concept_proposal_id,
     classes,
     valuePage1,
     handleChangePage1,
     user,
-    award,
-    coaward,
-    certificate,
-    cocertificate,
-    professional,
     classTimeline,
-    consulting,
-    expertise
   } = props;
+
+  const [award, setaward] = useState([]);
+  const [coaward, setcoaward] = useState([]);
+  const [certificate, setcertificate] = useState([]);
+  const [cocertificate, setcocertificate] = useState([]);
+  const [professional, setprofessional] = useState([]);
+  const [expertise, setexpertise] = useState([]);
+  const [consulting, setconsulting] = useState([]);
+
+  const apiUrl = "https://kmapi.kims-rmuti.com";
+  let id = atob(concept_proposal_id);
+
+  useEffect(() => {
+    axios
+      .get(`${apiUrl}/api/get/consulting_experience/${id}`)
+      .then((result) => {
+        // console.log(result.data);
+        setconsulting(result.data);
+      });
+
+    axios.get(`${apiUrl}/api/get/professional_license/${id}`).then((result) => {
+      // console.log(result.data);
+      setprofessional(result.data);
+    });
+
+    axios.get(`${apiUrl}/api/get/us-award/${id}`).then((result) => {
+      // console.log(result.data);
+      setaward(result.data);
+    });
+
+    axios.get(`${apiUrl}/api/get/us-expertise/${id}`).then((result) => {
+      // console.log(result.data);
+      setexpertise(result.data);
+    });
+
+    axios.get(`${apiUrl}/api/get/bb-user/award/${id}`).then((result) => {
+      // console.log(result.data);
+      setcoaward(result.data);
+    });
+
+    axios.get(`${apiUrl}/api/get/us-certificate/${id}`).then((result) => {
+      // console.log(result.data);
+      setcertificate(result.data);
+    });
+
+    axios.get(`${apiUrl}/api/get/bb-user/certificate/${id}`).then((result) => {
+      // console.log(result.data);
+      setcocertificate(result.data);
+    });
+  }, []);
+
   return (
     <TableContainer className="card-header-border card-border">
       <ThemeProvider theme={customTheme}>

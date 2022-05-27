@@ -51,6 +51,8 @@ import {
 import parse from "html-react-parser";
 import PropTypes from "prop-types";
 import AwesomeSlider from "react-awesome-slider";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function getId(url) {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -117,14 +119,35 @@ function a11yProps(index) {
 }
 
 export default function InnovationsPage(props) {
-  const {
-    classes,
-    valuePage1,
-    handleChangePage1,
-    innovation,
-    coinnovation1,
-    coinnovation2,
-  } = props;
+  const { classes, valuePage1, handleChangePage1, concept_proposal_id } = props;
+
+  const [innovation, setinnovation] = useState([]);
+  const [coinnovation1, setcoinnovation1] = useState([]);
+  const [coinnovation2, setcoinnovation2] = useState([]);
+
+  const apiUrl = "https://kmapi.kims-rmuti.com";
+  let id = atob(concept_proposal_id);
+
+  useEffect(() => {
+    axios.get(`${apiUrl}/api/get/us_innovation/${id}`).then((result) => {
+      // console.log(result.data);
+      setinnovation([result.data]);
+    });
+    axios
+      .get(`${apiUrl}/api/get/bb-user/innovations/images?id=${id}&pi_type_id=1`)
+      .then((result) => {
+        // console.log(result.data);
+        setcoinnovation1(result.data);
+      });
+
+    axios
+      .get(`${apiUrl}/api/get/bb-user/innovations/images?id=${id}&pi_type_id=2`)
+      .then((result) => {
+        console.log("ssss", result.data);
+        setcoinnovation2(result.data);
+      });
+  }, []);
+
   return (
     <ThemeProvider theme={customTheme}>
       <div className={classes.root}>

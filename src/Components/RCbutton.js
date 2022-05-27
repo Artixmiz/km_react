@@ -281,73 +281,14 @@ YoutubeEmbed.propTypes = {
 function RCbutton(props) {
   const { t } = useTranslation();
 
-  const [award, setaward] = useState([]);
-  const [expertise, setexpertise] = useState([]);
-  const [educational, seteducational] = useState([]);
-  const [working, setworking] = useState([]);
-  const [project, setproject] = useState([]);
-
-  const [map, setmap] = useState([]);
-  const [projecttype1, setprojecttype1] = useState([]);
-  const [projecttype2, setprojecttype2] = useState([]);
-  const [patent, setpatent] = useState([]);
-  const [certificate, setcertificate] = useState([]);
-  const [publication, setpublication] = useState([]);
-  const [publicationco, setpublicationco] = useState([]);
   const [scholar, setscholar] = useState([]);
-  const [uslink, setuslink] = useState([]);
-  const [purchasing, setpurchasing] = useState([]);
   const [user, setuser] = useState([]);
-  const [user1, setuser1] = useState({});
-  const [locationRe, Setdatamap] = useState([]);
-  const [innovation, setinnovation] = useState([]);
-  const [selected, setSelected] = React.useState(1);
+  const [uslink, setuslink] = useState([]);
+ 
   const [course, setcourse] = useState([]);
-  const [coaward, setcoaward] = useState([]);
   const [university, setuniversity] = useState([]);
   const [organization, setorganization] = useState([]);
   const [organization1, setorganization1] = useState([]);
-  const [professional, setprofessional] = useState([]);
-  const [consulting, setconsulting] = useState([]);
-  const [messageErr, setMessageErr] = useState(null);
-  const [innoimg, setinnoimg] = useState([]);
-  const [cocertificate, setcocertificate] = useState([]);
-  const [coinnovation1, setcoinnovation1] = useState([]);
-  const [coinnovation2, setcoinnovation2] = useState([]);
-
-  //ตีพิมพ์นักวิจัย-ระดับชาติ
-  const [PubliTHA1, setPubliTHA1] = useState([]); //คู่มือ
-  const [PubliTHA2, setPubliTHA2] = useState([]); //บทความวิชาการ
-  const [PubliTHA3, setPubliTHA3] = useState([]); //บทความวิจัย
-  const [PubliTHA4, setPubliTHA4] = useState([]); //วารสาร
-
-  //ตีพิมพ์นักวิจัย-นานาชาติ
-  const [PubliINTER1, setPubliINTER1] = useState([]);
-  const [PubliINTER2, setPubliINTER2] = useState([]);
-  const [PubliINTER3, setPubliINTER3] = useState([]);
-  const [PubliINTER4, setPubliINTER4] = useState([]);
-
-  //ตีพิมพ์-ผู้ช่วย-ระดับชาติ
-  const [CoPubliTHA1, setCoPubliTHA1] = useState([]); //คู่มือผู้ช่วย
-  const [CoPubliTHA2, setCoPubliTHA2] = useState([]); //บทความวิชาการผู้ช่วย
-  const [CoPubliTHA3, setCoPubliTHA3] = useState([]); //บทความวิจัยผู้ช่วย
-  const [CoPubliTHA4, setCoPubliTHA4] = useState([]); //วารสารผู้ช่วย
-
-  //ตีพิมพ์-ผู้ช่วย-นานาชาติ
-  const [CoPubliINTER1, setCoPubliINTER1] = useState([]);
-  const [CoPubliINTER2, setCoPubliINTER2] = useState([]);
-  const [CoPubliINTER3, setCoPubliINTER3] = useState([]);
-  const [CoPubliINTER4, setCoPubliINTER4] = useState([]);
-
-  const [patent1, setpatent1] = useState([]);
-  const [patent2, setpatent2] = useState([]);
-  const [patent3, setpatent3] = useState([]);
-  const [patent4, setpatent4] = useState([]);
-  const [patent5, setpatent5] = useState([]);
-  const [patent6, setpatent6] = useState([]);
-  const [patent7, setpatent7] = useState([]);
-  const [patent8, setpatent8] = useState([]);
-  const [patent9, setpatent9] = useState([]);
 
   //console.log("usersuseruseruseruseruser", user);
 
@@ -416,24 +357,6 @@ function RCbutton(props) {
   const localUrl = "http://localhost:4000";
   const apiUrl = "https://kmapi.kims-rmuti.com";
 
-  const mapData = async () => {
-    const response = await axios.get(
-      `${apiUrl}/api/get/us-projects-user/${atob(idencrypt)}`
-    );
-    return response.data;
-  };
-
-  // const dataM = mapData();
-
-  const mapDataTeam = async () => {
-    const response = await axios.get(
-      `${apiUrl}/api/get/us-project-map/team/${atob(idencrypt)}`
-    );
-    return response.data;
-  };
-
-  const dataTeam = mapDataTeam();
-
   const courseDetail = async (fname, lname) => {
     const response = await axios.get(
       `${apiUrl}/api/get/course_detail?firstname=${fname}&lastname=${lname}`
@@ -480,281 +403,7 @@ function RCbutton(props) {
       id = atob(idencrypt);
     }
 
-    const project = await mapData();
-    setmap(project);
-
-    // axios
-    //   .get(`${localUrl}/api/get/us-project/locations/${id}`)
-    //   .then((locationRe) => {
-    // Setdatamap(locationRe.data);
-    //   });
-
-    axios
-      .get(`${apiUrl}/api/get/consulting_experience/${id}`)
-      .then((result) => {
-        // console.log(result.data);
-        setconsulting(result.data);
-      });
-
-    axios.get(`${apiUrl}/api/get/professional_license/${id}`).then((result) => {
-      // console.log(result.data);
-      setprofessional(result.data);
-    });
-
-    axios.get(`${apiUrl}/api/get/us-award/${id}`).then((result) => {
-      // console.log(result.data);
-      setaward(result.data);
-    });
-
-    axios.get(`${apiUrl}/api/get/us-expertise/${id}`).then((result) => {
-      // console.log(result.data);
-      setexpertise(result.data);
-    });
-
-    axios.get(`${apiUrl}/api/get/bb-user/award/${id}`).then((result) => {
-      // console.log(result.data);
-      setcoaward(result.data);
-    });
-
-    axios.get(`${apiUrl}/api/get/us-educational/${id}`).then((result) => {
-      // console.log(result.data);
-      seteducational(result.data);
-    });
-
-    axios.get(`${apiUrl}/api/get/working-experience/${id}`).then((result) => {
-      // console.log(result.data);
-      setworking(result.data);
-    });
-
-    axios.get(`${apiUrl}/api/get/us-project/locations/${id}`).then((result) => {
-      // console.log(result.data);
-      setproject(result.data);
-    });
-
-    axios.get(`${apiUrl}/api/get/us-patent/${id}`).then((result) => {
-      const pd1 = result.data.filter(
-        (obj) => obj.patent_type_name === "สิทธิบัตรการประดิษฐ์"
-      );
-      const pd2 = result.data.filter(
-        (obj) => obj.patent_type_name === "สิทธิบัตรการออกแบบผลิตภัณฑ์"
-      );
-      const pd3 = result.data.filter(
-        (obj) => obj.patent_type_name === "อนุสิทธิบัตร"
-      );
-      const pd4 = result.data.filter(
-        (obj) => obj.patent_type_name === "ลิขสิทธิ์"
-      );
-      const pd5 = result.data.filter(
-        (obj) => obj.patent_type_name === "เครื่องหมายการค้า"
-      );
-      const pd6 = result.data.filter(
-        (obj) => obj.patent_type_name === "เครื่องหมายบริการ"
-      );
-      const pd7 = result.data.filter(
-        (obj) => obj.patent_type_name === "เครื่องหมายรับรอง"
-      );
-      const pd8 = result.data.filter(
-        (obj) => obj.patent_type_name === "เครื่องหมายร่วม"
-      );
-      const pd9 = result.data.filter(
-        (obj) => obj.patent_type_name === "ทรัพย์สินทางอุตสาหกรรม"
-      );
-      // console.log(result.data);
-      setpatent1(pd1);
-      setpatent2(pd2);
-      setpatent3(pd3);
-      setpatent4(pd4);
-      setpatent5(pd5);
-      setpatent6(pd6);
-      setpatent7(pd7);
-      setpatent8(pd8);
-      setpatent9(pd9);
-      setpatent(result.data);
-    });
-
-    axios.get(`${apiUrl}/api/get/us-certificate/${id}`).then((result) => {
-      // console.log(result.data);
-      setcertificate(result.data);
-    });
-
-    axios.get(`${apiUrl}/api/get/bb-user/certificate/${id}`).then((result) => {
-      // console.log(result.data);
-      setcocertificate(result.data);
-    });
-
-    axios.get(`${apiUrl}/api/get/us-publication/${id}`).then((result) => {
-      // console.log(result.data);
-      setpublication(result.data);
-    });
-
-    axios
-      //คู่มือ
-      .get(`${apiUrl}/api/get/us-publication?type=1&user_idcard=${id}`)
-      .then((result) => {
-        // const newDataTHA = result.data.filter(
-        //   (obj) => obj.publication_country === "THA"
-        // );
-
-        // const newDataINTER = result.data.filter(
-        //   (item) => item.publication_country !== "THA"
-        // );
-        // // console.log(result.data);
-        // setPubliTHA1(newDataTHA);
-        // setPubliINTER1(newDataINTER);
-        setPubliTHA1(result.data);
-      });
-
-    axios
-      //บทความวิชาการ
-      .get(`${apiUrl}/api/get/us-publication?type=2&user_idcard=${id}`)
-      .then((result) => {
-        // const newDataTHA = result.data.filter(
-        //   (obj) => obj.publication_country === "THA"
-        // );
-
-        // const newDataINTER = result.data.filter(
-        //   (item) => item.publication_country !== "THA"
-        // );
-        // // console.log(result.data);
-        // setPubliTHA2(newDataTHA);
-        // setPubliINTER2(newDataINTER);
-        setPubliTHA2(result.data);
-      });
-
-    axios
-      //วิจัย
-      .get(`${apiUrl}/api/get/us-publication?type=3&user_idcard=${id}`)
-      .then((result) => {
-        // const newDataTHA = result.data.filter(
-        //   (obj) => obj.publication_country === "THA"
-        // );
-
-        // const newDataINTER = result.data.filter(
-        //   (item) => item.publication_country !== "THA"
-        // );
-        // // console.log(result.data);
-        // setPubliINTER3(newDataINTER);
-        // setPubliTHA3(newDataTHA);
-        setPubliTHA3(result.data);
-      });
-
-    axios
-      //วิจัย
-      .get(`${apiUrl}/api/get/us-publication?type=4&user_idcard=${id}`)
-      .then((result) => {
-        setPubliINTER3(result.data);
-      });
-
-    axios
-      //วารสาร
-      .get(`${apiUrl}/api/get/us-publication?type=5&user_idcard=${id}`)
-      .then((result) => {
-        // const newDataTHA = result.data.filter(
-        //   (obj) => obj.publication_country === "THA"
-        // );
-
-        // const newDataINTER = result.data.filter(
-        //   (item) => item.publication_country !== "THA"
-        // );
-        // // console.log(result.data);
-        // setPubliTHA4(newDataTHA);
-        // setPubliINTER4(newDataINTER);
-        setPubliTHA4(result.data);
-      });
-
-    axios
-      //วารสาร
-      .get(`${apiUrl}/api/get/us-publication?type=6&user_idcard=${id}`)
-      .then((result) => {
-        setPubliINTER4(result.data);
-      });
-
-    axios
-      .get(`${apiUrl}/api/get/co-researcher/publication/${id}`)
-      .then((result) => {
-        console.log(result.data);
-        setpublicationco(result.data);
-      });
-
-    axios
-      //คู่มือผู้ช่วย
-      .get(`${apiUrl}/api/get/bb-user/publication/type?co_pi_type=10&id=${id}`)
-      .then((result) => {
-        const newDataTHA = result.data.filter(
-          (obj) => obj.co_researcher_publication_country === "THA"
-        );
-
-        const newDataINTER = result.data.filter(
-          (item) => item.co_researcher_publication_country !== "THA"
-        );
-        console.log("newDataTHA", newDataTHA);
-        console.log("newDataINTER", newDataINTER);
-
-        setCoPubliTHA1(newDataTHA);
-        setCoPubliINTER1(newDataINTER);
-      });
-
-    axios
-      //บทความวิชาการผู้ช่วย
-      .get(`${apiUrl}/api/get/bb-user/publication/type?co_pi_type=5&id=${id}`)
-      .then((result) => {
-        const newDataTHA = result.data.filter(
-          (obj) => obj.co_researcher_publication_country === "THA"
-        );
-
-        const newDataINTER = result.data.filter(
-          (item) => item.co_researcher_publication_country !== "THA"
-        );
-
-        setCoPubliTHA2(newDataTHA);
-        setCoPubliINTER2(newDataINTER);
-      });
-
-    axios
-      //บทความวิชาการผู้ช่วย
-      .get(`${apiUrl}/api/get/bb-user/publication/type?co_pi_type=1&id=${id}`)
-      .then((result) => {
-        const newDataTHA = result.data.filter(
-          (obj) => obj.co_researcher_publication_country === "THA"
-        );
-
-        const newDataINTER = result.data.filter(
-          (item) => item.co_researcher_publication_country !== "THA"
-        );
-
-        setCoPubliTHA3(newDataTHA);
-        setCoPubliINTER3(newDataINTER);
-      });
-
-    axios
-      //วารสารผู้ช่วย
-      .get(`${apiUrl}/api/get/bb-user/publication/type?co_pi_type=2&id=${id}`)
-      .then((result) => {
-        const newDataTHA = result.data.filter(
-          (obj) => obj.co_researcher_publication_country === "THA"
-        );
-
-        const newDataINTER = result.data.filter(
-          (item) => item.co_researcher_publication_country !== "THA"
-        );
-
-        setCoPubliTHA4(newDataTHA);
-        setCoPubliINTER4(newDataINTER);
-      });
-
-    axios
-      .get(`${apiUrl}/api/get/progress-report/report-purchasing/${id}`)
-      .then((result) => {
-        // console.log(result.data);
-        setpurchasing(result.data);
-      });
-
-    axios
-      .get(`${apiUrl}/api/get/us-project/type?id_user=${id}`)
-      .then((result) => {
-        // console.log(result.data);
-        setprojecttype1(result.data);
-      });
+    
 
     // axios
     //   .get(`${apiUrl}/api/get/us-project/type?id_user=${id}&id_project_type=2`)
@@ -819,78 +468,61 @@ function RCbutton(props) {
       setuslink(uslink);
       // console.log("asdss", scholar);
     });
-    axios.get(`${apiUrl}/api/get/us_innovation/${id}`).then((result) => {
-      // console.log(result.data);
-      setinnovation([result.data]);
-    });
-
-    axios
-      .get(`${apiUrl}/api/get/bb-user/innovations/images?id=${id}&pi_type_id=1`)
-      .then((result) => {
-        // console.log(result.data);
-        setcoinnovation1(result.data);
-      });
-
-    axios
-      .get(`${apiUrl}/api/get/bb-user/innovations/images?id=${id}&pi_type_id=2`)
-      .then((result) => {
-        console.log("ssss", result.data);
-        setcoinnovation2(result.data);
-      });
+  
   }, []);
 
   const classes = useStyles();
-  educational.sort((a, b) =>
-    a.educational_graduation > b.educational_graduation ? 1 : -1
-  );
-  working.sort((a, b) =>
-    a.working_experience_star > b.working_experience_star ? 1 : -1
-  );
-  projecttype1.sort((a, b) => (a.project_star < b.project_star ? 1 : -1));
+  // educational.sort((a, b) =>
+  //   a.educational_graduation > b.educational_graduation ? 1 : -1
+  // );
+  // working.sort((a, b) =>
+  //   a.working_experience_star > b.working_experience_star ? 1 : -1
+  // );
+  // projecttype1.sort((a, b) => (a.project_star < b.project_star ? 1 : -1));
 
-  PubliTHA1.sort((a, b) => (a.publication_date < b.publication_date ? 1 : -1));
-  PubliTHA2.sort((a, b) => (a.publication_date < b.publication_date ? 1 : -1));
-  PubliTHA3.sort((a, b) => (a.publication_date < b.publication_date ? 1 : -1));
-  PubliTHA4.sort((a, b) => (a.publication_date < b.publication_date ? 1 : -1));
+  // PubliTHA1.sort((a, b) => (a.publication_date < b.publication_date ? 1 : -1));
+  // PubliTHA2.sort((a, b) => (a.publication_date < b.publication_date ? 1 : -1));
+  // PubliTHA3.sort((a, b) => (a.publication_date < b.publication_date ? 1 : -1));
+  // PubliTHA4.sort((a, b) => (a.publication_date < b.publication_date ? 1 : -1));
 
-  PubliINTER1.sort((a, b) =>
-    a.publication_date < b.publication_date ? 1 : -1
-  );
-  PubliINTER2.sort((a, b) =>
-    a.publication_date < b.publication_date ? 1 : -1
-  );
-  PubliINTER3.sort((a, b) =>
-    a.publication_date < b.publication_date ? 1 : -1
-  );
-  PubliINTER4.sort((a, b) =>
-    a.publication_date < b.publication_date ? 1 : -1
-  );
+  // PubliINTER1.sort((a, b) =>
+  //   a.publication_date < b.publication_date ? 1 : -1
+  // );
+  // PubliINTER2.sort((a, b) =>
+  //   a.publication_date < b.publication_date ? 1 : -1
+  // );
+  // PubliINTER3.sort((a, b) =>
+  //   a.publication_date < b.publication_date ? 1 : -1
+  // );
+  // PubliINTER4.sort((a, b) =>
+  //   a.publication_date < b.publication_date ? 1 : -1
+  // );
 
-  CoPubliTHA1.sort((a, b) =>
-    a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
-  );
-  CoPubliTHA2.sort((a, b) =>
-    a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
-  );
-  CoPubliTHA3.sort((a, b) =>
-    a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
-  );
-  CoPubliTHA4.sort((a, b) =>
-    a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
-  );
+  // CoPubliTHA1.sort((a, b) =>
+  //   a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
+  // );
+  // CoPubliTHA2.sort((a, b) =>
+  //   a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
+  // );
+  // CoPubliTHA3.sort((a, b) =>
+  //   a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
+  // );
+  // CoPubliTHA4.sort((a, b) =>
+  //   a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
+  // );
 
-  CoPubliINTER1.sort((a, b) =>
-    a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
-  );
-  CoPubliINTER2.sort((a, b) =>
-    a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
-  );
-  CoPubliINTER3.sort((a, b) =>
-    a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
-  );
-  CoPubliINTER4.sort((a, b) =>
-    a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
-  );
+  // CoPubliINTER1.sort((a, b) =>
+  //   a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
+  // );
+  // CoPubliINTER2.sort((a, b) =>
+  //   a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
+  // );
+  // CoPubliINTER3.sort((a, b) =>
+  //   a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
+  // );
+  // CoPubliINTER4.sort((a, b) =>
+  //   a.co_researcher_publication_date < b.co_researcher_publication_date ? 1 : -1
+  // );
 
   const prefix = {
     1: "นาย",
@@ -1162,9 +794,7 @@ function RCbutton(props) {
               <Route path="/Researcher/locations">
                 <ResearcherLocationDetail
                   concept_proposal_id={idencrypt}
-                  projecttype1={projecttype1}
                   classes={classes}
-                  map={map}
                   user={user}
                 />
               </Route>
@@ -1175,15 +805,6 @@ function RCbutton(props) {
                   classes={classes}
                   valuePage1={valuePage1}
                   handleChangePage1={handleChangePage1}
-                  user={user}
-                  award={award}
-                  coaward={coaward}
-                  certificate={certificate}
-                  cocertificate={cocertificate}
-                  professional={professional}
-                  classTimeline={classTimeline}
-                  consulting={consulting}
-                  expertise={expertise}
                 />
               </Route>
 
@@ -1193,15 +814,6 @@ function RCbutton(props) {
                   classes={classes}
                   valuePage1={valuePage1}
                   handleChangePage1={handleChangePage1}
-                  patent1={patent1}
-                  patent2={patent2}
-                  patent3={patent3}
-                  patent4={patent4}
-                  patent5={patent5}
-                  patent6={patent6}
-                  patent7={patent7}
-                  patent8={patent8}
-                  patent9={patent9}
                   classTimeline={classTimeline}
                 />
               </Route>
@@ -1213,20 +825,8 @@ function RCbutton(props) {
                   valuePage1={valuePage1}
                   handleChangePage1={handleChangePage1}
                   Accordion={Accordion}
-                  PubliTHA1={PubliTHA1}
                   classTimeline={classTimeline}
                   publication_type={publication_type}
-                  CoPubliTHA1={CoPubliTHA1}
-                  PubliTHA2={PubliTHA2}
-                  CoPubliTHA2={CoPubliTHA2}
-                  PubliTHA3={PubliTHA3}
-                  CoPubliTHA3={CoPubliTHA3}
-                  PubliINTER3={PubliINTER3}
-                  CoPubliINTER3={CoPubliINTER3}
-                  PubliTHA4={PubliTHA4}
-                  CoPubliTHA4={CoPubliTHA4}
-                  CoPubliINTER4={CoPubliINTER4}
-                  PubliINTER4={PubliINTER4}
                 />
               </Route>
 
@@ -1236,9 +836,6 @@ function RCbutton(props) {
                   classes={classes}
                   valuePage1={valuePage1}
                   handleChangePage1={handleChangePage1}
-                  innovation={innovation}
-                  coinnovation1={coinnovation1}
-                  coinnovation2={coinnovation2}
                 />
               </Route>
 
@@ -1246,7 +843,6 @@ function RCbutton(props) {
                 <ResearcherGroup
                   concept_proposal_id={idencrypt}
                   classes={classes}
-                  dataTeam={dataTeam}
                 />
               </Route>
 
@@ -1255,10 +851,7 @@ function RCbutton(props) {
                   concept_proposal_id={idencrypt}
                   classes={classes}
                   Accordion={Accordion}
-                  educational={educational}
                   classTimeline={classTimeline}
-                  working={working}
-                  purchasing={purchasing}
                 />
               </Route>
 
@@ -1273,38 +866,7 @@ function RCbutton(props) {
           </div>
         </BrowserRouter>
       </div>
-      {/* <div
-      style={{
-        backgroundColor: "rgb(246, 168, 52)",
-        width: "100%",
-        marginTop: "0rem",
-        borderRadius: "0 0 0px 0px",
-      }}
-      >
-        <Suspense fallback={<div>loading...</div>}>
-          <SwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={value}
-            onChangeIndex={handleChangeIndex}
-          >
-            <TabPanel value={value} index={0} className="bg">
-              <p></p>
-            </TabPanel>
-
-            <TabPanel value={value} index={1} className="rc-body"></TabPanel>
-
-            <TabPanel value={value} index={2} className="rc-body"></TabPanel>
-
-            <TabPanel value={value} index={3} className="rc-body"></TabPanel>
-            <TabPanel value={value} index={4} className="rc-body"></TabPanel>
-            <TabPanel value={value} index={5} className="rc-body"></TabPanel>
-
-            <TabPanel value={value} index={6} className="rc-body"></TabPanel>
-
-            <TabPanel value={value} index={7} className="rc-body"></TabPanel>
-          </SwipeableViews>
-        </Suspense>
-      </div> */}
+    
     </div>
   );
 }

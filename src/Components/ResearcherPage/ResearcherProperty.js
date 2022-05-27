@@ -37,6 +37,8 @@ import {
   CardText,
   CardImg,
 } from "reactstrap";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const customTheme = createTheme({
   palette: {
@@ -75,20 +77,68 @@ function a11yProps(index) {
 
 export default function Property(props) {
   const {
+    concept_proposal_id,
     classes,
     valuePage1,
     handleChangePage1,
-    patent1,
-    patent2,
-    patent3,
-    patent4,
-    patent5,
-    patent6,
-    patent7,
-    patent8,
-    patent9,
+
     classTimeline,
   } = props;
+  const [patent1, setpatent1] = useState([]);
+  const [patent2, setpatent2] = useState([]);
+  const [patent3, setpatent3] = useState([]);
+  const [patent4, setpatent4] = useState([]);
+  const [patent5, setpatent5] = useState([]);
+  const [patent6, setpatent6] = useState([]);
+  const [patent7, setpatent7] = useState([]);
+  const [patent8, setpatent8] = useState([]);
+  const [patent9, setpatent9] = useState([]);
+
+  const apiUrl = "https://kmapi.kims-rmuti.com";
+  let id = atob(concept_proposal_id);
+
+  useEffect(() => {
+    axios.get(`${apiUrl}/api/get/us-patent/${id}`).then((result) => {
+      const pd1 = result.data.filter(
+        (obj) => obj.patent_type_name === "สิทธิบัตรการประดิษฐ์"
+      );
+      const pd2 = result.data.filter(
+        (obj) => obj.patent_type_name === "สิทธิบัตรการออกแบบผลิตภัณฑ์"
+      );
+      const pd3 = result.data.filter(
+        (obj) => obj.patent_type_name === "อนุสิทธิบัตร"
+      );
+      const pd4 = result.data.filter(
+        (obj) => obj.patent_type_name === "ลิขสิทธิ์"
+      );
+      const pd5 = result.data.filter(
+        (obj) => obj.patent_type_name === "เครื่องหมายการค้า"
+      );
+      const pd6 = result.data.filter(
+        (obj) => obj.patent_type_name === "เครื่องหมายบริการ"
+      );
+      const pd7 = result.data.filter(
+        (obj) => obj.patent_type_name === "เครื่องหมายรับรอง"
+      );
+      const pd8 = result.data.filter(
+        (obj) => obj.patent_type_name === "เครื่องหมายร่วม"
+      );
+      const pd9 = result.data.filter(
+        (obj) => obj.patent_type_name === "ทรัพย์สินทางอุตสาหกรรม"
+      );
+      // console.log(result.data);
+      setpatent1(pd1);
+      setpatent2(pd2);
+      setpatent3(pd3);
+      setpatent4(pd4);
+      setpatent5(pd5);
+      setpatent6(pd6);
+      setpatent7(pd7);
+      setpatent8(pd8);
+      setpatent9(pd9);
+    });
+  }, []);
+
   return (
     <TableContainer className="card-header-border card-border">
       <ThemeProvider theme={customTheme}>
