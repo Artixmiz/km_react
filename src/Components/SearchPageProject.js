@@ -6,34 +6,17 @@ import {
   Box,
   TextField,
   Button,
-  Select,
-  MenuItem,
-  FormControl,
-  Container,
   IconButton,
   CircularProgress,
 } from "@material-ui/core";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-  Label,
-  Form,
-  FormGroup,
-  Input,
-} from "reactstrap";
+import { Card, Row, Col, Form, Accordion } from "react-bootstrap";
 import React, { useCallback, useState, useMemo } from "react";
 import { useEventHandlers } from "@react-leaflet/core";
-import Leftbar from "./Leftbar";
 import "./Css/Search.scss";
 import "../index.css";
 import {
   MapContainer,
   TileLayer,
-  ZoomControl,
   Marker,
   CircleMarker,
   Popup,
@@ -42,13 +25,11 @@ import {
   Rectangle,
 } from "react-leaflet";
 import noImg from "../images/no-image.png";
-import markerIconPng from "../images/icon.png";
 import { Icon } from "leaflet";
 import { withRouter } from "react-router";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
-import Pagination from "@material-ui/lab/Pagination";
-import { BiInfoCircle, BiLinkExternal } from "react-icons/bi";
+import { BiInfoCircle } from "react-icons/bi";
 
 import { useTranslation } from "react-i18next";
 
@@ -90,10 +71,17 @@ function MinimapBounds({ parentMap, zoom }) {
 }
 
 function SearchPageProject(props) {
-  const { locationSearch } = props;
   const { t } = useTranslation();
   const [projects, setProjects] = React.useState([]);
   const [universitys, setUniversitys] = React.useState([]);
+  const [other_universitys, setother_universitys] = React.useState([]);
+
+  const [count_projects, setcount_projects] = React.useState(0);
+  const [count_in_country, setcount_in_country] = React.useState(0);
+  const [count_out_country, setcount_out_country] = React.useState(0);
+  const [count_rmuti_university, setcount_rmuti_university] = React.useState(0);
+  const [count_other_university, setcount_other_university] = React.useState(0);
+
   const [searchTitle, setSearchTitle] = React.useState("");
   // const [page, setPage] = React.useState(1);
   // const [count, setCount] = React.useState(0);
@@ -166,40 +154,6 @@ function SearchPageProject(props) {
     return params;
   };
 
-  const sendAPIRequest = async () => {
-    try {
-      const auth = await axios({
-        url: `https://dev-57432028.okta.com/oauth2/default/v1/token`,
-        method: "post",
-        auth: {
-          username: "0oa43c4k6hWeg1ygf5d7",
-          password: "e_L-W2PN0K04ttYNDSJZ4OZ43_1gNOWbwWYczbg0",
-        },
-        params: {
-          grant_type: "client_credentials",
-          scope: "myapi",
-        },
-      });
-
-      console.log(auth);
-      // return auth;
-
-      // const response = await axios({
-      //   url,
-      //   method: method ?? "get",
-      //   data: body ? JSON.parse(body) : null,
-      //   headers: {
-      //     // "Content-Type": "application/x-www-form-urlencoded",
-      //     authorization: `${auth.data.token_type} ${auth.data.access_token}`,
-      //   },
-      // });
-
-      // console.log(response.data);
-    } catch (error) {
-      console.log(`Error: ${error.message}`);
-    }
-  };
-
   const retrieveProjects = async () => {
     // sendAPIRequest();
 
@@ -226,9 +180,15 @@ function SearchPageProject(props) {
         // console.log(res.data);
         // const { projects, totalPages } = res.data;
 
-        console.log(res.data.universitys);
+        setcount_projects(res.data.count_projects);
+        setcount_in_country(res.data.count_in_country);
+        setcount_out_country(res.data.count_out_country);
+        setcount_rmuti_university(res.data.count_rmuti_university);
+        setcount_other_university(res.data.count_other_university);
+
         setProjects(res.data.projects);
-        setUniversitys(res.data.universitys);
+        setUniversitys(res.data.rmuti_universitys);
+        setother_universitys(res.data.other_university);
 
         // setCount(totalPages);
       })
@@ -356,538 +316,572 @@ function SearchPageProject(props) {
   }
 
   return (
-    <body className="bg">
-      <div className="body-detail ">
-        {/* <Box>
-          <text
-            style={{
-              fontFamily: "Prompt",
-              fontSize: 50,
-              fontWeight: "bold",
-              color: "#FF9F45",
-            }}
-          >
-            {t("title")}
-          </text>
-        </Box> */}
+    <div className="body-detail" style={{ padding: "1.5rem" }}>
+      <div style={{ padding: "0px 10px 0px 10px" }}>
+        <Card
+          className="card-border"
+          style={{ backgroundColor: "#f6a834", borderRadius: "15px" }}
+        >
+          <Card.Body style={{ padding: "10px" }}>
+            <div className="">
+              <Box
+                component="form"
+                sx={{
+                  "& .MuiTextField-root": {
+                    m: 2,
+                    width: "100%",
+                    marginTop: "10px",
+                  },
+                }}
+                noValidate
+                autoComplete="off"
+              >
+                <div>
+                  <Row className="align-items-center justify-content-md-center">
+                    <Col md="6" xs="12">
+                      <TextField
+                        id="standard-helperText"
+                        label={t("research.menu6")}
+                        defaultValue="Default Value"
+                        helperText={t("research.menu5")}
+                        InputProps={{ style: { fontFamily: "Prompt" } }}
+                        InputLabelProps={{
+                          style: { fontFamily: "Prompt" },
+                        }}
+                        FormHelperTextProps={{
+                          style: { fontFamily: "Prompt" },
+                        }}
+                        variant="standard"
+                        value={searchTitle}
+                        onChange={onChangeTitle}
+                      />
 
-        <div className="">
-          <div>
-            <Container maxWidth={false}>
-              <Card className="card-border">
-                {/* <CardBody className="card-header-border">
-                <CardTitle
-                  tag="h6"
-                  style={{
-                    marginBottom: -3,
-                    fontFamily: "Prompt",
-                    fontWeight: "bold",
-                    color: "rgb(58, 58, 58)",
-                  }}
-                >
-                  ค้นหางานวิจัย/งานบริการวิชาการ
-                </CardTitle>
-              </CardBody> */}
-                <CardBody>
-                  <div className="">
-                    <Box
-                      component="form"
-                      sx={{
-                        "& .MuiTextField-root": {
-                          m: 2,
+                      <Form
+                        id="outlined-multiline-flexible"
+                        multiline
+                        Input
+                        type="checkbox"
+                        InputLabelProps={{
+                          style: { fontFamily: "Prompt" },
+                        }}
+                        InputProps={{ style: { fontFamily: "Prompt" } }}
+                        FormHelperTextProps={{
+                          style: { fontFamily: "Prompt" },
+                        }}
+                        label="ประเภทงานวิจัย"
+                        // value={selected1}
+                        // onChange={handleChange}
+                        helperText="โปรดเลือก"
+                      ></Form>
+                    </Col>
+
+                    <Col md="1" xs="12">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        type="submit"
+                        onClick={retrieveProjects}
+                        style={{
+                          fontFamily: "Prompt",
                           width: "100%",
-                          marginTop: "10px",
-                        },
-                      }}
-                      noValidate
-                      autoComplete="off"
-                    >
-                      <div>
-                        <Row className="align-items-center justify-content-md-center">
-                          <Col md="6" xs="12">
-                            <TextField
-                              id="standard-helperText"
-                              label={t("research.menu6")}
-                              defaultValue="Default Value"
-                              helperText={t("research.menu5")}
-                              InputProps={{ style: { fontFamily: "Prompt" } }}
-                              InputLabelProps={{
-                                style: { fontFamily: "Prompt" },
-                              }}
-                              FormHelperTextProps={{
-                                style: { fontFamily: "Prompt" },
-                              }}
-                              variant="standard"
-                              value={searchTitle}
-                              onChange={onChangeTitle}
-                            />
-
-                            <Form
-                              id="outlined-multiline-flexible"
-                              multiline
-                              Input
-                              type="checkbox"
-                              InputLabelProps={{
-                                style: { fontFamily: "Prompt" },
-                              }}
-                              InputProps={{ style: { fontFamily: "Prompt" } }}
-                              FormHelperTextProps={{
-                                style: { fontFamily: "Prompt" },
-                              }}
-                              label="ประเภทงานวิจัย"
-                              // value={selected1}
-                              // onChange={handleChange}
-                              helperText="โปรดเลือก"
-                            ></Form>
-                          </Col>
-
-                          <Col md="1" xs="12">
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              size="large"
-                              type="submit"
-                              onClick={retrieveProjects}
-                              style={{ fontFamily: "Prompt", width: "100%" }}
-                              disabled={loading}
-                              startIcon={<FaSearch size={13} />}
-                            >
-                              {loading && <CircularProgress size={22} />}
-                              {!loading && t("search")}
-                            </Button>
-                          </Col>
-                        </Row>
-                      </div>
-                    </Box>
-                  </div>
-                </CardBody>
-              </Card>
-
+                          backgroundColor: "rgb(239, 125, 5)",
+                        }}
+                        disabled={loading}
+                        startIcon={<FaSearch size={13} />}
+                      >
+                        {loading && <CircularProgress size={22} />}
+                        {!loading && t("search")}
+                      </Button>
+                    </Col>
+                  </Row>
+                </div>
+              </Box>
+            </div>
+          </Card.Body>
+        </Card>
+        <div className="card-searcher">
+          <Row>
+            <Col sm={12}>
               <Card
                 className="card-border"
-                style={{ marginTop: "15px", fontFamily: "Prompt" }}
+                style={{
+                  marginTop: "10px",
+                  fontFamily: "Prompt",
+                  borderRadius: "15px",
+                  boxShadow: "none",
+                  border: "none",
+                }}
               >
-                {/* <CardBody className="card-header-border">
-                <CardTitle tag="h6" style={{ fontWeight: "bold" }}>
-                  แผนที่แสดงงานวิจัย
-                </CardTitle>
-              </CardBody> */}
-                <Row>
-                  <Col>
-                    <MapContainer
-                      center={[13, 102]}
-                      zoom={6}
-                      // scrollWheelZoom={true}
-                      minZoom={3}
-                      maxZoom={21}
-                      zoomControl={false}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        margin: "0 auto",
-                        // borderRadius: "5px",
-                      }}
-                    >
-                      <TileLayer
-                        // attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                      />
-                      {!message
-                        ? projects.map((p, index) => {
-                            return (
-                              <CircleMarker
-                                key={index}
-                                center={[
-                                  p.project_latitude ? p.project_latitude : 0,
-                                  p.project_longitude ? p.project_longitude : 0,
-                                ]}
-                                // radius={10}
-                                opacity={0}
-                              >
-                                <Marker
-                                  position={[
-                                    p.project_latitude ? p.project_latitude : 0,
-                                    p.project_longitude
-                                      ? p.project_longitude
-                                      : 0,
-                                  ]}
-                                  icon={
-                                    new Icon({
-                                      iconUrl:
-                                        p.project_type_id == 1
-                                          ? "https://researcher.kims-rmuti.com/icon/R.jpg"
-                                          : p.project_type_id == 2
-                                          ? "https://researcher.kims-rmuti.com/icon/AS.jpg"
-                                          : p.project_type_id == 5
-                                          ? "https://researcher.kims-rmuti.com/icon/U2T.jpg"
-                                          : "https://cdn1.iconfinder.com/data/icons/social-media-set/24/Reverbnation-128.png",
-                                      iconSize: [26, 26],
-                                      // iconAnchor: [19, 0],
-                                      className: "image-icon",
-                                    })
-                                  }
-                                >
-                                  <Popup>
-                                    <CardTitle class="tip__container">
-                                      <text
-                                        style={{
-                                          marginTop: "10px",
-                                          fontFamily: "Prompt",
-                                          fontSize: "20px",
-                                        }}
-                                      >
-                                        งานวิจัย
-                                      </text>
-                                      <hr />
-
-                                      <text
-                                        style={{
-                                          marginTop: "10px",
-                                          fontFamily: "Prompt",
-                                          fontSize: "15px",
-                                        }}
-                                      >
-                                        {p.project_name_th}
-                                      </text>
-                                      <hr />
-
-                                      <IconButton
-                                        color="primary"
-                                        aria-label="view info co"
-                                        onClick={() => {
-                                          console.log(p.concept_id);
-                                          p.project_id
-                                            ? props.history.push({
-                                                pathname:
-                                                  "/ProjectDetail/ProjectNetwork",
-                                                search: `?project_id=${btoa(
-                                                  p.project_id
-                                                )}`,
-                                              })
-                                            : props.history.push({
-                                                pathname:
-                                                  "/ProjectDetailConcep/ProjectNetwork",
-                                                search: `?concep_id=${btoa(
-                                                  p.concept_id
-                                                )}`,
-                                              });
-                                        }}
-                                        style={{
-                                          marginTop: "10px",
-                                          fontFamily: "Prompt",
-                                          fontSize: "15px",
-                                        }}
-                                      >
-                                        รายละเอียดเพิ่มเติม{" "}
-                                        <BiInfoCircle size={18} />
-                                      </IconButton>
-                                    </CardTitle>
-                                  </Popup>
-                                </Marker>
-                              </CircleMarker>
-                            );
-                          })
-                        : null}
-
-                      {/* {0 &&
-                                      0 ? (
-                                        
-                                      ) : null} */}
-                      <MinimapControl position="topright" />
-                    </MapContainer>
-                  </Col>
-
-                  <Col md={4}>
-                    {universitys.length ? (
-                      <div className="main-list">
-                        {universitys
-                          .sort((x, y) =>
-                            x.university.localeCompare(y.university, "th")
-                          )
-                          .map((list) => (
-                            <>
-                              <Card className="pt-2 mt-3 me-2">
-                                <Row
-                                  className=" align-items-center justify-content-md-center"
-                                  style={{ width: "100%" }}
-                                >
-                                  <Col md="6">
-                                    <h6>{list.university}</h6>
-                                  </Col>
-                                  <Col md="4">
-                                    <p>จำนวน {list.data.length} รายการ</p>
-                                  </Col>
-                                </Row>
-                              </Card>
-                              {list.data.length ? (
-                                <div className="list">
-                                  {list.data
-                                    .sort((x, y) =>
-                                      x.project_name_th.localeCompare(
-                                        y.project_name_th,
-                                        "th"
-                                      )
-                                    )
-                                    .map((listdata) => (
-                                      <div className="link_feature">
-                                        <a
-                                          href={
-                                            listdata.project_id
-                                              ? `/monitoring/ProjectDetail/ProjectNetwork?project_id=${btoa(
-                                                  listdata.project_id
-                                                )}`
-                                              : `/monitoring/ProjectDetailConcep/ProjectNetwork?concep_id=${btoa(
-                                                  listdata.concept_id
-                                                )}`
-                                          }
-                                          className="linkexternal"
-                                        >
-                                          <Row
-                                            className="p-2 align-items-center justify-content-md-center "
-                                            style={{ width: "100%" }}
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom"
-                                            title={listdata.project_name_th}
-                                          >
-                                            <Col md="2">
-                                              <img
-                                                className="rounded-circle mx-auto d-block"
-                                                width={40}
-                                                height={40}
-                                                src={
-                                                  listdata.project_type_id == 1
-                                                    ? `https://researcher.kims-rmuti.com/icon/R.jpg`
-                                                    : noImg
-                                                }
-                                              />
-                                            </Col>
-                                            <Col md="9">
-                                              <text>
-                                                {listdata.project_name_th.replace(
-                                                  /(.{30})..+/,
-                                                  "$1…"
-                                                )}
-                                              </text>
-                                            </Col>
-                                            <Col md="1">
-                                              <BiLinkExternal size={20} />
-                                            </Col>
-                                          </Row>
-                                        </a>
-                                      </div>
-                                    ))}
-                                </div>
-                              ) : (
-                                <div className="list pt-4">ไม่พบข้อมูล</div>
-                              )}
-                              <hr />
-                            </>
-                          ))}
-                      </div>
-                    ) : (
-                      <div className="main-list pt-4">ไม่พบข้อมูล</div>
-                    )}
-
-                    {/* <div className="list pt-4">ไม่พบข้อมูล</div> */}
-                  </Col>
-                </Row>
-              </Card>
-            </Container>
-
-            {/* <Card
-              style={{ marginTop: "15px", fontFamily: "Prompt" }}
-              className="card-border"
-            >
-              <CardBody>
-                {(() => {
-                  if (message) {
-                    return (
-                      <Table hover responsive>
-                        <thead>
-                          <tr>
-                            <th>ประเภท</th>
-                            <th>ตำแหน่งที่ตั้ง</th>
-                            <th>งานวิจัย</th>
-                            <th>ดูข้อมูล</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td colSpan="4" style={{ padding: "20px" }}>
-                              No Data Available
-                            </td>
-                          </tr>
-                        </tbody>
-                      </Table>
-                    );
-                  } else {
-                    return (
-                      <Table hover responsive>
-                        <thead>
-                          <tr>
-                            <th>ประเภท</th>
-                            <th>งานวิจัย</th>
-                            <th>ตำแหน่งที่ตั้ง</th>
-                            <th>ดูข้อมูล</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {projects &&
-                            projects.map((project, index) => {
-                              return (
-                                <tr>
-                                  <td valign="middle">
-                                    {prefix[project.project_type_id]}
-                                  </td>
-
-                                  <td
-                                    valign="middle"
+                <MapContainer
+                  center={[13, 102]}
+                  zoom={6}
+                  // scrollWheelZoom={true}
+                  minZoom={3}
+                  maxZoom={21}
+                  zoomControl={false}
+                  style={{
+                    width: "100%",
+                    minHeight: "450px",
+                    height: "65vh",
+                    margin: "0",
+                    zIndex: "0",
+                    borderRadius: "15px",
+                  }}
+                >
+                  <TileLayer
+                    // attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  {!message
+                    ? projects.map((p, index) => {
+                        return (
+                          <CircleMarker
+                            key={index}
+                            center={[
+                              p.project_latitude ? p.project_latitude : 0,
+                              p.project_longitude ? p.project_longitude : 0,
+                            ]}
+                            // radius={10}
+                            opacity={0}
+                          >
+                            <Marker
+                              position={[
+                                p.project_latitude ? p.project_latitude : 0,
+                                p.project_longitude ? p.project_longitude : 0,
+                              ]}
+                              icon={
+                                new Icon({
+                                  iconUrl:
+                                    p.project_type_id == 1
+                                      ? "https://researcher.kims-rmuti.com/icon/R.jpg"
+                                      : p.project_type_id == 2
+                                      ? "https://researcher.kims-rmuti.com/icon/AS.jpg"
+                                      : p.project_type_id == 5
+                                      ? "https://researcher.kims-rmuti.com/icon/U2T.jpg"
+                                      : "https://cdn1.iconfinder.com/data/icons/social-media-set/24/Reverbnation-128.png",
+                                  iconSize: [26, 26],
+                                  // iconAnchor: [19, 0],
+                                  className: "image-icon",
+                                })
+                              }
+                            >
+                              <Popup>
+                                <Card.Title class="tip__container">
+                                  <text
                                     style={{
+                                      marginTop: "10px",
                                       fontFamily: "Prompt",
-                                      width: "390px",
+                                      fontSize: "20px",
                                     }}
                                   >
-                                    {project.project_name_th
-                                      ? project.project_name_th
-                                      : project.concept_proposal_name_th}
-                                  </td>
-                                  <td valign="middle">
-                                    <MapContainer
-                                      center={[
-                                        project.project_latitude
-                                          ? project.project_latitude
-                                          : 0,
-                                        project.project_longitude
-                                          ? project.project_longitude
-                                          : 0,
-                                      ]}
-                                      zoom={7}
-                                      // scrollWheelZoom={true}
-                                      zoomControl={false}
-                                      style={{
-                                        width: "220px",
-                                        height: "90px",
-                                        margin: "0 auto",
-                                        borderRadius: "5px",
-                                      }}
-                                    >
-                                      <TileLayer
-                                        // attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                      />
+                                    งานวิจัย
+                                  </text>
+                                  <hr />
 
-                                      {project.project_latitude &&
-                                      project.project_longitude ? (
-                                        <CircleMarker
-                                          key={index}
-                                          center={[
-                                            project.project_latitude
-                                              ? project.project_latitude
-                                              : 0,
-                                            project.project_longitude
-                                              ? project.project_longitude
-                                              : 0,
-                                          ]}
-                                          // radius={10}
-                                          opacity={0}
-                                        >
-                                          <Marker
-                                            position={[
-                                              project.project_latitude
-                                                ? project.project_latitude
-                                                : 0,
-                                              project.project_longitude
-                                                ? project.project_longitude
-                                                : 0,
-                                            ]}
-                                            icon={
-                                              new Icon({
-                                                iconUrl:
-                                                  project.project_type_id == 1
-                                                    ? "https://www.km-innovations.rmuti.ac.th/researcher/icon/งานวิจัย.png"
-                                                    : project.project_type_id ==
-                                                      2
-                                                    ? "https://www.km-innovations.rmuti.ac.th/researcher/icon/บริการวิชาการ.png"
-                                                    : "https://cdn1.iconfinder.com/data/icons/social-media-set/24/Reverbnation-128.png",
-                                                iconSize: [40, 41],
-                                                // iconAnchor: [19, 0],
-                                                className: "image-icon",
-                                              })
-                                            }
-                                          ></Marker>
-                                        </CircleMarker>
-                                      ) : null}
-                                    </MapContainer>
-                                  </td>
-                                  <td valign="middle">
-                                    <IconButton
-                                      color="primary"
-                                      aria-label="view info project"
-                                      onClick={() => {
-                                        console.log(
-                                          "test" + project.project_id
-                                        );
-                                        project.project_id
-                                          ? props.history.push({
-                                              pathname: "/ProjectDetail",
-                                              search: `?project_id=${btoa(project.project_id)}`,
-                                            })
-                                          : props.history.push({
-                                              pathname: "/ProjectDetailConcep",
-                                              search: `?concep_id=${btoa(project.concept_id)}`,
-                                            });
-                                      }}
-                                    >
-                                      <BiInfoCircle size={40} />
-                                    </IconButton>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                        </tbody>
-                      </Table>
-                    );
-                  }
-                })()}
-                <Row className="align-items-center justify-content-md-center">
-                  <Col md="5" xs="5">
-                    <div
+                                  <text
+                                    style={{
+                                      marginTop: "10px",
+                                      fontFamily: "Prompt",
+                                      fontSize: "15px",
+                                    }}
+                                  >
+                                    {p.project_name_th}
+                                  </text>
+                                  <hr />
+
+                                  <IconButton
+                                    color="primary"
+                                    aria-label="view info co"
+                                    onClick={() => {
+                                      console.log(p.concept_id);
+                                      p.project_id
+                                        ? props.history.push({
+                                            pathname:
+                                              "/ProjectDetail/ProjectNetwork",
+                                            search: `?project_id=${btoa(
+                                              p.project_id
+                                            )}`,
+                                          })
+                                        : props.history.push({
+                                            pathname:
+                                              "/ProjectDetailConcep/ProjectNetwork",
+                                            search: `?concep_id=${btoa(
+                                              p.concept_id
+                                            )}`,
+                                          });
+                                    }}
+                                    style={{
+                                      marginTop: "10px",
+                                      fontFamily: "Prompt",
+                                      fontSize: "15px",
+                                    }}
+                                  >
+                                    รายละเอียดเพิ่มเติม{" "}
+                                    <BiInfoCircle size={18} />
+                                  </IconButton>
+                                </Card.Title>
+                              </Popup>
+                            </Marker>
+                          </CircleMarker>
+                        );
+                      })
+                    : null}
+                  <MinimapControl position="topright" />
+                </MapContainer>
+              </Card>
+            </Col>
+            <Col sm={12}>
+              <div
+                className="dashboard"
+                style={{ marginTop: "-4.5rem", marginBottom: "-1rem" }}
+              >
+                <div className="all-card">
+                  <Row>
+                    <Col>
+                      <div className="card">
+                        <div className="card-body ">
+                          <h5 className="card-title text-title">มทร.อีสาน</h5>
+                          <h2 className="card-text text-amount">
+                            {count_rmuti_university} วิทยาเขต
+                          </h2>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="card">
+                        <div className="card-body ">
+                          <h5 className="card-title text-title">
+                            งานวิจัยมทร.อีสาน
+                          </h5>
+                          <h2 className="card-text text-amount">
+                            {count_projects} โครงการ{" "}
+                          </h2>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="card">
+                        <div className="card-body ">
+                          <h5 className="card-title text-title">
+                            งานวิจัยเครือข่าย
+                          </h5>
+                          <h2 className="card-text text-amount">
+                            {count_other_university} โครงการ
+                          </h2>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="card">
+                        <div className="card-body ">
+                          <h5 className="card-title text-title">ภายในประเทศ</h5>
+                          <h2 className="card-text text-amount">
+                            {count_in_country} โครงการ
+                          </h2>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="card">
+                        <div className="card-body ">
+                          <h5 className="card-title text-title">
+                            ภายนอกประเทศ
+                          </h5>
+                          <h2 className="card-text text-amount">
+                            {count_out_country} โครงการ
+                          </h2>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              </div>
+            </Col>
+            <Col md={12} style={{ padding: "0 1rem 0 3rem" }}>
+              <Accordion
+                style={{ padding: "10px 25px 0 25px" }}
+                className="bg-title"
+                defaultActiveKey="0"
+              >
+                <Accordion.Item
+                  eventKey="0"
+                  style={{ backgroundColor: "transparent", border: "none" }}
+                >
+                  <Accordion.Header>
+                    <h2
                       style={{
                         textAlign: "left",
-                        paddingRight: "8px",
-                        fontSize: "0.9rem",
+                        color: "#fff",
+                        fontWeight: "600",
+                        marginBottom: "2rem",
                       }}
                     >
-                      Page :<strong> {page} </strong> of{" "}
-                      <strong>{count} </strong>
-                    </div>
-                  </Col>
-                  <Col md="7" xs="7">
-                    <div style={{ marginLeft: "auto", marginRight: "0" }}>
-                      <Pagination
-                        // className="my-3 "
-                        style={{
-                          display: "flex",
-                          justifyContent: "right",
-                        }}
-                        count={count}
-                        page={page}
-                        color="primary"
-                        siblingCount={1}
-                        boundaryCount={2}
-                        variant="outlined"
-                        shape="rounded"
-                        onChange={handlePageChange}
-                      />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card> */}
-          </div>
+                      งานวิจัยมหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน
+                    </h2>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <Row style={{ paddingLeft: "1rem" }}>
+                      {universitys.length ? (
+                        <>
+                          {universitys
+                            .sort((x, y) => x.name.localeCompare(y.name, "th"))
+                            .map((list) => (
+                              <Col
+                                xs
+                                sm={12}
+                                md
+                                lg={6}
+                                xl={6}
+                                xxl={4}
+                                style={{ paddingBottom: "1.5rem" }}
+                              >
+                                <div
+                                  className="card-university"
+                                  style={{
+                                    backgroundColor: "#fff",
+                                    borderRadius: "15px",
+                                  }}
+                                >
+                                  <div
+                                    className="card-header"
+                                    style={{
+                                      padding: "1.5rem 1.5rem 0px",
+                                      borderRadius: "15px  15px 0 0",
+                                    }}
+                                  >
+                                    <h5>{list.name}</h5>
+                                    <p
+                                      style={{
+                                        textAlign: "left",
+                                        marginTop: "0.5rem",
+                                        marginBottom: "0.5rem",
+                                      }}
+                                    >
+                                      จำนวน {list.data.length} โครงการ
+                                    </p>
+                                  </div>
+                                  <div className="card-university-body">
+                                    {list.data.length ? (
+                                      <div className="list">
+                                        {list.data
+                                          .sort((x, y) =>
+                                            x.project_name_th.localeCompare(
+                                              y.project_name_th,
+                                              "th"
+                                            )
+                                          )
+                                          .map((listdata) => (
+                                            <div className="link_feature">
+                                              <a
+                                                href={
+                                                  listdata.project_id
+                                                    ? `/monitoring/ProjectDetail/ProjectNetwork?project_id=${btoa(
+                                                        listdata.project_id
+                                                      )}`
+                                                    : `/monitoring/ProjectDetailConcep/ProjectNetwork?concep_id=${btoa(
+                                                        listdata.concept_id
+                                                      )}`
+                                                }
+                                                className="linkexternal"
+                                              >
+                                                <Row
+                                                  className="p-2 align-items-center justify-content-md-center "
+                                                  style={{ width: "100%" }}
+                                                  data-bs-toggle="tooltip"
+                                                  data-bs-placement="bottom"
+                                                  title={
+                                                    listdata.project_name_th
+                                                  }
+                                                >
+                                                  <Col md="2">
+                                                    <img
+                                                      className="rounded-circle mx-auto d-block"
+                                                      width={40}
+                                                      height={40}
+                                                      src={
+                                                        listdata.project_type_id ==
+                                                        1
+                                                          ? `https://researcher.kims-rmuti.com/icon/R.jpg`
+                                                          : noImg
+                                                      }
+                                                    />
+                                                  </Col>
+                                                  <Col md="10">
+                                                    <text>
+                                                      {listdata.project_name_th}
+                                                    </text>
+                                                  </Col>
+                                                </Row>
+                                              </a>
+                                            </div>
+                                          ))}
+                                      </div>
+                                    ) : (
+                                      <div className="list pt-4">
+                                        ไม่พบข้อมูล
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </Col>
+                            ))}
+                        </>
+                      ) : (
+                        <div className="pt-4">ไม่พบข้อมูล</div>
+                      )}
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </Col>
+            <Col
+              md={12}
+              style={{ padding: "0 1rem 0 3rem", marginTop: "2rem" }}
+            >
+              <Accordion
+                style={{ padding: "10px 25px 0 25px" }}
+                className="bg-title"
+                defaultActiveKey="0"
+              >
+                <Accordion.Item
+                  eventKey="0"
+                  style={{ backgroundColor: "transparent", border: "none" }}
+                >
+                  <Accordion.Header>
+                    <h2
+                      style={{
+                        textAlign: "left",
+                        color: "#fff",
+                        fontWeight: "600",
+                        marginBottom: "2rem",
+                      }}
+                    >
+                      งานวิจัยเครือข่าย
+                    </h2>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <Row style={{ paddingLeft: "1rem" }}>
+                      {other_universitys.length ? (
+                        <>
+                          {other_universitys
+                            .sort((x, y) => x.name.localeCompare(y.name, "th"))
+                            .map((list) => (
+                              <Col
+                                xs
+                                sm={12}
+                                md
+                                lg={6}
+                                xl={6}
+                                xxl={4}
+                                style={{ paddingBottom: "1.5rem" }}
+                              >
+                                <div
+                                  className="card-university"
+                                  style={{
+                                    backgroundColor: "#fff",
+                                    borderRadius: "15px",
+                                  }}
+                                >
+                                  <div
+                                    className="card-header"
+                                    style={{
+                                      padding: "1.5rem 1.5rem 0px",
+                                      borderRadius: "15px  15px 0 0",
+                                    }}
+                                  >
+                                    <h5>{list.name}</h5>
+                                    <p
+                                      style={{
+                                        textAlign: "left",
+                                        marginTop: "0.5rem",
+                                        marginBottom: "0.5rem",
+                                      }}
+                                    >
+                                      จำนวน {list.data.length} โครงการ
+                                    </p>
+                                  </div>
+                                  <div className="card-university-body">
+                                    {list.data.length ? (
+                                      <div className="list">
+                                        {list.data
+                                          .sort((x, y) =>
+                                            x.project_name_th.localeCompare(
+                                              y.project_name_th,
+                                              "th"
+                                            )
+                                          )
+                                          .map((listdata) => (
+                                            <div className="link_feature">
+                                              <a
+                                                href={
+                                                  listdata.project_id
+                                                    ? `/monitoring/ProjectDetail/ProjectNetwork?project_id=${btoa(
+                                                        listdata.project_id
+                                                      )}`
+                                                    : `/monitoring/ProjectDetailConcep/ProjectNetwork?concep_id=${btoa(
+                                                        listdata.concept_id
+                                                      )}`
+                                                }
+                                                className="linkexternal"
+                                              >
+                                                <Row
+                                                  className="p-2 align-items-center justify-content-md-center "
+                                                  style={{ width: "100%" }}
+                                                  data-bs-toggle="tooltip"
+                                                  data-bs-placement="bottom"
+                                                  title={
+                                                    listdata.project_name_th
+                                                  }
+                                                >
+                                                  <Col md="2">
+                                                    <img
+                                                      className="rounded-circle mx-auto d-block"
+                                                      width={40}
+                                                      height={40}
+                                                      src={
+                                                        listdata.project_type_id ==
+                                                        1
+                                                          ? `https://researcher.kims-rmuti.com/icon/R.jpg`
+                                                          : noImg
+                                                      }
+                                                    />
+                                                  </Col>
+                                                  <Col md="10">
+                                                    <text>
+                                                      {listdata.project_name_th.replace(
+                                                        /(.{30})..+/,
+                                                        "$1…"
+                                                      )}
+                                                    </text>
+                                                  </Col>
+                                                </Row>
+                                              </a>
+                                            </div>
+                                          ))}
+                                      </div>
+                                    ) : (
+                                      <div className="list pt-4">
+                                        ไม่พบข้อมูล
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </Col>
+                            ))}
+                        </>
+                      ) : (
+                        <div className="pt-4">ไม่พบข้อมูล</div>
+                      )}
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </Col>
+          </Row>
         </div>
       </div>
-    </body>
+    </div>
   );
 }
 

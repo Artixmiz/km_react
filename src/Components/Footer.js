@@ -12,25 +12,32 @@ export default function Footer() {
     <div className="body-detail">
       <div className="footer-bg">
         <Row style={{ width: "100%", padding: "2rem", paddingBottom: "1rem" }}>
-          <Col sm={2}>
+          <Col xs={6} xl={2}>
             <Row>
               <Col sm={12} style={{ textAlign: "left" }}>
                 <h6>Made by</h6>
               </Col>
               <Col sm={12}>
-                <img src={logo_footer} style={{ width: "80%" }} />
+                <img
+                  src={logo_footer}
+                  style={{ width: "80%", maxWidth: "150px" }}
+                />
               </Col>
             </Row>
           </Col>
-          <Col sm={2}>
+          <Col xs={6} xl={2}>
             <Row>
               <Col sm={12} style={{ textAlign: "left" }}>
                 <h6>Sponsorship</h6>
               </Col>
-              <Col sm={6}>
-                <img src={rmutilogo} style={{ width: "80%" }} />
+              <Col xs={6} sm={6}>
+                <img
+                  src={rmutilogo}
+                  style={{ width: "80%", maxWidth: "85px" }}
+                />
               </Col>
               <Col
+                xs={6}
                 sm={6}
                 style={{
                   display: "flex",
@@ -38,11 +45,14 @@ export default function Footer() {
                   justifyContent: "center",
                 }}
               >
-                <img src={sidelogo} style={{ width: "100%" }} />
+                <img
+                  src={sidelogo}
+                  style={{ width: "100%", maxWidth: "100px" }}
+                />
               </Col>
             </Row>
           </Col>
-          <Col sm={7}>
+          <Col xs={12} xl={7}>
             <Row>
               <Col sm={12} style={{ textAlign: "left" }}>
                 <h6>ติดต่อ : </h6>
@@ -67,14 +77,18 @@ export default function Footer() {
             </Row>
           </Col>
           <Col
-            sm={1}
+            xs={6}
+            xl={1}
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <img src={footer_stiker} style={{ width: "150%" }} />
+            <img
+              src={footer_stiker}
+              style={{ width: "150%", maxWidth: "150px" }}
+            />
           </Col>
         </Row>
       </div>
