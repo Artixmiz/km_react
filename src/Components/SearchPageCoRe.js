@@ -761,6 +761,18 @@ function SearchPageCoRe(props) {
                             <div className="card">
                               <div className="card-body ">
                                 <h5 className="card-title text-title">
+                                  เครือข่ายทั้งหมด
+                                </h5>
+                                <h2 className="card-text text-amount">
+                                  {count_co} เครือข่าย
+                                </h2>
+                              </div>
+                            </div>
+                          </Col>
+                          <Col>
+                            <div className="card">
+                              <div className="card-body ">
+                                <h5 className="card-title text-title">
                                   เครือข่ายระดับชาติ
                                 </h5>
                                 <h2 className="card-text text-amount">
@@ -777,18 +789,6 @@ function SearchPageCoRe(props) {
                                 </h5>
                                 <h2 className="card-text text-amount">
                                   {count_out_country} เครือข่าย{" "}
-                                </h2>
-                              </div>
-                            </div>
-                          </Col>
-                          <Col>
-                            <div className="card">
-                              <div className="card-body ">
-                                <h5 className="card-title text-title">
-                                  เครือข่ายทั้งหมด
-                                </h5>
-                                <h2 className="card-text text-amount">
-                                  {count_co} เครือข่าย
                                 </h2>
                               </div>
                             </div>
