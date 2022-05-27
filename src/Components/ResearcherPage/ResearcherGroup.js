@@ -48,9 +48,24 @@ import {
 } from "react-leaflet";
 
 import Map from "../D3Layer";
+import { useEffect } from "react";
+import axios from "axios";
 
 export default function ResearcherGroup(props) {
-  const { classes, dataTeam } = props;
+  const { concept_proposal_id, classes } = props;
+
+  const apiUrl = "https://kmapi.kims-rmuti.com";
+  let id = atob(concept_proposal_id);
+
+  const mapDataTeam = async () => {
+    const response = await axios.get(
+      `${apiUrl}/api/get/us-project-map/team/${id}`
+    );
+    return response.data;
+  };
+
+  const dataTeam = mapDataTeam();
+
   return (
     <TableContainer className="card-header-border card-border">
       <Card>

@@ -35,10 +35,37 @@ import {
 
 import { FaInfo, FaCheck, FaCompressArrowsAlt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function ResearcherLocation(props) {
   const { t } = useTranslation();
-  const { concept_proposal_id, map, classes, projecttype1 , user} = props;
+  const { concept_proposal_id, classes, user } = props;
+  const [projecttype1, setprojecttype1] = useState([]);
+  const [map, setmap] = useState([]);
+
+  const apiUrl = "https://kmapi.kims-rmuti.com";
+
+  let id = atob(concept_proposal_id);
+
+  useEffect(async () => {
+    const project = await mapData();
+    setmap(project);
+    axios
+      .get(`${apiUrl}/api/get/us-project/type?id_user=${id}`)
+      .then((result) => {
+        // console.log(result.data);
+        setprojecttype1(result.data);
+      });
+  });
+
+  const mapData = async () => {
+    const response = await axios.get(
+      `${apiUrl}/api/get/us-projects-user/${id}`
+    );
+    return response.data;
+  };
+
   return (
     <>
       <Card className=" ">

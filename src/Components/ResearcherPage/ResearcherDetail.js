@@ -38,16 +38,37 @@ import {
   CardImg,
 } from "reactstrap";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function DetailPage(props) {
-  const {
-    Accordion,
-    classes,
-    educational,
-    classTimeline,
-    working,
-    purchasing,
-  } = props;
+  const { concept_proposal_id, Accordion, classes, classTimeline } = props;
+
+  const [educational, seteducational] = useState([]);
+  const [working, setworking] = useState([]);
+  const [purchasing, setpurchasing] = useState([]);
+
+  const apiUrl = "https://kmapi.kims-rmuti.com";
+  let id = atob(concept_proposal_id);
+
+  useEffect(() => {
+    axios.get(`${apiUrl}/api/get/us-educational/${id}`).then((result) => {
+      // console.log(result.data);
+      seteducational(result.data);
+    });
+
+    axios.get(`${apiUrl}/api/get/working-experience/${id}`).then((result) => {
+      // console.log(result.data);
+      setworking(result.data);
+    });
+
+    axios
+      .get(`${apiUrl}/api/get/progress-report/report-purchasing/${id}`)
+      .then((result) => {
+        // console.log(result.data);
+        setpurchasing(result.data);
+      });
+  }, []);
   return (
     <div>
       <Grid container spacing={1}>

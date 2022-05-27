@@ -37,6 +37,7 @@ import {
   CardText,
   CardImg,
 } from "reactstrap";
+import { useEffect } from "react";
 
 export default function Course(props) {
   const { classes, course } = props;

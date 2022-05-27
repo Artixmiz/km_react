@@ -39,15 +39,17 @@ import {
 } from "reactstrap";
 
 import {
-    BiMapPin,
-    BiBookOpen,
-    BiMedal,
-    BiNews,
-    BiGroup,
-    BiCertification,
-    BiInfoCircle,
-    BiWorld,
-  } from "react-icons/bi";
+  BiMapPin,
+  BiBookOpen,
+  BiMedal,
+  BiNews,
+  BiGroup,
+  BiCertification,
+  BiInfoCircle,
+  BiWorld,
+} from "react-icons/bi";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const customTheme = createTheme({
   palette: {
@@ -84,27 +86,195 @@ function a11yProps(index) {
   };
 }
 
-export default function publication(props) {
+export default function Publication(props) {
   const {
+    concept_proposal_id,
     classes,
     valuePage1,
     handleChangePage1,
     Accordion,
-    PubliTHA1,
     classTimeline,
     publication_type,
-    CoPubliTHA1,
-    PubliTHA2,
-    CoPubliTHA2,
-    PubliTHA3,
-    CoPubliTHA3,
-    PubliINTER3,
-    CoPubliINTER3,
-    PubliTHA4,
-    CoPubliTHA4,
-    CoPubliINTER4,
-    PubliINTER4,
+ 
   } = props;
+
+  //ตีพิมพ์นักวิจัย-ระดับชาติ
+  const [PubliTHA1, setPubliTHA1] = useState([]); //คู่มือ
+  const [PubliTHA2, setPubliTHA2] = useState([]); //บทความวิชาการ
+  const [PubliTHA3, setPubliTHA3] = useState([]); //บทความวิจัย
+  const [PubliTHA4, setPubliTHA4] = useState([]); //วารสาร
+
+  //ตีพิมพ์นักวิจัย-นานาชาติ
+  const [PubliINTER1, setPubliINTER1] = useState([]);
+  const [PubliINTER2, setPubliINTER2] = useState([]);
+  const [PubliINTER3, setPubliINTER3] = useState([]);
+  const [PubliINTER4, setPubliINTER4] = useState([]);
+
+  //ตีพิมพ์-ผู้ช่วย-ระดับชาติ
+  const [CoPubliTHA1, setCoPubliTHA1] = useState([]); //คู่มือผู้ช่วย
+  const [CoPubliTHA2, setCoPubliTHA2] = useState([]); //บทความวิชาการผู้ช่วย
+  const [CoPubliTHA3, setCoPubliTHA3] = useState([]); //บทความวิจัยผู้ช่วย
+  const [CoPubliTHA4, setCoPubliTHA4] = useState([]); //วารสารผู้ช่วย
+
+  //ตีพิมพ์-ผู้ช่วย-นานาชาติ
+  const [CoPubliINTER1, setCoPubliINTER1] = useState([]);
+  const [CoPubliINTER2, setCoPubliINTER2] = useState([]);
+  const [CoPubliINTER3, setCoPubliINTER3] = useState([]);
+  const [CoPubliINTER4, setCoPubliINTER4] = useState([]);
+
+  const apiUrl = "https://kmapi.kims-rmuti.com";
+  let id = atob(concept_proposal_id);
+
+  useEffect(() => {
+    axios
+      //คู่มือ
+      .get(`${apiUrl}/api/get/us-publication?type=1&user_idcard=${id}`)
+      .then((result) => {
+        // const newDataTHA = result.data.filter(
+        //   (obj) => obj.publication_country === "THA"
+        // );
+
+        // const newDataINTER = result.data.filter(
+        //   (item) => item.publication_country !== "THA"
+        // );
+        // // console.log(result.data);
+        // setPubliTHA1(newDataTHA);
+        // setPubliINTER1(newDataINTER);
+        setPubliTHA1(result.data);
+      });
+
+    axios
+      //บทความวิชาการ
+      .get(`${apiUrl}/api/get/us-publication?type=2&user_idcard=${id}`)
+      .then((result) => {
+        // const newDataTHA = result.data.filter(
+        //   (obj) => obj.publication_country === "THA"
+        // );
+
+        // const newDataINTER = result.data.filter(
+        //   (item) => item.publication_country !== "THA"
+        // );
+        // // console.log(result.data);
+        // setPubliTHA2(newDataTHA);
+        // setPubliINTER2(newDataINTER);
+        setPubliTHA2(result.data);
+      });
+
+    axios
+      //วิจัย
+      .get(`${apiUrl}/api/get/us-publication?type=3&user_idcard=${id}`)
+      .then((result) => {
+        // const newDataTHA = result.data.filter(
+        //   (obj) => obj.publication_country === "THA"
+        // );
+
+        // const newDataINTER = result.data.filter(
+        //   (item) => item.publication_country !== "THA"
+        // );
+        // // console.log(result.data);
+        // setPubliINTER3(newDataINTER);
+        // setPubliTHA3(newDataTHA);
+        setPubliTHA3(result.data);
+      });
+
+    axios
+      //วิจัย
+      .get(`${apiUrl}/api/get/us-publication?type=4&user_idcard=${id}`)
+      .then((result) => {
+        setPubliINTER3(result.data);
+      });
+
+    axios
+      //วารสาร
+      .get(`${apiUrl}/api/get/us-publication?type=5&user_idcard=${id}`)
+      .then((result) => {
+        // const newDataTHA = result.data.filter(
+        //   (obj) => obj.publication_country === "THA"
+        // );
+
+        // const newDataINTER = result.data.filter(
+        //   (item) => item.publication_country !== "THA"
+        // );
+        // // console.log(result.data);
+        // setPubliTHA4(newDataTHA);
+        // setPubliINTER4(newDataINTER);
+        setPubliTHA4(result.data);
+      });
+
+    axios
+      //วารสาร
+      .get(`${apiUrl}/api/get/us-publication?type=6&user_idcard=${id}`)
+      .then((result) => {
+        setPubliINTER4(result.data);
+      });
+
+   
+    axios
+      //คู่มือผู้ช่วย
+      .get(`${apiUrl}/api/get/bb-user/publication/type?co_pi_type=10&id=${id}`)
+      .then((result) => {
+        const newDataTHA = result.data.filter(
+          (obj) => obj.co_researcher_publication_country === "THA"
+        );
+
+        const newDataINTER = result.data.filter(
+          (item) => item.co_researcher_publication_country !== "THA"
+        );
+        console.log("newDataTHA", newDataTHA);
+        console.log("newDataINTER", newDataINTER);
+
+        setCoPubliTHA1(newDataTHA);
+        setCoPubliINTER1(newDataINTER);
+      });
+
+    axios
+      //บทความวิชาการผู้ช่วย
+      .get(`${apiUrl}/api/get/bb-user/publication/type?co_pi_type=5&id=${id}`)
+      .then((result) => {
+        const newDataTHA = result.data.filter(
+          (obj) => obj.co_researcher_publication_country === "THA"
+        );
+
+        const newDataINTER = result.data.filter(
+          (item) => item.co_researcher_publication_country !== "THA"
+        );
+
+        setCoPubliTHA2(newDataTHA);
+        setCoPubliINTER2(newDataINTER);
+      });
+
+    axios
+      //บทความวิชาการผู้ช่วย
+      .get(`${apiUrl}/api/get/bb-user/publication/type?co_pi_type=1&id=${id}`)
+      .then((result) => {
+        const newDataTHA = result.data.filter(
+          (obj) => obj.co_researcher_publication_country === "THA"
+        );
+
+        const newDataINTER = result.data.filter(
+          (item) => item.co_researcher_publication_country !== "THA"
+        );
+
+        setCoPubliTHA3(newDataTHA);
+        setCoPubliINTER3(newDataINTER);
+      });
+
+    axios
+      //วารสารผู้ช่วย
+      .get(`${apiUrl}/api/get/bb-user/publication/type?co_pi_type=2&id=${id}`)
+      .then((result) => {
+        const newDataTHA = result.data.filter(
+          (obj) => obj.co_researcher_publication_country === "THA"
+        );
+
+        const newDataINTER = result.data.filter(
+          (item) => item.co_researcher_publication_country !== "THA"
+        );
+
+        setCoPubliTHA4(newDataTHA);
+        setCoPubliINTER4(newDataINTER);
+      });
+  });
   return (
     <ThemeProvider theme={customTheme}>
       <div className={classes.root}>

@@ -1,110 +1,27 @@
-import {
-  MapContainer,
-  TileLayer,
-  ZoomControl,
-  Marker,
-  useMap,
-} from "react-leaflet";
 import React, { useEffect, useState } from "react";
-import Table from "react-bootstrap/Table";
-
-import D3Layer from "../D3Layer";
-import { Container } from "@material-ui/core";
 import {
   Col,
   // Container,
   Row,
   CardTitle,
   CardBody,
-  CardText,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Modal,
-  CardImg,
   CardSubtitle,
 } from "reactstrap";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import "../Css/Detail.scss";
-import axios from "axios";
+
 import Typography from "@material-ui/core/Typography";
 import "../Css/mapView.scss";
 import { Card } from "react-bootstrap";
-import * as d3 from "d3";
 
 import AwesomeSlider from "react-awesome-slider";
 
-import Timeline from "@material-ui/lab/Timeline";
-import TimelineItem from "@material-ui/lab/TimelineItem";
-import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
-import TimelineConnector from "@material-ui/lab/TimelineConnector";
-import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
-import TimelineContent from "@material-ui/lab/TimelineContent";
-import TimelineDot from "@material-ui/lab/TimelineDot";
-import Button from "@material-ui/core/Button";
-import "bootstrap/dist/css/bootstrap.min.css";
-import PersonIcon from "@material-ui/icons/Person";
-import CallIcon from "@material-ui/icons/Call";
-import EmailIcon from "@material-ui/icons/Email";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import InstagramIcon from "@material-ui/icons/Instagram";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import LanguageIcon from "@material-ui/icons/Language";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import LaptopMacIcon from "@material-ui/icons/LaptopMac";
 import TableContainer from "@material-ui/core/TableContainer";
 import CardContent from "@material-ui/core/CardContent";
-import MenuBookIcon from "@material-ui/icons/MenuBook";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import L from "leaflet";
-import { HiOutlineLightBulb, HiOutlineAcademicCap } from "react-icons/hi";
-import { BsGraphUp, BsFillFileMedicalFill } from "react-icons/bs";
-import {
-  BiNetworkChart,
-  BiInfoCircle,
-  BiMedal,
-  BiNews,
-  BiGroup,
-} from "react-icons/bi";
-import { GiGiftOfKnowledge, GiImpactPoint } from "react-icons/gi";
-import {
-  AiOutlineUser,
-  AiOutlineReconciliation,
-  AiOutlineCoffee,
-  AiOutlineApartment,
-  AiTwotoneTool,
-  AiFillSnippets,
-} from "react-icons/ai";
-import { GrCluster } from "react-icons/gr";
-import SwipeableViews from "react-swipeable-views";
-import { withRouter } from "react-router-dom";
+
 import PropTypes from "prop-types";
-import {
-  makeStyles,
-  createTheme,
-  ThemeProvider,
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { orange } from "@material-ui/core/colors";
 import Box from "@material-ui/core/Box";
-import AppBar from "@material-ui/core/AppBar";
-import {
-  FaArrowAltCircleRight,
-  FaArrowAltCircleDown,
-  FaIndustry,
-  FaHandsHelping,
-  FaArrowAltCircleUp,
-} from "react-icons/fa";
-
-const customTheme = createTheme({
-  palette: {
-    secondary: {
-      main: orange[500],
-    },
-  },
-});
+import axios from "axios";
 
 const useCard = makeStyles({
   root: {
@@ -153,33 +70,6 @@ YoutubeEmbed.propTypes = {
   embedId: PropTypes.string.isRequired,
 };
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-force-tabpanel-${index}`}
-      aria-labelledby={`scrollable-force-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index) {
-  return {
-    id: `scrollable-force-tab-${index}`,
-    "aria-controls": `scrollable-force-tabpanel-${index}`,
-  };
-}
-
 function getId(url) {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
   const match = url.match(regExp);
@@ -188,7 +78,26 @@ function getId(url) {
 }
 
 export default function KnowledgePage(props) {
-    const {knowledge, classes} = props
+  const {
+    co_researcher_id,
+    classes,
+  } = props;
+  const apiUrl = "https://kmapi.kims-rmuti.com";
+  const [knowledge, setknowledge] = useState([]);
+
+  let id = atob(co_researcher_id);
+
+  useEffect(() => {
+    axios
+      .get(`${apiUrl}/api/get/co-researcher-knowledge/image/${id}`)
+      .then((result) => {
+        setknowledge(result.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+  }, []);
+
   return (
     <TableContainer
       style={{

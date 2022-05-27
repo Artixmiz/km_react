@@ -1,131 +1,26 @@
-import {
-  MapContainer,
-  TileLayer,
-  ZoomControl,
-  Marker,
-  useMap,
-} from "react-leaflet";
+import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 import React, { useEffect, useState } from "react";
-import Table from "react-bootstrap/Table";
 
 import D3Layer from "../D3Layer";
-import { Container } from "@material-ui/core";
-import {
-  Col,
-  // Container,
-  Row,
-  CardTitle,
-  CardBody,
-  CardText,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Modal,
-  CardImg,
-  CardSubtitle,
-} from "reactstrap";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import "../Css/Detail.scss";
-import axios from "axios";
+import { CardTitle, CardBody } from "reactstrap";
+
 import Typography from "@material-ui/core/Typography";
 import "../Css/mapView.scss";
 import { Card } from "react-bootstrap";
-import * as d3 from "d3";
 
-import AwesomeSlider from "react-awesome-slider";
-
-import Timeline from "@material-ui/lab/Timeline";
-import TimelineItem from "@material-ui/lab/TimelineItem";
-import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
-import TimelineConnector from "@material-ui/lab/TimelineConnector";
-import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
-import TimelineContent from "@material-ui/lab/TimelineContent";
-import TimelineDot from "@material-ui/lab/TimelineDot";
 import Button from "@material-ui/core/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-import PersonIcon from "@material-ui/icons/Person";
-import CallIcon from "@material-ui/icons/Call";
-import EmailIcon from "@material-ui/icons/Email";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import InstagramIcon from "@material-ui/icons/Instagram";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import LanguageIcon from "@material-ui/icons/Language";
+
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import LaptopMacIcon from "@material-ui/icons/LaptopMac";
+
 import TableContainer from "@material-ui/core/TableContainer";
 import CardContent from "@material-ui/core/CardContent";
-import MenuBookIcon from "@material-ui/icons/MenuBook";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import L from "leaflet";
-import { HiOutlineLightBulb, HiOutlineAcademicCap } from "react-icons/hi";
-import { BsGraphUp, BsFillFileMedicalFill } from "react-icons/bs";
-import {
-  BiNetworkChart,
-  BiInfoCircle,
-  BiMedal,
-  BiNews,
-  BiGroup,
-} from "react-icons/bi";
-import { GiGiftOfKnowledge, GiImpactPoint } from "react-icons/gi";
-import {
-  AiOutlineUser,
-  AiOutlineReconciliation,
-  AiOutlineCoffee,
-  AiOutlineApartment,
-  AiTwotoneTool,
-  AiFillSnippets,
-} from "react-icons/ai";
-import { GrCluster } from "react-icons/gr";
-import SwipeableViews from "react-swipeable-views";
-import { withRouter } from "react-router-dom";
+
 import PropTypes from "prop-types";
-import {
-  makeStyles,
-  createTheme,
-  ThemeProvider,
-} from "@material-ui/core/styles";
+import { makeStyles, createTheme } from "@material-ui/core/styles";
 import { orange } from "@material-ui/core/colors";
 import Box from "@material-ui/core/Box";
-import AppBar from "@material-ui/core/AppBar";
-import {
-  FaArrowAltCircleRight,
-  FaArrowAltCircleDown,
-  FaIndustry,
-  FaHandsHelping,
-  FaArrowAltCircleUp,
-} from "react-icons/fa";
-
-const customTheme = createTheme({
-  palette: {
-    secondary: {
-      main: orange[500],
-    },
-  },
-});
-
-const useCard = makeStyles({
-  root: {
-    minWidth: 2,
-    elevation: 15,
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-  media: {
-    height: 140,
-  },
-});
+import axios from "axios";
 
 const YoutubeEmbed = ({ embedId }) => {
   console.log(embedId);
@@ -160,325 +55,218 @@ function getId(url) {
   return match && match[2].length === 11 ? match[2] : null;
 }
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-force-tabpanel-${index}`}
-      aria-labelledby={`scrollable-force-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index) {
-  return {
-    id: `scrollable-force-tab-${index}`,
-    "aria-controls": `scrollable-force-tabpanel-${index}`,
-  };
-}
-
 export default function ProjectPage(props) {
-  const { classes, valuePage1, patent, publication, handleChangePage1 } = props;
-  return (
-    <ThemeProvider theme={customTheme}>
-      <div className={classes.root}>
-        <AppBar position="static" color="default" className={classes.appbar}>
-          <Tabs
-            value={valuePage1}
-            onChange={handleChangePage1}
-            variant="scrollable"
-            scrollButtons="on"
-            TabIndicatorProps={{
-              style: { background: "rgb(252, 113, 0)" },
-            }}
-            classes={{
-              root: classes.abRoot,
-              positionStatic: classes.abStatic,
-            }}
-            textColor="secondary"
-            aria-label="scrollable tabs menu"
-          >
-            <Tab
-              label="ทรัพย์สินทางปัญญา"
-              className={classes.customLabel}
-              {...a11yProps(0)}
-            />
-            <Tab
-              label="เอกสารเผยแพร่"
-              className={classes.customLabel}
-              {...a11yProps(1)}
-            />
-          </Tabs>
-        </AppBar>
-      </div>
+  const { co_researcher_id, classes } = props;
+  const apiUrl = "https://kmapi.kims-rmuti.com";
+  const [projects, setprojects] = useState([]);
+  let id = atob(co_researcher_id);
 
-      <TabPanel value={valuePage1} index={0}>
-        <Card className="card-header-border card-border">
-          <CardBody className="card-header-border">
+  useEffect(() => {
+    axios
+      .get(`${apiUrl}/api/get/co-researcher/projects/${id}`)
+      .then((result) => {
+        setprojects(result.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+        // setmserrorkn(err.response.data.message);
+      });
+  }, []);
+
+  const mapData = async () => {
+    const response = await axios.get(
+      `${apiUrl}/api/get/co-researcher/map/${id}`
+    );
+    return response.data;
+  };
+
+  const dataM = mapData();
+
+  return (
+    <>
+      <Card style={{ marginTop: "15px", fontFamily: "Prompt" }}>
+        {/* <CardBody className="card-header-border">
+                        <CardTitle
+                          tag="h6"
+                          style={{
+                            padding: 5,
+                            color: "black",
+                            fontFamily: "Prompt",
+                          }}
+                          className={(classes.customLabel, classes.headerLabel)}
+                        >
+                          แผนที่แสดงโครงการดำเนินงาน
+                        </CardTitle>
+                      </CardBody> */}
+
+        <MapContainer
+          className="map-border"
+          center={[13, 100]}
+          zoom={3}
+          scrollWheelZoom={true}
+          zoomControl={false}
+          style={{ width: "100%", height: "600px" }}
+        >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+
+          <ZoomControl position="topright" />
+          <D3Layer location={dataM} />
+        </MapContainer>
+      </Card>
+
+      <p></p>
+
+      <Card className="card-header-border card-border">
+        <Card>
+          <CardBody className="card-header-border card-border">
             <CardTitle
               tag="h6"
               style={{ padding: 5, color: "black" }}
               className={(classes.customLabel, classes.headerLabel)}
             >
-              ทรัพย์สินทางปัญญา
+              โครงการดำเนินงาน
             </CardTitle>
           </CardBody>
-          <TableContainer component={Paper} style={{ fontFamily: "Prompt" }}>
-            <Timeline align="alternate">
-              {patent.map((listValue, index) => {
+
+          <TableContainer
+            className="card-header-border card-border"
+            style={{
+              fontFamily: "Prompt",
+              padding: "20px 20px 20px 20px",
+            }}
+          >
+            <Grid container spacing={2} columns={16}>
+              {projects.map((listValue, index, project_type, l) => {
                 return (
-                  <Grid item xs={4} container justify="center">
+                  <Grid item xs={6}>
                     <Card
+                      className=" card-border"
+                      variant="outlined"
+                      key={project_type}
                       style={{
-                        width: "30",
-                        margin: "30px 30px 30px 30px",
+                        margin: "0px 0px 10px 0px",
                         fontFamily: "Prompt",
                       }}
                     >
-                      <Card.Img
-                        variant="top"
-                        src={`https://researcher.kims-rmuti.com/file-upload/co_patent-upload/${listValue.co_patent_image}`}
-                        height="auto"
-                        width="150"
-                      />
-                      <Card.Body>
-                        <Card.Title> {listValue.co_patent_name_th}</Card.Title>
-                        <Card.Text>
-                          {listValue.co_patent_name_EN}
-
+                      <CardBody>
+                        <CardContent>
+                          {/* <img
+                                      width="auto"
+                                      height="170"
+                                      aria-label="Placeholder: Image"
+                                      preserveAspectRatio="xMidYMid slice"
+                                      src={`https://www.km-innovations.rmuti.ac.th/researcher/file-upload/co_researcher-upload/${listValue.co_researcher_image}`}
+                                      style={{ padding: "10px" }}
+                                    /> */}
                           <p>
-                            {listValue.co_patent_registered_name}
-                            <p></p>
-                            วันที่ :&nbsp;
-                            {listValue.co_patent_date
-                              ? new Date(
-                                  listValue.co_patent_date
-                                ).toLocaleDateString("th-TH", {
-                                  year: "numeric",
-                                  month: "long",
-                                  day: "numeric",
-                                  weekday: "long",
-                                })
-                              : ""}
-                            <p></p>
                             <Typography
-                              className={useCard.pos}
-                              color="textSecondary"
+                              align="left"
                               style={{ fontFamily: "Prompt" }}
+                              gutterBottom
                             >
-                              ประเภทสิทธิบัตร :&nbsp;
-                              {listValue.patent_type_name}
+                              <h className={classes.customLabel}>
+                                {listValue.concept_proposal_name_th}
+                                <br></br>{" "}
+                              </h>
+                              {listValue.concept_proposal_name_en}
                             </Typography>
                           </p>
-                          {/* <Typography
-                                      style={{ fontFamily: "Prompt" }}
-                                    >
-                                      ถึง :&nbsp;{" "}
-                                      {listValue.co_certificate_end
-                                        ? new Date(
-                                            listValue.co_certificate_start
-                                          ).toLocaleDateString("th-TH", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                            weekday: "long",
-                                          })
-                                        : ""}
-                                    </Typography>
-                                    <Typography
-                                      align="center"
-                                      className={useCard.pos}
-                                      color="textSecondary"
-                                      style={{ fontFamily: "Prompt" }}
-                                    >
-                                      สถานที่ :&nbsp;
-                                      {listValue.co_certificate_venue}
-                                    </Typography>
-                                    <Typography
-                                      align="center"
-                                      className={useCard.pos}
-                                      color="textSecondary"
-                                      style={{ fontFamily: "Prompt" }}
-                                    >
-                                      ประเทศ :{" "}
-                                      {listValue.co_certificate_country}
-                                    </Typography> */}
-                        </Card.Text>
-                      </Card.Body>
+                          <p>
+                            <Typography
+                              align="left"
+                              style={{ fontFamily: "Prompt" }}
+                            >
+                              <h className={classes.customLabel}>
+                                งบประมาณ : &nbsp;{" "}
+                              </h>
+                              {listValue.concept_budget
+                                ? new Number(
+                                    listValue.concept_budget
+                                  ).toLocaleString("en")
+                                : ""}{" "}
+                              บาท
+                            </Typography>
+                          </p>
+                          <p>
+                            <Typography
+                              align="left"
+                              style={{ fontFamily: "Prompt" }}
+                            >
+                              <h className={classes.customLabel}>
+                                ปี : &nbsp;{" "}
+                              </h>{" "}
+                              {listValue.concept_year}
+                            </Typography>
+                          </p>
+                          <p>
+                            <Typography
+                              align="left"
+                              style={{ fontFamily: "Prompt" }}
+                            >
+                              <h className={classes.customLabel}>
+                                ชื่อนักวิจัย : &nbsp;
+                              </h>
+                              {listValue.prefix_name_th}
+                              {listValue.user_first_name_th}
+                              &nbsp;
+                              {listValue.user_last_name_th}
+                            </Typography>
+                          </p>
+                          <p>
+                            <Typography
+                              align="left"
+                              style={{ fontFamily: "Prompt" }}
+                            >
+                              <h className={classes.customLabel}>
+                                หน่วยงาน : &nbsp;
+                              </h>
+                              {listValue.name}
+                            </Typography>
+                          </p>
+                          {/* <Button>
+                                      <a
+                                        target="_blank"
+                                        href={`https://researcher.kims-rmuti.com/file-upload/project-upload/${listValue.project_upload}`}
+                                        rel="noreferrer"
+                                      >
+                                        <GetAppIcon />
+                                      </a>
+                                    </Button> */}
+
+                          <Button
+                            color="primary"
+                            style={{ fontFamily: "Prompt" }}
+                            aria-label="view info project"
+                            onClick={() => {
+                              console.log("test" + listValue.project_id);
+                              props.history.push({
+                                pathname: "/ProjectDetail/projectNetwork",
+                                search: `?project_id=${btoa(
+                                  listValue.project_id
+                                )}`,
+                                pathname: "/ProjectDetailConcep/projectNetwork",
+
+                                search: `?concep_id=${btoa(
+                                  listValue.concept_proposal_id
+                                )}`,
+                              });
+                            }}
+                          >
+                            รายละเอียดเพิ่มเติม
+                          </Button>
+                        </CardContent>
+                      </CardBody>
                     </Card>
                   </Grid>
                 );
               })}
-            </Timeline>
+            </Grid>
           </TableContainer>
         </Card>
-      </TabPanel>
-
-      <TabPanel value={valuePage1} index={1}>
-        <Card className="card-header-border card-border">
-          <CardBody className="card-header-border">
-            <CardTitle
-              tag="h6"
-              style={{ padding: 5, color: "black" }}
-              className={(classes.customLabel, classes.headerLabel)}
-            >
-              เอกสารเผยแพร่
-            </CardTitle>
-          </CardBody>
-          <TableContainer component={Paper} style={{ fontFamily: "Prompt" }}>
-            <Timeline align="alternate">
-              {publication.map((listValue, index) => {
-                return (
-                  <TimelineItem>
-                    <TimelineOppositeContent align="left">
-                      <Typography variant="body2" padding="1px 1px 1px 1px">
-                        {listValue.patent_date}
-                      </Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                      <TimelineDot
-                        color="secondary"
-                        variant="outlined"
-                        className="card-header-border"
-                      >
-                        <AiOutlineReconciliation />
-                      </TimelineDot>
-
-                      <TimelineConnector />
-                    </TimelineSeparator>
-
-                    <TimelineContent align="left">
-                      <Paper elevation={5}>
-                        <Typography align="left" variant="h6" component="h6">
-                          {listValue.educational_degree}
-                        </Typography>
-
-                        <Typography
-                          align="left"
-                          style={{
-                            color: "blue",
-                            fontFamily: "Prompt",
-                          }}
-                        >
-                          &nbsp;{" "}
-                          <h
-                            style={{
-                              color: "black",
-                              fontFamily: "Prompt",
-                            }}
-                          >
-                            ชื่อ
-                          </h>
-                          : &nbsp;
-                          {listValue.co_researcher_publication_name_th}
-                          &nbsp; ({listValue.co_researcher_publication_name_en})
-                        </Typography>
-                        <Typography
-                          align="left"
-                          style={{
-                            color: "blue",
-                            fontFamily: "Prompt",
-                          }}
-                        >
-                          &nbsp;{" "}
-                          <h
-                            style={{
-                              color: "black",
-                              fontFamily: "Prompt",
-                            }}
-                          >
-                            ประเภท
-                          </h>
-                          : &nbsp;
-                          {listValue.co_researcher_publication_publish}
-                        </Typography>
-                        <Typography
-                          align="left"
-                          style={{
-                            color: "blue",
-                            fontFamily: "Prompt",
-                          }}
-                        >
-                          &nbsp;{" "}
-                          <h
-                            style={{
-                              color: "black",
-                              fontFamily: "Prompt",
-                            }}
-                          >
-                            {" "}
-                            ประเทศ{" "}
-                          </h>
-                          : &nbsp;
-                          {listValue.co_researcher_publication_country}
-                        </Typography>
-                        <Typography
-                          align="left"
-                          style={{
-                            color: "blue",
-                            fontFamily: "Prompt",
-                          }}
-                        >
-                          &nbsp;{" "}
-                          <h
-                            style={{
-                              color: "black",
-                              fontFamily: "Prompt",
-                            }}
-                          >
-                            {" "}
-                            วันที่{" "}
-                          </h>
-                          : &nbsp;
-                          {listValue.co_researcher_publication_date
-                            ? new Date(
-                                listValue.co_researcher_publication_date
-                              ).toLocaleDateString("th-TH", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                                weekday: "long",
-                              })
-                            : " "}
-                        </Typography>
-                        <Typography
-                          align="left"
-                          style={{
-                            color: "blue",
-                            fontFamily: "Prompt",
-                          }}
-                        >
-                          &nbsp; {listValue.co_researcher_publication_type_name}
-                        </Typography>
-                        <Button>
-                          <a
-                            target="_blank"
-                            href={`https://researcher.kims-rmuti.com/file-upload/publication-upload/${listValue.patent_attachment}`}
-                            rel="noreferrer"
-                          >
-                            {listValue.co_researcher_publication_attachment}
-                            <GetAppIcon />
-                          </a>
-                        </Button>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                );
-              })}
-            </Timeline>
-          </TableContainer>
-        </Card>
-      </TabPanel>
-    </ThemeProvider>
+      </Card>
+    </>
   );
 }

@@ -6,13 +6,6 @@ import {
   Row,
   CardTitle,
   CardBody,
-  CardText,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Modal,
-  CardImg,
-  CardSubtitle,
 } from "reactstrap";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -42,6 +35,7 @@ import {
 } from "@material-ui/core/styles";
 
 import AppBar from "@material-ui/core/AppBar";
+import axios from "axios";
 
 const customTheme = createTheme({
   palette: {
@@ -133,14 +127,43 @@ function getId(url) {
 }
 
 export default function ExpertisePage(props) {
-  const {
-    classes,
-    valuePage1,
-    handleChangePage1,
-    expertise,
-    award,
-    certificate,
-  } = props;
+  const { co_researcher_id, classes, valuePage1, handleChangePage1 } = props;
+  const apiUrl = "https://kmapi.kims-rmuti.com";
+  const [expertise, setexpertise] = useState([]);
+  const [award, setaward] = useState([]);
+  const [certificate, setcertificate] = useState([]);
+
+  let id = atob(co_researcher_id);
+
+  useEffect(() => {
+    axios
+      .get(`${apiUrl}/api/get/co-researcher-expertise/image/${id}`)
+      .then((result) => {
+        setexpertise(result.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+
+    axios
+      .get(`${apiUrl}/api/get/co-researcher/award/${id}`)
+      .then((result) => {
+        setaward(result.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+
+    axios
+      .get(`${apiUrl}/api/get/co-researcher/certificate/${id}`)
+      .then((result) => {
+        setcertificate(result.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+  }, []);
+
   return (
     <ThemeProvider theme={customTheme}>
       <div className={classes.root}>
