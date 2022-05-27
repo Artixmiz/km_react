@@ -247,7 +247,7 @@ function SearchPageProject(props) {
         //   setMessage(e.response.data.message);
 
         // }, 500);
-        setMessage(e.response.data.message);
+        // setMessage(e.response.data.message);
       });
   };
 

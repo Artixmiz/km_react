@@ -27,7 +27,7 @@ const DetailProject = (props) => {
     
     <Col md="12">
       <Card
-        className="card-header-border card-border"
+        // className="card-header-border card-border"
         className={classes.cardlayout}
       >
         <CardBody className="card-header-border">

@@ -33,7 +33,7 @@ import {
 
 import MarkerClusterGroup from "react-leaflet-markercluster";
 
-import { Card, CardTitle, CardBody, Table, Row, Col } from "reactstrap";
+import { Card,Row, Col } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import noImg from "../images/no-image.png";
@@ -336,7 +336,7 @@ const SearchPageResearch = (props) => {
     <div className="body-detail" style={{ padding: "1.5rem" }}>
       <div style={{ padding: "0px 10px 0px 10px" }}>
         <Card className="card-border">
-          <CardBody>
+          <Card.Body>
             <Box
               component="form"
               sx={{
@@ -405,7 +405,7 @@ const SearchPageResearch = (props) => {
                 </Row>
               </div>
             </Box>
-          </CardBody>
+          </Card.Body>
         </Card>
 
         <div className="card-searcher">
@@ -540,6 +540,7 @@ const SearchPageResearch = (props) => {
                         md
                         lg={6}
                         xl={4}
+                        xxl={3}
                         style={{ paddingBottom: "1.5rem" }}
                       >
                         <div
