@@ -2,34 +2,20 @@ import {
   Box,
   TextField,
   Button,
-  Select,
-  MenuItem,
-  FormControl,
   Container,
   IconButton,
   CircularProgress,
 } from "@material-ui/core";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-  Label,
-  Form,
-  FormGroup,
-  Input,
-} from "reactstrap";
+import { Card, Row, Col, Form } from "react-bootstrap";
+
+import { Input, FormGroup } from "reactstrap";
 import React, { useCallback, useState, useMemo, useRef } from "react";
 import { useEventHandlers } from "@react-leaflet/core";
-import Leftbar from "./Leftbar";
 import "./Css/Search.scss";
 import "../index.css";
 import {
   MapContainer,
   TileLayer,
-  ZoomControl,
   Marker,
   CircleMarker,
   Popup,
@@ -38,12 +24,10 @@ import {
   Rectangle,
 } from "react-leaflet";
 import noImg from "../images/no-image.png";
-import markerIconPng from "../images/icon.png";
 import { Icon } from "leaflet";
 import { withRouter } from "react-router";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
-import Pagination from "@material-ui/lab/Pagination";
 import { BiInfoCircle, BiLinkExternal } from "react-icons/bi";
 
 import { useTranslation } from "react-i18next";
@@ -145,7 +129,7 @@ function SearchPageProject(props) {
 
         // console.log(projects);
         setProjects(res.data.projects);
-        setUniversitys(res.data.universitys);
+        setUniversitys(res.data.rmuti_universitys);
         // setCount(totalPages);
       })
       .finally(() => {
@@ -163,7 +147,7 @@ function SearchPageProject(props) {
         //   setMessage(e.response.data.message);
 
         // }, 500);
-        setMessage(e.response.data.message);
+        // setMessage(e.response.data.message);
       });
   };
 
@@ -323,7 +307,7 @@ function SearchPageProject(props) {
                   ค้นหางานบริการวิชาการ
                 </CardTitle>
               </CardBody> */}
-                <CardBody>
+                <Card.Body>
                   <div className="">
                     <Box
                       component="form"
@@ -445,7 +429,7 @@ function SearchPageProject(props) {
                       </div>
                     </Box>
                   </div>
-                </CardBody>
+                </Card.Body>
               </Card>
 
               <Card
@@ -520,7 +504,7 @@ function SearchPageProject(props) {
                                   }
                                 >
                                   <Popup>
-                                    <CardTitle class="tip__container">
+                                    <Card.Title class="tip__container">
                                       <text
                                         style={{
                                           marginTop: "10px",
@@ -573,7 +557,7 @@ function SearchPageProject(props) {
                                         รายละเอียดเพิ่มเติม{" "}
                                         <BiInfoCircle size={18} />
                                       </IconButton>
-                                    </CardTitle>
+                                    </Card.Title>
                                   </Popup>
                                 </Marker>
                               </CircleMarker>
@@ -591,9 +575,7 @@ function SearchPageProject(props) {
                     {universitys.length ? (
                       <div className="main-list">
                         {universitys
-                          .sort((x, y) =>
-                            x.university.localeCompare(y.university, "th")
-                          )
+                          .sort((x, y) => x.name.localeCompare(y.name, "th"))
                           .map((list) => (
                             <>
                               <Card className="pt-2 mt-3 me-2">
@@ -602,7 +584,7 @@ function SearchPageProject(props) {
                                   style={{ width: "100%" }}
                                 >
                                   <Col md="6">
-                                    <h6>{list.university}</h6>
+                                    <h6>{list.name}</h6>
                                   </Col>
                                   <Col md="4">
                                     <p>จำนวน {list.data.length} รายการ</p>

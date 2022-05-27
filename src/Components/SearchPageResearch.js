@@ -33,7 +33,7 @@ import {
 
 import MarkerClusterGroup from "react-leaflet-markercluster";
 
-import { Card,Row, Col } from "react-bootstrap";
+import { Card, Row, Col, Accordion } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import noImg from "../images/no-image.png";
@@ -335,8 +335,11 @@ const SearchPageResearch = (props) => {
   return (
     <div className="body-detail" style={{ padding: "1.5rem" }}>
       <div style={{ padding: "0px 10px 0px 10px" }}>
-        <Card className="card-border">
-          <Card.Body>
+        <Card
+          className="card-border"
+          style={{ backgroundColor: "#f6a834", borderRadius: "15px" }}
+        >
+          <Card.Body style={{ padding: "10px" }}>
             <Box
               component="form"
               sx={{
@@ -394,7 +397,11 @@ const SearchPageResearch = (props) => {
                       color="primary"
                       size="large"
                       onClick={onSubmit}
-                      style={{ fontFamily: "Prompt", width: "100%" }}
+                      style={{
+                        fontFamily: "Prompt",
+                        width: "100%",
+                        backgroundColor: "rgb(239, 125, 5)",
+                      }}
                       disabled={loading}
                       startIcon={<FaSearch size={13} />}
                     >
@@ -417,8 +424,8 @@ const SearchPageResearch = (props) => {
                   marginTop: "10px",
                   fontFamily: "Prompt",
                   borderRadius: "15px",
-                  boxShadow:"none",
-                  border:"none"
+                  boxShadow: "none",
+                  border: "none",
                 }}
               >
                 {/* <CardBody className="card-header-border">
@@ -433,7 +440,8 @@ const SearchPageResearch = (props) => {
                   zoomControl={false}
                   style={{
                     width: "100%",
-                    height: "600px",
+                    minHeight: "450px",
+                    height: "65vh",
                     margin: "0",
                     zIndex: "0",
                     borderRadius: "15px",
@@ -458,11 +466,36 @@ const SearchPageResearch = (props) => {
                     <Col>
                       <div className="card">
                         <div className="card-body ">
+                          <h5 className="card-title text-title">มทร.อีสาน</h5>
+                          <h2 className="card-text text-amount">
+                            {count_rmuti_university} วิทยาเขต
+                          </h2>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="card">
+                        <div className="card-body ">
                           <h5 className="card-title text-title">
-                            นักวิจัยทั้งหมด
+                            นักวิจัยมทร.อีสาน
                           </h5>
                           <h2 className="card-text text-amount">
                             {count_researcher} คน{" "}
+                          </h2>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="card">
+                        <div
+                          className="card-body "
+                          style={{ padding: "1rem 0.5rem" }}
+                        >
+                          <h5 className="card-title text-title">
+                            นักวิจัยเครือข่าย
+                          </h5>
+                          <h2 className="card-text text-amount">
+                            {count_other_university} คน
                           </h2>
                         </div>
                       </div>
@@ -489,141 +522,266 @@ const SearchPageResearch = (props) => {
                         </div>
                       </div>
                     </Col>
-                    <Col>
-                      <div className="card">
-                        <div className="card-body ">
-                          <h5 className="card-title text-title">วิทยาเขต</h5>
-                          <h2 className="card-text text-amount">
-                            {count_rmuti_university} แห่ง
-                          </h2>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="card">
-                        <div
-                          className="card-body "
-                          style={{ padding: "1rem 0.5rem" }}
-                        >
-                          <h5 className="card-title text-title">
-                            มหาวิทยาลัยเครือข่าย
-                          </h5>
-                          <h2 className="card-text text-amount">
-                            {count_other_university} แห่ง
-                          </h2>
-                        </div>
-                      </div>
-                    </Col>
                   </Row>
                 </div>
               </div>
             </Col>
             <Col md={12} style={{ padding: "0 1rem 0 3rem" }}>
-              <h2
-                style={{
-                  textAlign: "left",
-                  color: "#fff",
-                  fontWeight: "600",
-                  marginBottom: "2rem",
-                }}
+              <Accordion
+                style={{ padding: "10px 25px 0 25px" }}
+                className="bg-title"
+                defaultActiveKey="0"
               >
-                รายชื่อนักวิจัย
-              </h2>
-              {universitys.length ? (
-                <Row style={{ paddingLeft: "1rem" }}>
-                  {universitys
-                    .sort((x, y) => x.name.localeCompare(y.name, "th"))
-                    .map((list) => (
-                      <Col
-                        xs
-                        sm={12}
-                        md
-                        lg={6}
-                        xl={4}
-                        xxl={3}
-                        style={{ paddingBottom: "1.5rem" }}
-                      >
-                        <div
-                          className="card-university"
-                          style={{
-                            backgroundColor: "#fff",
-                            borderRadius: "15px",
-                          }}
-                        >
-                          <div
-                            className="card-header"
-                            style={{
-                              padding: "1.5rem 1.5rem 0px",
-                              borderRadius: "15px  15px 0 0",
-                            }}
-                          >
-                            <h5>{list.name}</h5>
-                            <p
-                              style={{
-                                textAlign: "left",
-                                marginTop: "0.5rem",
-                                marginBottom: "0.5rem",
-                              }}
-                            >
-                              จำนวน {list.data.length} คน
-                            </p>
-                          </div>
-                          <div className="card-university-body">
-                            {list.data.length ? (
-                              <div className="list">
-                                {list.data
-                                  .sort((x, y) =>
-                                    x.user_first_name_th.localeCompare(
-                                      y.user_first_name_th,
-                                      "th"
-                                    )
-                                  )
-                                  .map((listdata) => (
-                                    <div className="link_feature">
-                                      <a
-                                        href={`/monitoring/Researcher?user_idcard=${btoa(
-                                          listdata.user_idcard
-                                        )}`}
-                                        className="linkexternal"
-                                      >
-                                        <Row
-                                          className="p-2 align-items-center justify-content-md-center"
-                                          style={{ width: "100%" }}
-                                        >
-                                          <Col md="2">
-                                            <img
-                                              className="rounded-circle mx-auto d-block"
-                                              width={40}
-                                              height={40}
-                                              src={
-                                                listdata.user_image_user
-                                                  ? `https://researcher.kims-rmuti.com/file-upload/images-profile-upload/${listdata.user_image_user}`
-                                                  : "https://www.km-innovations.rmuti.ac.th/researcher/icon/researcher.png"
-                                              }
-                                            />
-                                          </Col>
-                                          <Col md="10">
-                                            {listdata.prefix_id}
-                                            {listdata.user_first_name_th}{" "}
-                                            {listdata.user_last_name_th}
-                                          </Col>
-                                        </Row>
-                                      </a>
-                                    </div>
-                                  ))}
-                              </div>
-                            ) : (
-                              <div className="list pt-4">ไม่พบข้อมูล</div>
-                            )}
-                          </div>
-                        </div>
-                      </Col>
-                    ))}
-                  {/* </div> */}
-                </Row>
-              ) : (
-                <div className="main-list pt-4">ไม่พบข้อมูล</div>
-              )}
+                <Accordion.Item
+                  eventKey="0"
+                  style={{ backgroundColor: "transparent", border: "none" }}
+                >
+                  <Accordion.Header>
+                    <h2
+                      style={{
+                        textAlign: "left",
+                        color: "#fff",
+                        fontWeight: "600",
+                        marginBottom: "2rem",
+                      }}
+                    >
+                      รายชื่อนักวิจัยมหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน
+                    </h2>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <Row style={{ paddingLeft: "1rem" }}>
+                      {universitys.length ? (
+                        <>
+                          {universitys
+                            .sort((x, y) => x.name.localeCompare(y.name, "th"))
+                            .map((list) => (
+                              <Col
+                                xs
+                                sm={12}
+                                md
+                                lg={6}
+                                xl={4}
+                                xxl={4}
+                                style={{ paddingBottom: "1.5rem" }}
+                              >
+                                <div
+                                  className="card-university"
+                                  style={{
+                                    backgroundColor: "#fff",
+                                    borderRadius: "15px",
+                                  }}
+                                >
+                                  <div
+                                    className="card-header"
+                                    style={{
+                                      padding: "1.5rem 1.5rem 0px",
+                                      borderRadius: "15px  15px 0 0",
+                                    }}
+                                  >
+                                    <h5>{list.name}</h5>
+                                    <p
+                                      style={{
+                                        textAlign: "left",
+                                        marginTop: "0.5rem",
+                                        marginBottom: "0.5rem",
+                                      }}
+                                    >
+                                      จำนวน {list.data.length} คน
+                                    </p>
+                                  </div>
+                                  <div className="card-university-body">
+                                    {list.data.length ? (
+                                      <div className="list">
+                                        {list.data
+                                          .sort((x, y) =>
+                                            x.user_first_name_th.localeCompare(
+                                              y.user_first_name_th,
+                                              "th"
+                                            )
+                                          )
+                                          .map((listdata) => (
+                                            <div className="link_feature">
+                                              <a
+                                                href={`/monitoring/Researcher?user_idcard=${btoa(
+                                                  listdata.user_idcard
+                                                )}`}
+                                                className="linkexternal"
+                                              >
+                                                <Row
+                                                  className="p-2 align-items-center justify-content-md-center"
+                                                  style={{ width: "100%" }}
+                                                >
+                                                  <Col md="2">
+                                                    <img
+                                                      className="rounded-circle mx-auto d-block"
+                                                      width={40}
+                                                      height={40}
+                                                      src={
+                                                        listdata.user_image_user
+                                                          ? `https://researcher.kims-rmuti.com/file-upload/images-profile-upload/${listdata.user_image_user}`
+                                                          : "https://www.km-innovations.rmuti.ac.th/researcher/icon/researcher.png"
+                                                      }
+                                                    />
+                                                  </Col>
+                                                  <Col md="10">
+                                                    {listdata.prefix_id}
+                                                    {
+                                                      listdata.user_first_name_th
+                                                    }{" "}
+                                                    {listdata.user_last_name_th}
+                                                  </Col>
+                                                </Row>
+                                              </a>
+                                            </div>
+                                          ))}
+                                      </div>
+                                    ) : (
+                                      <div className="list pt-4">
+                                        ไม่พบข้อมูล
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </Col>
+                            ))}
+                        </>
+                      ) : (
+                        <div className="pt-4">ไม่พบข้อมูล</div>
+                      )}
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </Col>
+            <Col
+              md={12}
+              style={{ padding: "0 1rem 0 3rem", marginTop: "2rem" }}
+            >
+              <Accordion
+                style={{ padding: "10px 25px 0 25px" }}
+                className="bg-title"
+                defaultActiveKey="0"
+              >
+                <Accordion.Item
+                  eventKey="0"
+                  style={{ backgroundColor: "transparent", border: "none" }}
+                >
+                  <Accordion.Header>
+                    <h2
+                      style={{
+                        textAlign: "left",
+                        color: "#fff",
+                        fontWeight: "600",
+                        marginBottom: "2rem",
+                      }}
+                    >
+                      รายชื่อนักวิจัยเครือข่าย
+                    </h2>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <Row style={{ paddingLeft: "1rem" }}>
+                      {other_universitys.length ? (
+                        <>
+                          {other_universitys
+                            .sort((x, y) => x.name.localeCompare(y.name, "th"))
+                            .map((list) => (
+                              <Col
+                                xs
+                                sm={12}
+                                md
+                                lg={6}
+                                xl={4}
+                                xxl={4}
+                                style={{ paddingBottom: "1.5rem" }}
+                              >
+                                <div
+                                  className="card-university"
+                                  style={{
+                                    backgroundColor: "#fff",
+                                    borderRadius: "15px",
+                                  }}
+                                >
+                                  <div
+                                    className="card-header"
+                                    style={{
+                                      padding: "1.5rem 1.5rem 0px",
+                                      borderRadius: "15px  15px 0 0",
+                                    }}
+                                  >
+                                    <h5>{list.name}</h5>
+                                    <p
+                                      style={{
+                                        textAlign: "left",
+                                        marginTop: "0.5rem",
+                                        marginBottom: "0.5rem",
+                                      }}
+                                    >
+                                      จำนวน {list.data.length} คน
+                                    </p>
+                                  </div>
+                                  <div className="card-university-body">
+                                    {list.data.length ? (
+                                      <div className="list">
+                                        {list.data
+                                          .sort((x, y) =>
+                                            x.user_first_name_th.localeCompare(
+                                              y.user_first_name_th,
+                                              "th"
+                                            )
+                                          )
+                                          .map((listdata) => (
+                                            <div className="link_feature">
+                                              <a
+                                                href={`/monitoring/Researcher?user_idcard=${btoa(
+                                                  listdata.user_idcard
+                                                )}`}
+                                                className="linkexternal"
+                                              >
+                                                <Row
+                                                  className="p-2 align-items-center justify-content-md-center"
+                                                  style={{ width: "100%" }}
+                                                >
+                                                  <Col md="2">
+                                                    <img
+                                                      className="rounded-circle mx-auto d-block"
+                                                      width={40}
+                                                      height={40}
+                                                      src={
+                                                        listdata.user_image_user
+                                                          ? `https://researcher.kims-rmuti.com/file-upload/images-profile-upload/${listdata.user_image_user}`
+                                                          : "https://www.km-innovations.rmuti.ac.th/researcher/icon/researcher.png"
+                                                      }
+                                                    />
+                                                  </Col>
+                                                  <Col md="10">
+                                                    {listdata.prefix_id}
+                                                    {
+                                                      listdata.user_first_name_th
+                                                    }{" "}
+                                                    {listdata.user_last_name_th}
+                                                  </Col>
+                                                </Row>
+                                              </a>
+                                            </div>
+                                          ))}
+                                      </div>
+                                    ) : (
+                                      <div className="list pt-4">
+                                        ไม่พบข้อมูล
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </Col>
+                            ))}
+                        </>
+                      ) : (
+                        <div className="pt-4">ไม่พบข้อมูล</div>
+                      )}
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
             </Col>
           </Row>
         </div>
