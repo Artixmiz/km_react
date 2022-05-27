@@ -621,7 +621,7 @@ function SearchPageProject(props) {
                               marginBottom: '2rem',
                             }}
                           >
-                            งานวิจัยเครือข่าย
+                            งานวิจัยมหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน
                           </h2>
                         </Accordion.Header>
                         <Accordion.Body>
